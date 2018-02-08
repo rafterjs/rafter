@@ -1,2 +1,1 @@
-# rafter
-Rafter JS Framework
+# Rafter Framework
