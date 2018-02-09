@@ -7,53 +7,32 @@
             "email": "joshstuartx@gmail.com"
         }
     ],
-    "private": true,
+    "license": "MIT",
     "scripts": {
-        "dev": "nodemon --watch server --watch config server/server.js --exec babel-node",
-        "test": ""
+        "dev": "nodemon --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
+        "test": "TODO",
+        "build-server": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib && babel --include-dotfiles  ./config --out-dir ./dist/config && babel --include-dotfiles  ./example --out-dir ./dist/example",
+        "clean": "rm -rf ./dist && mkdir ./dist",
+        "build": "npm run clean && npm run build-server",
+        "prepublish": "npm run build"
     },
     "dependencies": {
-        "box-di-autoloader": "0.1.4",
-        "cors": "2.8.4",
-        "express": "4.16.2",
-        "lodash.get": "4.4.2",
-        "moment": "2.20.1",
-        "mongoose": "5.0.3",
-        "winston": "2.4.0"
+        "box-di-autoloader": "^0.2.0",
+        "express": "4.16.2"
     },
-    "babel": {
-        "presets": [
-            [
-                "latest-node",
-                {
-                    "target": "current"
-                }
-            ]
-        ],
-        "plugins": [
-            "transform-async-to-generator",
-            "transform-object-rest-spread",
-            "transform-imports"
-        ]
-    },
-    "description": "",
-    "main": "",
+    "description": "A slightly opinionated JS framework that makes building apps easy and testable",
+    "main": "dist/index.js",
     "devDependencies": {
-        "babel-cli": "6.24.1",
-        "babel-core": "6.26.0",
-        "babel-eslint": "^8.2.1",
-        "babel-loader": "7.1.2",
-        "babel-plugin-transform-async-to-generator": "6.24.1",
-        "babel-plugin-transform-class-properties": "6.24.1",
-        "babel-plugin-transform-imports": "1.4.1",
-        "babel-plugin-transform-object-rest-spread": "6.26.0",
-        "babel-polyfill": "6.23.0",
-        "babel-preset-env": "1.6.1",
-        "babel-preset-latest-node": "0.4.0",
-        "eslint": "4.15.0",
-        "nodemon": "1.14.11"
+        "@babel/cli": "^7.0.0-beta.39",
+        "@babel/core": "^7.0.0-beta.39",
+        "@babel/node": "^7.0.0-beta.39",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.39",
+        "@babel/preset-env": "^7.0.0-beta.39",
+        "babel-eslint": "^7.2.3",
+        "eslint": "^4.17.0",
+        "nodemon": "^1.14.12"
     },
     "engines": {
-        "node": "9.4.0"
+        "node": "9"
     }
 }

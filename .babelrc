@@ -1,15 +1,15 @@
 {
     "presets": [
         [
-            "latest-node",
+            "@babel/preset-env",
             {
-                "target": "current"
+                "targets": {
+                    "node": "9.0"
+                }
             }
         ]
     ],
     "plugins": [
-        "transform-async-to-generator",
-        "transform-object-rest-spread",
-        "transform-imports"
+        "@babel/plugin-proposal-object-rest-spread"
     ]
 }
