@@ -1,6 +1,6 @@
 {
     "name": "rafter",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "contributors": [
         {
             "name": "Josh Stuart",
@@ -15,17 +15,17 @@
     "scripts": {
         "dev": "nodemon --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
         "test": "TODO",
-        "build-server": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib && babel --include-dotfiles  ./config --out-dir ./dist/config && babel --include-dotfiles  ./example --out-dir ./dist/example",
+        "build-server": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib && babel --include-dotfiles ./example --out-dir ./dist/example",
         "clean": "rm -rf ./dist && mkdir ./dist",
-        "build": "npm run clean && npm run build-server",
-        "prepublish": "npm run build"
+        "build": "npm run clean && npm run build-server && npm run copy",
+        "copy": "cp ./package.json ./dist/package.json"
     },
     "dependencies": {
         "box-di-autoloader": "^0.2.0",
         "express": "4.16.2"
     },
     "description": "A slightly opinionated JS framework that makes building apps easy and testable",
-    "main": "dist/index.js",
+    "main": "./index.js",
     "devDependencies": {
         "@babel/cli": "^7.0.0-beta.39",
         "@babel/core": "^7.0.0-beta.39",

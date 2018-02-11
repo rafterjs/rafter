@@ -1,18 +1,38 @@
 import BoxDiAutoLoader from 'box-di-autoloader';
-import rafterConfig from './config/.config';
 import ConfigAutoloaderService from './lib/utils/config-autoloader-service';
 import {Box} from 'box-di';
 
+const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
+
 export default class Rafter {
     /**
-     * @param {string=} applicationDirectory This is the directory your application is located. Most of the time it
+     * @param {string=} appDirectory This is the directory your application is located. Most of the time it
      *     will be 2 directories up from where Rafter is located, but that is not always the case.
-     * @param {Logger=} logger
+     * @param {object=} autoloader The autoloading parameters. You can customize what the names of each of the
+     *     autoloaded files should be.
+     * @param {Logger=} logger a logging interface eg. winston, console, etc
      */
-    constructor(applicationDirectory = `${__dirname}/../../`, logger = console) {
-        // TODO allow overriding configuration
-        this._recursiveConfigLoader = new ConfigAutoloaderService();
-        this._applicationDirectory = applicationDirectory;
+    constructor({
+        appDirectory = `${__dirname}/../../`,
+        autoloader = {
+            config: `.config.js`,
+            routes: `.routes.js`,
+            middleware: `.middleware.js`,
+            services: `.services.js`,
+            preStartHooks: `.pre-start-hooks.js`,
+        },
+        logger = console
+    }) {
+        // TODO allow overriding configuration.... not sure how yet.
+        this._recursiveConfigLoader = new ConfigAutoloaderService(
+            autoloader.config,
+            autoloader.services,
+            autoloader.middleware,
+            autoloader.routes,
+            autoloader.preStartHooks,
+            logger
+        );
+        this._appDirectory = appDirectory;
         this._logger = logger;
         this._boxDiAutoLoader;
         this._server;
@@ -41,18 +61,20 @@ export default class Rafter {
     async _getConfig() {
         // load rafter config
         const configDto = await this._recursiveConfigLoader.get(
-            rafterConfig.autoloader.directory
+            RAFTER_AUTOLOADER_DIRECTORY
         );
 
         // load application config
-        if (this._applicationDirectory) {
+        if (this._appDirectory) {
             const applicationConfigDto = await this._recursiveConfigLoader.get(
-                this._applicationDirectory
+                this._appDirectory
             );
+
             // merge the application config
             configDto.addConfig(applicationConfigDto.getConfig()).
             addServices(applicationConfigDto.getServices()).
             addMiddleware(applicationConfigDto.getMiddleware()).
+            addPreStartHooks(applicationConfigDto.getPreStartHooks()).
             addRoutes(applicationConfigDto.getRoutes());
         }
 
@@ -61,6 +83,8 @@ export default class Rafter {
 
     async _getAutoloader() {
         const configDto = await this._getConfig();
+
+        // TODO namespace these DI services
 
         // add the config to the DI container
         Box.register(`config`, () => configDto.getConfig());
@@ -73,6 +97,9 @@ export default class Rafter {
 
         // add the middleware to the DI container
         Box.register(`middleware`, () => configDto.getMiddleware());
+
+        // add the middleware to the DI container
+        Box.register(`preStartHooks`, () => configDto.getPreStartHooks());
 
         return new BoxDiAutoLoader(
             configDto.getServices(),
