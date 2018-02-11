@@ -1,6 +1,6 @@
 {
     "name": "rafter",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "contributors": [
         {
             "name": "Josh Stuart",
@@ -15,9 +15,9 @@
     "scripts": {
         "dev": "nodemon --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
         "test": "TODO",
-        "build-server": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib && babel --include-dotfiles ./example --out-dir ./dist/example",
+        "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
         "clean": "rm -rf ./dist && mkdir ./dist",
-        "build": "npm run clean && npm run build-server && npm run copy",
+        "build": "npm run clean && npm run build-lib && npm run copy",
         "copy": "cp ./package.json ./dist/package.json"
     },
     "dependencies": {
