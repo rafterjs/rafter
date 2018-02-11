@@ -24,6 +24,7 @@ export default class Rafter {
         logger = console
     }) {
         // TODO allow overriding configuration.... not sure how yet.
+        // Also inject this dependency otherwise it is difficult to test and swap out.
         this._recursiveConfigLoader = new ConfigAutoloaderService(
             autoloader.config,
             autoloader.services,
