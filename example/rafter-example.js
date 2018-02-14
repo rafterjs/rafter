@@ -1,7 +1,7 @@
-import Rafter from '../rafter';
+import Rafter from '../index';
 
 const run = async () => {
-    const rafter = new Rafter({
+    const rafter = Rafter({
         appDirectory: `${__dirname}`,
         logger: console
     });

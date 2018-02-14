@@ -4,71 +4,70 @@ import {Box} from 'box-di';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
 
-export default class Rafter {
+/**
+ *
+ * @param {string=} appDirectory This is the directory your application is located. Most of the time it
+ *     will be 2 directories up from where Rafter is located, but that is not always the case.
+ * @param {ConfigAutoloaderService} autoloaderService
+ * @param {Logger=} logger a logging interface eg. winston, console, etc
+ * @return {Rafter}
+ */
+export default ({
+    appDirectory = `${__dirname}/../../`,
+    autoloaderService,
+    logger = console
+}) => {
     /**
-     * @param {string=} appDirectory This is the directory your application is located. Most of the time it
-     *     will be 2 directories up from where Rafter is located, but that is not always the case.
-     * @param {object=} autoloader The autoloading parameters. You can customize what the names of each of the
-     *     autoloaded files should be.
-     * @param {Logger=} logger a logging interface eg. winston, console, etc
+     * @namespace Rafter
      */
-    constructor({
-        appDirectory = `${__dirname}/../../`,
-        autoloader = {
-            config: `.config.js`,
-            routes: `.routes.js`,
-            middleware: `.middleware.js`,
-            services: `.services.js`,
-            preStartHooks: `.pre-start-hooks.js`,
-        },
-        logger = console
-    }) {
-        // TODO allow overriding configuration.... not sure how yet.
-        // Also inject this dependency otherwise it is difficult to test and swap out.
-        this._recursiveConfigLoader = new ConfigAutoloaderService(
-            autoloader.config,
-            autoloader.services,
-            autoloader.middleware,
-            autoloader.routes,
-            autoloader.preStartHooks,
-            logger
-        );
-        this._appDirectory = appDirectory;
-        this._logger = logger;
-        this._boxDiAutoLoader;
-        this._server;
-    }
+    const Rafter = {};
 
-    async start() {
+    let boxDiAutoLoader;
+    let server;
+
+    Rafter.start = async () => {
         try {
-            this._boxDiAutoLoader = await this._getAutoloader();
-            await this._boxDiAutoLoader.load();
+            boxDiAutoLoader = await getAutoloader();
+            await boxDiAutoLoader.load();
 
             /**
              * @type {Server}
              */
-            this._server = this._boxDiAutoLoader.get('server');
-            return this._server.start();
+            server = boxDiAutoLoader.get('server');
+            return server.start();
         } catch (error) {
-            this._logger.error(error);
+            logger.error(error);
             process.exit(1);
         }
-    }
+    };
+
+    /**
+     * @return {Promise}
+     */
+    Rafter.stop = async () => {
+        if (server) {
+            // TODO empty the service container
+            // boxDiAutoLoader.reset();
+            return server.stop();
+        }
+
+        throw new Error(`Rafter::stop the server has not been started`);
+    };
 
     /**
      * @return {Promise<ConfigDto>}
      * @private
      */
-    async _getConfig() {
+    async function getConfig() {
         // load rafter config
-        const configDto = await this._recursiveConfigLoader.get(
+        const configDto = await autoloaderService.get(
             RAFTER_AUTOLOADER_DIRECTORY
         );
 
         // load application config
-        if (this._appDirectory) {
-            const applicationConfigDto = await this._recursiveConfigLoader.get(
-                this._appDirectory
+        if (appDirectory) {
+            const applicationConfigDto = await autoloaderService.get(
+                appDirectory
             );
 
             // merge the application config
@@ -82,8 +81,8 @@ export default class Rafter {
         return configDto;
     }
 
-    async _getAutoloader() {
-        const configDto = await this._getConfig();
+    async function getAutoloader() {
+        const configDto = await getConfig();
 
         // TODO namespace these DI services
 
@@ -105,20 +104,9 @@ export default class Rafter {
         return new BoxDiAutoLoader(
             configDto.getServices(),
             Box,
-            this._logger
+            logger
         );
     }
 
-    /**
-     * @return {Promise}
-     */
-    async stop() {
-        if (this._server) {
-            // TODO empty the service container
-            // this._boxDiAutoLoader.reset();
-            return this._server.stop();
-        }
-
-        throw new Error(`Rafter::stop the server has not been started`);
-    }
+    return Object.freeze(Rafter);
 }
