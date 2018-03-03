@@ -14,7 +14,8 @@
     },
     "scripts": {
         "dev": "nodemon --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
-        "test": "TODO",
+        "test": "jest --notify ./lib",
+        "test:watch": "jest --notify --watch ./lib",
         "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
         "clean": "rm -rf ./dist && mkdir ./dist",
         "build": "npm run clean && npm run build-lib && npm run copy",
@@ -32,8 +33,11 @@
         "@babel/node": "^7.0.0-beta.39",
         "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.39",
         "@babel/preset-env": "^7.0.0-beta.39",
+        "babel-core": "^7.0.0-bridge.0",
         "babel-eslint": "^7.2.3",
+        "babel-jest": "^22.4.1",
         "eslint": "^4.17.0",
+        "jest": "^22.4.2",
         "nodemon": "^1.14.12"
     },
     "engines": {
