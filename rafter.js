@@ -1,6 +1,5 @@
 import BoxDiAutoLoader from 'box-di-autoloader';
 import { Box } from 'box-di';
-import ConfigAutoloaderService from './lib/utils/config-autoloader-service';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
 
@@ -20,15 +19,16 @@ export default ({ appDirectory = `${__dirname}/../../`, autoloaderService, logge
 
   let boxDiAutoLoader;
   let server;
+
   /**
    * @return {Promise<ConfigDto>}
    * @private
    */
   async function getConfig() {
-    // load rafter config
+    // load rafter config files first
     const configDto = await autoloaderService.get(RAFTER_AUTOLOADER_DIRECTORY);
 
-    // load application config
+    // load application specific config
     if (appDirectory) {
       const applicationConfigDto = await autoloaderService.get(appDirectory);
 
@@ -46,7 +46,6 @@ export default ({ appDirectory = `${__dirname}/../../`, autoloaderService, logge
 
   async function getAutoloader() {
     const configDto = await getConfig();
-
     // TODO namespace these DI services
 
     // add the config to the DI container

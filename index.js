@@ -13,7 +13,8 @@ import ConfigAutoloaderService from './lib/utils/config-autoloader-service';
  * @param {object=} logger
  * @return {Rafter}
  */
-export default ({
+export default (
+  {
     appDirectory = `${__dirname}/../../`,
     configFileName = `.config.js`,
     servicesFileName = `.services.js`,
@@ -21,23 +22,24 @@ export default ({
     routesFileName = `.routes.js`,
     preStartHooksFileName = `.pre-start-hooks.js`,
     logger = console
-}) => {
-    const autoloaderService = ConfigAutoloaderService({
-        configFileName,
-        servicesFileName,
-        middlewareFileName,
-        routesFileName,
-        preStartHooksFileName,
-        logger
-    });
+  }
+) => {
+  const autoloaderService = new ConfigAutoloaderService({
+    configFileName,
+    servicesFileName,
+    middlewareFileName,
+    routesFileName,
+    preStartHooksFileName,
+    logger
+  });
 
-    return Rafter({
-        appDirectory,
-        autoloaderService,
-        logger
-    });
+  return Rafter({
+    appDirectory,
+    autoloaderService,
+    logger
+  });
 };
 
 export {
-    Rafter
+  Rafter
 };
