@@ -14,7 +14,7 @@
   },
   "scripts": {
     "babel-node": "babel-node",
-    "start": "pm2 start ./example/rafter-init.js --watch",
+    "start": "pm2 start --watch ./example/rafter-init.js",
     "test": "jest --notify ./lib && yarn lint:prettier",
     "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
     "clean": "rimraf ./dist",
@@ -26,11 +26,11 @@
     "prettier": "./node_modules/.bin/prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.js\""
   },
   "dependencies": {
-    "@babel/register": "^7.4.0",
+    "@babel/register": "7.4.0",
     "box-di": "0.2.1",
     "box-di-autoloader": "0.3.0",
-    "express": "4.16.2",
-    "recursive-readdir": "^2.2.2"
+    "express": "4.16.4",
+    "recursive-readdir": "2.2.2"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./index.js",
