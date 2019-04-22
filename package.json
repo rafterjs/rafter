@@ -15,7 +15,7 @@
   "scripts": {
     "babel-node": "babel-node",
     "start": "pm2 start --watch ./example/rafter-init.js",
-    "test": "jest --notify ./lib && yarn lint:prettier",
+    "test": "jest --notify ./lib",
     "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
     "clean": "rimraf ./dist",
     "build": "yarn clean && yarn build-lib && yarn copy",
