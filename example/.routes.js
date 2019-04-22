@@ -1,10 +1,10 @@
-import {GET} from '../lib/common/router/route-method-constants';
+import { GET } from '../lib/common/router/route-method-constants';
 
 export default [
-    {
-        endpoint: `/`,
-        controller: 'exampleController',
-        action: 'index',
-        method: GET
-    },
+  {
+    endpoint: `/`,
+    controller: 'exampleController',
+    action: 'index',
+    method: GET,
+  },
 ];

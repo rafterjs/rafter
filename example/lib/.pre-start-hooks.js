@@ -1,4 +1,1 @@
-export default [
-    `preStartService1`,
-    `preStartService2`,
-]
+export default [`preStartService1`, `preStartService2`];
