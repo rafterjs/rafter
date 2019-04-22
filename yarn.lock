@@ -1328,7 +1328,7 @@ body-parser@1.18.2:
     raw-body "2.3.2"
     type-is "~1.6.15"
 
-box-di-autoloader@^0.3.0:
+box-di-autoloader@0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/box-di-autoloader/-/box-di-autoloader-0.3.0.tgz#b902fd2b7f1a35012e99e5c8272db951ed24dfca"
   integrity sha512-HDUtM5B3qc072zrU/bllxgwl2exwRpDsv1jnoLZz1fvjI5pAe2dEcdh70PMqctkiXr4/Wu+efukmxwpKg5nGHQ==

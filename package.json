@@ -14,16 +14,18 @@
     },
     "scripts": {
         "dev": "pm2 --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
-        "test": "TODO",
+        "test": "yarn lint:prettier",
         "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
         "clean": "rimraf ./dist",
         "build": "yarn clean && yarn build-lib && yarn copy",
         "copy": "copyfiles ./package.json ./dist/package.json",
-        "lint": "./node_modules/.bin/eslint ./.bin ./example ./lib ./index.js ./rafter.js",
-        "prettier": "./node_modules/.bin/prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\""
+        "lint": "./node_modules/.bin/eslint ./lib ./index.js ./rafter.js",
+        "lint:prettier": "./node_modules/.bin/prettier --check \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.js\"",
+        "prettier": "./node_modules/.bin/prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.js\""
     },
     "dependencies": {
-        "box-di-autoloader": "^0.3.0",
+        "box-di-autoloader": "0.3.0",
+        "box-di": "0.2.1",
         "express": "4.16.2"
     },
     "description": "A slightly opinionated JS framework that makes building apps easy and testable",
