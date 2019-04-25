@@ -1,6 +1,7 @@
-import path from 'path';
+import * as path from 'path';
 import recursive from 'recursive-readdir';
-import ConfigDto from './config-dto';
+import ConfigDto from './ConfigDto';
+import {ILogger} from './ILogger';
 
 const DEFAULT_FILENAMES = {
   CONFIG: `.config.js`,
@@ -25,14 +26,22 @@ const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
  */
 
 export default class ConfigAutoloaderService {
+  allowedFileNames: string[];
+  configFileName: string;
+  servicesFileName: string;
+  middlewareFileName: string;
+  routesFileName: string;
+  preStartHooksFileName: string;
+  logger: ILogger;
+
   constructor({
-    configFileName = DEFAULT_FILENAMES.CONFIG,
-    servicesFileName = DEFAULT_FILENAMES.SERVICES,
-    middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
-    routesFileName = DEFAULT_FILENAMES.ROUTES,
-    preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
-    logger = console,
-  }) {
+                configFileName = DEFAULT_FILENAMES.CONFIG,
+                servicesFileName = DEFAULT_FILENAMES.SERVICES,
+                middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
+                routesFileName = DEFAULT_FILENAMES.ROUTES,
+                preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
+                logger = console,
+              }) {
     this.allowedFileNames = [
       configFileName,
       servicesFileName,
@@ -54,13 +63,13 @@ export default class ConfigAutoloaderService {
    * @return {boolean}
    * @private
    */
-  isIgnoredDirectory(pathname) {
+  private isIgnoredDirectory(pathname: string): boolean {
     const directories = pathname.split('/');
     const lastDirectory = directories.pop();
     return IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  updateConfig(configDto, config, file) {
+  private updateConfig(configDto: ConfigDto, config, file) {
     const filename = path.basename(file);
 
     switch (filename) {
@@ -84,12 +93,12 @@ export default class ConfigAutoloaderService {
     }
   }
 
-  isAllowedFile(file) {
+  private isAllowedFile(file) {
     return this.allowedFileNames.includes(path.basename(file));
   }
 
   async get(directory) {
-    const configDto = ConfigDto();
+    const configDto = new ConfigDto();
 
     const isIgnored = (file, stats) => {
       return this.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));

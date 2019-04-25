@@ -1,6 +1,6 @@
 export default {
   preStartHooksProvider: {
-    path: `${__dirname}/pre-start-hooks-provider`,
+    path: `${__dirname}/PreStartHooksProvider`,
     dependencies: [`diContainer`, `logger`],
   },
 };

@@ -19,7 +19,7 @@ npm install --save rafter
 The following configuration files are autoloaded during the Rafter service starting:
 
 * `.config.js`: a general application or module config.
-* `.services.js`: adds services and their dependencies to a service container.
+* `.services.ts`: adds services and their dependencies to a service container.
 * `.middleware.js`: registers services as middleware.
 * `.routes.js`: links controller services to route definitions.
 * `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
@@ -48,7 +48,7 @@ This config can be referenced within the injected dependencies.
 
 ### Services
 
-The services file (`.services.js`) is the heart of the Rafter, and the most opinionated portion of the framework. 
+The services file (`.services.ts`) is the heart of the Rafter, and the most opinionated portion of the framework. 
 
 It is a manifest of all your services and their dependencies. These will be autoloaded into the service container at run time, and invoked at request time. They are all Singletons, which means we only create 1 instance, and hold it in memory for the entire lifetime of the process.
 
@@ -98,7 +98,7 @@ export default [
 ];
 ```
 
-Note; the middleware must be registered in the `.services.js` config.
+Note; the middleware must be registered in the `.services.ts` config.
 
 ### Routes
 
@@ -115,7 +115,7 @@ export default [
 ];
 ```
 
-This would call `exampleController.index(req, res)` when the route `GET /` is hit. Again, the controller `exampleController` has to be registered in the `.services.js` config.
+This would call `exampleController.index(req, res)` when the route `GET /` is hit. Again, the controller `exampleController` has to be registered in the `.services.ts` config.
 
 ### Pre start hooks
 

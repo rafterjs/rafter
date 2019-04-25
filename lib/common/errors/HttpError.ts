@@ -2,8 +2,10 @@
  * An extension of the javascript error class for http errors.
  *
  */
-export default class HttpError extends Error {
-  constructor(status, message) {
+export class HttpError extends Error {
+  status: number;
+
+  constructor(status: number, message: string) {
     super(message);
     this.status = status;
   }
@@ -13,7 +15,7 @@ export default class HttpError extends Error {
    *
    * @returns {Number}
    */
-  getStatus() {
+  getStatus(): number {
     return this.status;
   }
 
@@ -22,7 +24,7 @@ export default class HttpError extends Error {
    *
    * @returns {String}
    */
-  getMessage() {
+  getMessage(): string {
     return this.message;
   }
 }

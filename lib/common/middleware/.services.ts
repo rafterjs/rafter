@@ -1,6 +1,6 @@
 export default {
   middlewareProvider: {
-    path: `${__dirname}/middleware-provider`,
+    path: `${__dirname}/MiddlewareProvider`,
     dependencies: [`diContainer`, `logger`],
   },
 };

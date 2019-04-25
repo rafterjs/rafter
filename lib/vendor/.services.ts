@@ -1,10 +1,10 @@
 export default {
   express: {
-    path: `${__dirname}/express-factory`,
+    path: `${__dirname}/ExpressFactory`,
     dependencies: [],
   },
   diContainer: {
-    path: `${__dirname}/box-di-factory`,
+    path: `${__dirname}/BoxDiFactory`,
     dependencies: [],
   },
 };

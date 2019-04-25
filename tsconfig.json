@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "jsx": "preserve",
+        "lib": [
+            "dom",
+            "esnext"
+        ],
+        "typeRoots": ["./types"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "strict": true,
+        "target": "es2015",
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+        ["node_modules", "types"]
+    ]
+}

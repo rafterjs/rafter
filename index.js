@@ -1,5 +1,5 @@
 import Rafter from './rafter';
-import ConfigAutoloaderService from './lib/utils/config-autoloader-service';
+import ConfigAutoloaderService from './lib/utils/ConfigAutoloaderService';
 
 /**
  * This is a simple factory for Rafter that sets up all the basic stuff.

@@ -1,10 +1,10 @@
 export default {
   routerProvider: {
-    path: `${__dirname}/router-provider-factory`,
+    path: `${__dirname}/RouterProviderFactory`,
     dependencies: [],
   },
   configToRouteDtoTransformer: {
-    path: `${__dirname}/config-to-route-dto-transformer`,
+    path: `${__dirname}/ConfigToRouteDtoTransformer`,
     dependencies: [`diContainer`],
   },
   routesProvider: {
