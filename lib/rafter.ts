@@ -1,14 +1,15 @@
 import { Box } from 'box-di';
+import { IDiAutoloader } from 'box-di-autoloader';
 import { ILogger } from './utils/ILogger';
 import { IConfigAutoloader } from './utils/IConfigAutoloader';
 import { IServer } from './common/server/Server';
-import boxDiAutoloaderFactory, { IDiAutoloader } from './vendor/BoxDiAutoloaderFactory';
+import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
 
-const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
+const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}`;
 
 interface IRafter {
   appDirectory?: string;
-  configAutoloaderService?: IConfigAutoloader;
+  configAutoloaderService: IConfigAutoloader;
   logger?: ILogger;
 }
 
@@ -21,8 +22,8 @@ interface IRafter {
  * @return {Rafter}
  */
 export default class Rafter {
-  boxDiAutoLoader: IDiAutoloader;
-  server: IServer;
+  boxDiAutoLoader?: IDiAutoloader;
+  server?: IServer;
   appDirectory: string;
   configAutoloaderService: IConfigAutoloader;
   logger: ILogger;
