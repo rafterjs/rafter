@@ -1,4 +1,4 @@
-enum METHOD {
+export enum METHOD {
   GET = 'get',
   POST = 'post',
   PATCH = 'patch',
@@ -6,5 +6,3 @@ enum METHOD {
   DELETE = 'delete',
   HEAD = 'head',
 }
-
-export { METHOD };

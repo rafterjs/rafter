@@ -1,5 +1,4 @@
-import * as express from 'express';
-import { Express } from 'express';
+import express, {Express} from 'express';
 
 export default (): Express => {
   return express();

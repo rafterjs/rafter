@@ -1,10 +1,8 @@
 import {Box} from 'box-di';
-import {IDiContainer} from './lib/vendor/BoxDiFactory';
-import {ILogger} from './lib/utils/ILogger';
-import {IConfigAutoloader} from './lib/utils/IConfigAutoloader';
-import {IServer} from './lib/common/server/Server';
-import {IDiAutoloader} from './lib/vendor/BoxDiAutoloaderFactory';
-import boxDiAutoloaderFactory from './lib/vendor/BoxDiAutoloaderFactory';
+import {ILogger} from './utils/ILogger';
+import {IConfigAutoloader} from './utils/IConfigAutoloader';
+import {IServer} from './common/server/Server';
+import boxDiAutoloaderFactory, {IDiAutoloader} from './vendor/BoxDiAutoloaderFactory';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
 
@@ -23,19 +21,13 @@ interface IRafter {
  * @return {Rafter}
  */
 export default class Rafter {
-  boxDiAutoLoader: IDiContainer;
+  boxDiAutoLoader: IDiAutoloader;
   server: IServer;
   appDirectory: string;
   configAutoloaderService: IConfigAutoloader;
   logger: ILogger;
 
-  constructor(
-    {
-      appDirectory = `${__dirname}/../../`,
-      configAutoloaderService,
-      logger = console
-    }: IRafter
-  ) {
+  constructor({ appDirectory = `${__dirname}/../../`, configAutoloaderService, logger = console }: IRafter) {
     this.appDirectory = appDirectory;
     this.configAutoloaderService = configAutoloaderService;
     this.logger = logger;
@@ -115,5 +107,5 @@ export default class Rafter {
     }
 
     throw new Error(`Rafter::stop the server has not been started`);
-  };
+  }
 }
