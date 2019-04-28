@@ -13,21 +13,18 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "babel-node": "../../node_modules/.bin/babel-node",
-    "start": "../../node_modules/.bin/pm2 start --watch example/rafter-init.ts",
-    "test": "../../node_modules/.bin/jest --notify ./lib",
-    "build:lib": "../../node_modules/.bin/babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:example": "yarn clean:example && ../../node_modules/.bin/babel --include-dotfiles example --out-dir dist-example --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "start": "",
+    "test": "jest --notify ./lib",
+    "build:lib": "babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean": "yarn clean:lib",
-    "clean:lib": "../../node_modules/.bin/rimraf ./dist",
-    "clean:example": "../../node_modules/.bin/rimraf ./dist-example",
+    "clean:lib": "rimraf ./dist",
     "build": "yarn clean && yarn build:lib",
-    "copy": "../../node_modules/.bin/copyfiles ./package.json ./dist/package.json",
+    "copy": "copyfiles ./package.json ./dist/package.json",
     "lint": "yarn lint:eslint && yarn lint:prettier",
-    "test:types": "../../node_modules/.bin/tsc",
-    "lint:eslint": "../../node_modules/.bin/eslint ./lib lib/index.ts ./rafter.ts",
-    "lint:prettier": "../../node_modules/.bin/prettier --check \\\"{lib,example}/**/*.{js,jsx,ts,tsx}\\\" --write \\\"./rafter.ts\\\"",
-    "prettier": "../../node_modules/.bin/prettier --write \\\"{lib,example}/**/*.{js,jsx,ts,tsx}\\\" --write \\\"./rafter.ts\\\""
+    "test:types": "tsc",
+    "lint:eslint": "eslint ./lib lib/index.ts ./rafter.ts",
+    "lint:prettier": "prettier --check \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\"",
+    "prettier": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
   },
   "dependencies": {
     "@rafter/di-container": "0.2.2",

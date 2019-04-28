@@ -1,19 +1,14 @@
 const presets = [
-    [
-        '@babel/env',
-        {
-            targets: {
-                node: '8'
-            }
-        }
-    ]
+  [
+    '@babel/env',
+    {
+      targets: {
+        node: '8',
+      },
+    },
+  ],
 ];
 
-const plugins = [
-    [
-        '@babel/plugin-proposal-decorators',
-        {'legacy': true}
-    ]
-];
+const plugins = [['@babel/plugin-proposal-decorators', { legacy: true }]];
 
-module.exports = {presets, plugins};
+module.exports = { presets, plugins };

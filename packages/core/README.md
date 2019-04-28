@@ -3,10 +3,11 @@
 Rafter is a lightweight, slightly opinionated Javascript framework for rapid development of web applications.
 
 ### Rafter:
-* is built on top of [Expressjs](https://expressjs.com/).
-* eliminates the tedious wiring of routes, middleware and services.
-* allows decoupling of services by utilizing dependency injection via an autoloading service container. 
-* is flexible and testable.
+
+- is built on top of [Expressjs](https://expressjs.com/).
+- eliminates the tedious wiring of routes, middleware and services.
+- allows decoupling of services by utilizing dependency injection via an autoloading service container.
+- is flexible and testable.
 
 ## Install
 
@@ -18,11 +19,11 @@ npm install --save rafter
 
 The following configuration files are autoloaded during the Rafter service starting:
 
-* `.config.ts`: a general application or module config.
-* `.services.ts`: adds services and their dependencies to a service container.
-* `.middleware.js`: registers services as middleware.
-* `.routes.js`: links controller services to route definitions.
-* `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
+- `.config.ts`: a general application or module config.
+- `.services.ts`: adds services and their dependencies to a service container.
+- `.middleware.js`: registers services as middleware.
+- `.routes.js`: links controller services to route definitions.
+- `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
 
 The Rafter autoloader will look for all of these files recursively throughout your project. This allows you to modularize your project rather than defining all your config in one place.
 
@@ -30,57 +31,49 @@ The Rafter autoloader will look for all of these files recursively throughout yo
 
 The config file (`.config.ts`) is a place to define all your application style config.
 
-```javascript 
+```javascript
 export default {
   db: {
-    connectionUrl: 'mongodb://localhost:27000/rafter' || process.env.NODE_DB_CONNECTION
+    connectionUrl: 'mongodb://localhost:27000/rafter' || process.env.NODE_DB_CONNECTION,
   },
   server: {
-    port: 3000
+    port: 3000,
   },
   example: {
-    message: `Hello Mars`
-  }
-}
+    message: `Hello Mars`,
+  },
+};
 ```
 
 This config can be referenced within the injected dependencies.
 
 ### Services
 
-The services file (`.services.ts`) is the heart of the Rafter, and the most opinionated portion of the framework. 
+The services file (`.services.ts`) is the heart of the Rafter, and the most opinionated portion of the framework.
 
 It is a manifest of all your services and their dependencies. These will be autoloaded into the service container at run time, and invoked at request time. They are all Singletons, which means we only create 1 instance, and hold it in memory for the entire lifetime of the process.
 
-```javascript 
+```javascript
 export default {
   exampleController: {
     path: `${__dirname}/example-controller`,
-    dependencies: [
-       `config.example.message`
-    ]
+    dependencies: [`config.example.message`],
   },
   logger: {
     path: `${__dirname}/logger`,
-    dependencies: []
+    dependencies: [],
   },
   dbDao: {
     path: `${__dirname}/db-dao`,
-    dependencies: [
-      `mongoose`,
-      `logger`
-    ]
+    dependencies: [`mongoose`, `logger`],
   },
   mongoose: {
     path: `${__dirname}/mongoose-factory`,
-    dependencies: []
+    dependencies: [],
   },
   connectDbService: {
     path: `${__dirname}/connect-db-service`,
-    dependencies: [
-      `dbDao`,
-      `logger`
-    ]
+    dependencies: [`dbDao`, `logger`],
   },
 };
 ```
@@ -91,11 +84,8 @@ The object key is the service name, which can be used as the dependency referenc
 
 The middleware file (`.middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
 
-```javascript 
-export default [
-  `corsMiddleware`,
-  `authenticationMiddleware`,
-];
+```javascript
+export default [`corsMiddleware`, `authenticationMiddleware`];
 ```
 
 Note; the middleware must be registered in the `.services.ts` config.
@@ -104,14 +94,14 @@ Note; the middleware must be registered in the `.services.ts` config.
 
 The routes file (`.routes.js`) exports an array of objects which define the http method, route, controller and action. eg.
 
-```javascript 
+```javascript
 export default [
-    {
-        endpoint: `/`,
-        controller: `exampleController`,
-        action: `index`,
-        method: `get`
-    },
+  {
+    endpoint: `/`,
+    controller: `exampleController`,
+    action: `index`,
+    method: `get`,
+  },
 ];
 ```
 
@@ -121,21 +111,19 @@ This would call `exampleController.index(req, res)` when the route `GET /` is hi
 
 The routes file (`.pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
-```javascript 
-export default [
-    `connectDbService`,
-]
+```javascript
+export default [`connectDbService`];
 ```
 
 An example of the `connectDbService` would be:
 
-```javascript 
+```javascript
 export default (dbDao, logger) => {
-    return async () => {
-      logger.info(`Connecting to the database`);
-      return dbDao.connect();
-    }
-}
+  return async () => {
+    logger.info(`Connecting to the database`);
+    return dbDao.connect();
+  };
+};
 ```
 
 ### Rafter instantiation
@@ -148,7 +136,7 @@ import rafter from 'rafter';
 const run = async () => {
   const rafterServer = rafter();
   await rafterServer.start();
-}
+};
 
 run();
 ```
@@ -166,13 +154,13 @@ To see an example project, visit the [skeleton rafter app](https://github.com/cr
 
 # Going deeper
 
-Rafter is slightly opinionated; which means we have outlined specific ways of doing some things. Not as much as say, Sails or Ruby on Rails, but just enough to provide a simple and fast foundation for your project. 
+Rafter is slightly opinionated; which means we have outlined specific ways of doing some things. Not as much as say, Sails or Ruby on Rails, but just enough to provide a simple and fast foundation for your project.
 
 The foundations of the Rafter framework are:
 
-* Dependency injection
-* Autoloading services
-* Configuration
+- Dependency injection
+- Autoloading services
+- Configuration
 
 ## Dependency injection
 
@@ -181,21 +169,23 @@ With the advent of `RequireJs`, dependency injection (DI) had largely been throw
 eg.
 
 ### With RequireJs
+
 ```javascript
 import mongoose from 'mongoose';
 
-const connect = async (connectionUrl) => {
+const connect = async connectionUrl => {
   await mongoose.connect(connectionUrl);
-}
+};
 
-const find = async (query) => {
+const find = async query => {
   await mongoose.find(query);
-}
+};
 
-export {connect};
+export { connect };
 ```
 
 ### With DI
+
 ```javascript
 export default class DbDao {
   constructor(db) {
@@ -211,6 +201,5 @@ export default class DbDao {
   }
 }
 ```
+
 As you can see with DI, we can substitute any DB service rather than being stuck with mongoose. This insulates services which use a data store from caring what particular store it is. eg. If our DB becomes slow, we can simply substitute a `CacheDao` instead, and no other services would have to change.
-
-

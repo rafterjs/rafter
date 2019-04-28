@@ -15,6 +15,4 @@ export default {
 };
 
 // es6 exports
-export {
-  Box, inject, scope, singleton, prototype, FactoryInterface,
-};
+export { Box, inject, scope, singleton, prototype, FactoryInterface };

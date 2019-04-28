@@ -1,4 +1,4 @@
-import {IDiContainer, ILogger} from '@rafter/di-container';
+import { IDiContainer, ILogger } from '@rafter/di-container';
 
 declare namespace b {
   interface IDiAutoloader {

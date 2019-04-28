@@ -1,4 +1,5 @@
 # A dependency injection autoloader
+
 [![Build Status](https://travis-ci.com/crimsonronin/box-di-autoloader.svg?branch=master)](https://travis-ci.com/crimsonronin/box-di-autoloader)
 
 A config driven autoloader for dependency injection.
@@ -14,6 +15,7 @@ npm install --save box-di-autoloader
 Check out the files in `./example` and `./test/fixtures`
 
 ### The autoloading config
+
 ```
 // service-config.js
 
@@ -39,6 +41,7 @@ export default servicesConfig;
 ```
 
 ### Example class with DI
+
 ```
 // test-class.js
 
@@ -75,6 +78,7 @@ export default TestClass;
 ```
 
 ### Instantiating the DI container using the autoloader
+
 ```
 import BoxDiAutoLoader from '../lib/box-di-autoloader';
 import serviceConfig from './service-config';
@@ -93,6 +97,7 @@ DI is a well vetted programming pattern that encourages decoupling of services a
 Check out: http://tutorials.jenkov.com/dependency-injection/dependency-injection-benefits.html and https://stackoverflow.com/questions/130794/what-is-dependency-injection
 
 ### Why should we use it in node?
+
 Just because we have `import` or `require` doesn't mean we should forgo programming best practices. What `import` does is hardcode your dependencies, rather than making them configurable or reusable eg.
 
 Say we have a `DbService` which currently uses `MongoDb`. In an `import` style your code would be something like:
@@ -104,16 +109,16 @@ class DbService {
     async connect(url) {
         return mongoose.connect(url);
     }
-    
+
     async find(query, Model) {
         return mongoose.find(query, Model);
-    }    
-    
+    }
+
     ...
 }
 ```
 
-But now your app has grown and you realise that the load on your DB is reducing application performance; you need to introduce a caching layer to reduce the load on the DB. 
+But now your app has grown and you realise that the load on your DB is reducing application performance; you need to introduce a caching layer to reduce the load on the DB.
 
 In our import scenario above that would require a bunch of rewriting at the `DbService` level. Instead if we had structured it like:
 
@@ -122,15 +127,15 @@ class DbService {
     constructor(dao) {
         this._dao = dao;
     }
-    
+
     async connect(url) {
         return this._dao.connect(url);
     }
-    
+
     async find(query, Model) {
         return this._dao.find(query, Model);
     }
-    
+
     ...
 }
 ```
@@ -145,26 +150,26 @@ class MongoDbCacheDao {
         this._dao = dao;
         this._cache = {};
     }
-    
+
     async connect(url) {
         return this._dao.connect(url);
     }
-    
+
     async find(query, Model) {
         const md5sum = crypto.createHash('md5');
         md5sum.update(
-            JSON.stringify(query) + 
+            JSON.stringify(query) +
             JSON.stringify(Model)
         );
-        
+
         const cacheId =  md5sum.digest('hex');
         if (!this._cache[cacheId]) {
             this._cache[cacheId] = await this._dao.find(query, Model);
         }
-        
+
         return this._cache[cacheId];
     }
-    
+
     ...
 }
 ```
@@ -173,6 +178,6 @@ So even though we have import/require in node, it is still valuable to separate 
 
 ## Why use an autoloader with DI
 
-As your application grows, so too does your dependency graph. Handling all your dependencies manually becomes very tedious and you end up with lots of boilerplate code in the form of `factories`. Instead, when using an autoloader, you maintain your dependencies in a simple config file and you only need to create `factories` in rare circumstances when class/function instantiation is much more complex. 
+As your application grows, so too does your dependency graph. Handling all your dependencies manually becomes very tedious and you end up with lots of boilerplate code in the form of `factories`. Instead, when using an autoloader, you maintain your dependencies in a simple config file and you only need to create `factories` in rare circumstances when class/function instantiation is much more complex.
 
 Overall, this means less code to write and maintain, which means less complexity and faster time to market.

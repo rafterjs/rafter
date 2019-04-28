@@ -8,7 +8,7 @@
     "build:di-container": "cd packages/di-container && yarn build",
     "build:di-autoloader": "cd packages/di-autoloader && yarn build",
     "start": "lerna start",
-    "format": "./node_modules/.bin/prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "prettier": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "test:lint": "eslint \"packages/**/*.{js,jsx}\""
   },
   "devDependencies": {
