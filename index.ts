@@ -24,7 +24,7 @@ export default (
     logger = console
   }
 ) => {
-  const autoloaderService = new ConfigAutoloaderService({
+  const configAutoloaderService = new ConfigAutoloaderService({
     configFileName,
     servicesFileName,
     middlewareFileName,
@@ -33,9 +33,9 @@ export default (
     logger
   });
 
-  return Rafter({
+  return new Rafter({
     appDirectory,
-    autoloaderService,
+    configAutoloaderService,
     logger
   });
 };

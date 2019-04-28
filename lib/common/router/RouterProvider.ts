@@ -5,7 +5,7 @@
  * @return {RouterProvider}
  */
 import * as Express from 'express';
-import {IRouter} from 'express-serve-static-core';
+import { IRouter } from 'express-serve-static-core';
 
 export default class RouterProvider {
   routerFactory: typeof Express.Router;

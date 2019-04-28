@@ -1,4 +1,4 @@
-import {ILogger} from './ILogger';
+import { ILogger } from './ILogger';
 
 /**
  * A generic logger class. This takes a logger, which could even be console if needed.

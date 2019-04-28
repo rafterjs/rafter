@@ -1,7 +1,8 @@
 import * as path from 'path';
 import recursive from 'recursive-readdir';
 import ConfigDto from './ConfigDto';
-import {ILogger} from './ILogger';
+import { ILogger } from './ILogger';
+import { IConfigAutoloader } from './IConfigAutoloader';
 
 const DEFAULT_FILENAMES = {
   CONFIG: `.config.js`,
@@ -25,7 +26,7 @@ const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
  * @return {ConfigAutoloaderService}
  */
 
-export default class ConfigAutoloaderService {
+export default class ConfigAutoloaderService implements IConfigAutoloader {
   allowedFileNames: string[];
   configFileName: string;
   servicesFileName: string;
@@ -35,13 +36,13 @@ export default class ConfigAutoloaderService {
   logger: ILogger;
 
   constructor({
-                configFileName = DEFAULT_FILENAMES.CONFIG,
-                servicesFileName = DEFAULT_FILENAMES.SERVICES,
-                middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
-                routesFileName = DEFAULT_FILENAMES.ROUTES,
-                preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
-                logger = console,
-              }) {
+    configFileName = DEFAULT_FILENAMES.CONFIG,
+    servicesFileName = DEFAULT_FILENAMES.SERVICES,
+    middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
+    routesFileName = DEFAULT_FILENAMES.ROUTES,
+    preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
+    logger = console,
+  }) {
     this.allowedFileNames = [
       configFileName,
       servicesFileName,
@@ -97,7 +98,7 @@ export default class ConfigAutoloaderService {
     return this.allowedFileNames.includes(path.basename(file));
   }
 
-  async get(directory) {
+  async get(directory: string): Promise<ConfigDto> {
     const configDto = new ConfigDto();
 
     const isIgnored = (file, stats) => {

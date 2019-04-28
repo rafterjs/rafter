@@ -1,36 +1,57 @@
-import BoxDiAutoLoader from 'box-di-autoloader';
-import { Box } from 'box-di';
+import {Box} from 'box-di';
+import {IDiContainer} from './lib/vendor/BoxDiFactory';
+import {ILogger} from './lib/utils/ILogger';
+import {IConfigAutoloader} from './lib/utils/IConfigAutoloader';
+import {IServer} from './lib/common/server/Server';
+import {IDiAutoloader} from './lib/vendor/BoxDiAutoloaderFactory';
+import boxDiAutoloaderFactory from './lib/vendor/BoxDiAutoloaderFactory';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
+
+interface IRafter {
+  appDirectory?: string;
+  configAutoloaderService?: IConfigAutoloader;
+  logger?: ILogger;
+}
 
 /**
  *
  * @param {string=} appDirectory This is the directory your application is located. Most of the time it
  *     will be 2 directories up from where Rafter is located, but that is not always the case.
- * @param {ConfigAutoloaderService} autoloaderService
+ * @param {ConfigAutoloaderService} configAutoloaderService
  * @param {Logger=} logger a logging interface eg. winston, console, etc
  * @return {Rafter}
  */
-export default ({ appDirectory = `${__dirname}/../../`, autoloaderService, logger = console }) => {
-  /**
-   * @namespace Rafter
-   */
-  const Rafter = {};
+export default class Rafter {
+  boxDiAutoLoader: IDiContainer;
+  server: IServer;
+  appDirectory: string;
+  configAutoloaderService: IConfigAutoloader;
+  logger: ILogger;
 
-  let boxDiAutoLoader;
-  let server;
+  constructor(
+    {
+      appDirectory = `${__dirname}/../../`,
+      configAutoloaderService,
+      logger = console
+    }: IRafter
+  ) {
+    this.appDirectory = appDirectory;
+    this.configAutoloaderService = configAutoloaderService;
+    this.logger = logger;
+  }
 
   /**
    * @return {Promise<ConfigDto>}
    * @private
    */
-  async function getConfig() {
+  async getConfig() {
     // load rafter config files first
-    const configDto = await autoloaderService.get(RAFTER_AUTOLOADER_DIRECTORY);
+    const configDto = await this.configAutoloaderService.get(RAFTER_AUTOLOADER_DIRECTORY);
 
     // load application specific config
-    if (appDirectory) {
-      const applicationConfigDto = await autoloaderService.get(appDirectory);
+    if (this.appDirectory) {
+      const applicationConfigDto = await this.configAutoloaderService.get(this.appDirectory);
 
       // merge the application config
       configDto
@@ -44,8 +65,8 @@ export default ({ appDirectory = `${__dirname}/../../`, autoloaderService, logge
     return configDto;
   }
 
-  async function getAutoloader() {
-    const configDto = await getConfig();
+  async getAutoloader(): Promise<IDiAutoloader> {
+    const configDto = await this.getConfig();
     // TODO namespace these DI services
 
     // add the config to the DI container
@@ -63,38 +84,36 @@ export default ({ appDirectory = `${__dirname}/../../`, autoloaderService, logge
     // add the middleware to the DI container
     Box.register(`preStartHooks`, () => configDto.getPreStartHooks());
 
-    return new BoxDiAutoLoader(configDto.getServices(), Box, logger);
+    return boxDiAutoloaderFactory(configDto.getServices(), this.logger);
   }
 
-  Rafter.start = async () => {
+  async start() {
     try {
-      boxDiAutoLoader = await getAutoloader();
-      await boxDiAutoLoader.load();
+      this.boxDiAutoLoader = await this.getAutoloader();
+      await this.boxDiAutoLoader.load();
 
       /**
        * @type {Server}
        */
-      server = boxDiAutoLoader.get('server');
-      return server.start();
+      this.server = this.boxDiAutoLoader.get<IServer>('server');
+      return this.server.start();
     } catch (error) {
-      logger.error(error);
+      this.logger.error(error);
       return Promise.reject();
       // process.exit(1);
     }
-  };
+  }
 
   /**
    * @return {Promise}
    */
-  Rafter.stop = async () => {
-    if (server) {
+  async stop() {
+    if (this.server) {
       // TODO empty the service container
       // boxDiAutoLoader.reset();
-      return server.stop();
+      return this.server.stop();
     }
 
     throw new Error(`Rafter::stop the server has not been started`);
   };
-
-  return Object.freeze(Rafter);
-};
+}

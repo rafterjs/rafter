@@ -1,10 +1,10 @@
-import {Box} from 'box-di';
-import {ILogger} from '../utils/ILogger';
+import { Box } from 'box-di';
+import { ILogger } from '../utils/ILogger';
 
 export interface IDiContainer {
   setLogger(logger: ILogger): void;
 
-  get<T>(service: string): T;
+  get<T>(serviceName: string): T;
 
   register<T>(serviceName: string, service: T): void;
 

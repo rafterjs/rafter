@@ -18,7 +18,7 @@ npm install --save rafter
 
 The following configuration files are autoloaded during the Rafter service starting:
 
-* `.config.js`: a general application or module config.
+* `.config.ts`: a general application or module config.
 * `.services.ts`: adds services and their dependencies to a service container.
 * `.middleware.js`: registers services as middleware.
 * `.routes.js`: links controller services to route definitions.
@@ -28,7 +28,7 @@ The Rafter autoloader will look for all of these files recursively throughout yo
 
 ### Config
 
-The config file (`.config.js`) is a place to define all your application style config.
+The config file (`.config.ts`) is a place to define all your application style config.
 
 ```javascript 
 export default {

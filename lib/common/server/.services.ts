@@ -1,6 +1,6 @@
 export default {
   server: {
-    path: `${__dirname}/server`,
+    path: `${__dirname}/Server`,
     dependencies: [
       `express`,
       `routesProvider`,

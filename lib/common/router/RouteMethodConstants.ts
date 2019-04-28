@@ -7,4 +7,4 @@ enum METHOD {
   HEAD = 'head',
 }
 
-export {METHOD}
+export { METHOD };

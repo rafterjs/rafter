@@ -1,7 +1,7 @@
-import {IMiddleWareConfig} from '../common/middleware/IMiddleware';
-import {IRouteConfig} from '../common/router/IRouteConfig';
-import {IPreStartHook, IPreStartHookConfig} from '../common/pre-start-hooks/IPreStartHook';
-import {IServiceConfig} from '../common/IService';
+import { IMiddleWareConfig } from '../common/middleware/IMiddleware';
+import { IRouteConfig } from '../common/router/IRouteConfig';
+import { IPreStartHook, IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
+import { IServiceConfig } from '../common/IService';
 
 /**
  * A config dto which holds information about services, middleware, routes and misc config. This is used primarily for
@@ -21,7 +21,7 @@ export default class ConfigDto {
    */
   public getConfig() {
     return this.config;
-  };
+  }
 
   /**
    * @param {any} newConfig
@@ -33,14 +33,14 @@ export default class ConfigDto {
       ...newConfig,
     };
     return this;
-  };
+  }
 
   /**
    * @return {IPreStartHook[]}
    */
   public getPreStartHooks(): IPreStartHookConfig[] {
     return this.preStartHooks;
-  };
+  }
 
   /**
    * @param {IPreStartHook[]} newPreStartHooks
@@ -49,14 +49,14 @@ export default class ConfigDto {
   public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[]) {
     this.preStartHooks = [...this.preStartHooks, ...newPreStartHooks];
     return this;
-  };
+  }
 
   /**
    * @return {object}
    */
   public getServices(): IServiceConfig {
     return this.services;
-  };
+  }
 
   /**
    * @param {IServiceConfig} newServices
@@ -68,14 +68,14 @@ export default class ConfigDto {
       ...newServices,
     };
     return this;
-  };
+  }
 
   /**
    * @return {object}
    */
   public getMiddleware(): IMiddleWareConfig[] {
     return this.middleware;
-  };
+  }
 
   /**
    * @param {IMiddleWareConfig[]} newMiddleware
@@ -84,14 +84,14 @@ export default class ConfigDto {
   public addMiddleware(newMiddleware: IMiddleWareConfig[]) {
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
-  };
+  }
 
   /**
    * @return {object}
    */
   public getRoutes(): IRouteConfig[] {
     return this.routes;
-  };
+  }
 
   /**
    * @param {IRouteConfig[]} newRoutes

@@ -4,7 +4,7 @@
  * @param {IControllerAction} controller
  * @return {RouteDto}
  */
-import {IControllerAction} from './IControllerAction';
+import { IControllerAction } from './IControllerAction';
 
 export default class RouteDto {
   method: string;
@@ -16,7 +16,6 @@ export default class RouteDto {
     this.endpoint = endpoint;
     this.controller = controller;
   }
-
 
   /**
    * @return {string}
@@ -38,4 +37,4 @@ export default class RouteDto {
   public getMethod(): string {
     return this.method;
   }
-};
+}
