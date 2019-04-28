@@ -1,4 +1,4 @@
-import Rafter from '../lib';
+import Rafter from '../packages/core/lib';
 
 const run = async () => {
   const rafter = Rafter({

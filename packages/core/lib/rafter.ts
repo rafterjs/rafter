@@ -1,5 +1,5 @@
-import { Box } from 'box-di';
-import { IDiAutoloader } from 'box-di-autoloader';
+import { Box } from '@rafter/di-container';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/ILogger';
 import { IConfigAutoloader } from './utils/IConfigAutoloader';
 import { IServer } from './common/server/Server';

@@ -1,0 +1,35 @@
+{
+  "name": "@rafter/di-container-example",
+  "description": "A DI container that works",
+  "version": "0.2.2",
+  "author": "Josh Stuart <joshstuartx@gmail.com>",
+  "license": "MIT",
+  "main": "./dist/example.js",
+  "scripts": {
+    "start": "yarn build && node dist/example.js",
+    "build:example": "babel ./index.js --out-dir ./dist && babel lib --out-dir ./dist/lib",
+    "build": "yarn clean && yarn build:example",
+    "clean": "rimraf ./dist",
+    "prepublish": "yarn build",
+    "lint": "./node_modules/.bin/eslint lib",
+    "prettier": "./node_modules/.bin/prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
+  },
+  "dependencies": {
+    "@babel/polyfill": "7.4.3",
+    "@rafter/di-container": "2.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "prettier": "^1.17.0",
+    "rimraf": "^2.6.3"
+  }
+}

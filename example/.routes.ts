@@ -1,5 +1,5 @@
-import { METHOD } from '../lib/common/router/RouteMethodConstants';
-import { IRouteConfig } from '../lib/common/router/IRouteConfig';
+import { METHOD } from '../packages/core/lib/common/router/RouteMethodConstants';
+import { IRouteConfig } from '../packages/core/lib/common/router/IRouteConfig';
 
 export default [
   {

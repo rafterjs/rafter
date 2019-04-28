@@ -1,0 +1,13 @@
+logs
+*.log
+/coverage/*
+node_modules
+tmp
+.tmp
+.DS_Store
+*.iml
+.idea
+*-compiled.js.map$
+*-compiled.js$
+npm-debug.log*
+/dist

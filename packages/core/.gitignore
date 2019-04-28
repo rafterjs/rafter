@@ -12,8 +12,6 @@ tmp
 *.orig
 *.iml
 .idea
-dist
-build
+/dist
 npm-debug.log*
 nohup.out
-stats.json
