@@ -1,9 +1,9 @@
 import RouteDto from './RouteDto';
-import {METHOD} from './RouteMethodConstants';
-import {IDiContainer} from '../../vendor/BoxDiFactory';
-import {ITransformer} from '../mappers/ITransformer';
-import {IRouteConfig} from './IRouteConfig';
-import {IController, IControllerAction} from './IControllerAction';
+import { METHOD } from './RouteMethodConstants';
+import { IDiContainer } from '../../vendor/BoxDiFactory';
+import { ITransformer } from '../mappers/ITransformer';
+import { IRouteConfig } from './IRouteConfig';
+import { IController, IControllerAction } from './IControllerAction';
 
 /**
  * A config to route mapper.
@@ -42,7 +42,7 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
    * @return {RouteDto}
    * @private
    */
-  private convertSingle({method = METHOD.GET, endpoint, controller, action}: IRouteConfig): RouteDto {
+  private convertSingle({ method = METHOD.GET, endpoint, controller, action }: IRouteConfig): RouteDto {
     return new RouteDto(method, endpoint, this.getControllerAction(controller, action));
   }
 

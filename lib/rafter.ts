@@ -1,8 +1,8 @@
-import {Box} from 'box-di';
-import {ILogger} from './utils/ILogger';
-import {IConfigAutoloader} from './utils/IConfigAutoloader';
-import {IServer} from './common/server/Server';
-import boxDiAutoloaderFactory, {IDiAutoloader} from './vendor/BoxDiAutoloaderFactory';
+import { Box } from 'box-di';
+import { ILogger } from './utils/ILogger';
+import { IConfigAutoloader } from './utils/IConfigAutoloader';
+import { IServer } from './common/server/Server';
+import boxDiAutoloaderFactory, { IDiAutoloader } from './vendor/BoxDiAutoloaderFactory';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}/lib`;
 

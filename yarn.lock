@@ -1429,17 +1429,17 @@ body-parser@1.18.3:
     raw-body "2.3.3"
     type-is "~1.6.16"
 
-box-di-autoloader@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/box-di-autoloader/-/box-di-autoloader-0.3.0.tgz#b902fd2b7f1a35012e99e5c8272db951ed24dfca"
-  integrity sha512-HDUtM5B3qc072zrU/bllxgwl2exwRpDsv1jnoLZz1fvjI5pAe2dEcdh70PMqctkiXr4/Wu+efukmxwpKg5nGHQ==
+box-di-autoloader@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npmjs.org/box-di-autoloader/-/box-di-autoloader-0.3.1.tgz#b709630044ca7a4078ee49184c4a14aabf3536b9"
+  integrity sha512-YbjArXW32e9UimCK/8SFQ58shbuw+UB2ImH3vMRILajdo3E1YZ+4/A26iV+Qzt8xfUbgUPfQtvaPxrSp8HMUjA==
   dependencies:
-    box-di "0.2.1"
+    box-di "0.2.2"
 
-box-di@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/box-di/-/box-di-0.2.1.tgz#34c3bb1e485511e8b8113632fff11385425c29f8"
-  integrity sha512-Lqm3iMtxQf6oaJKsuUeVHIG1zvNxSFE3m5jBDebl3Cref/PCIvmRhju5nachMgy7EgCg7CJhYssmaq5t1rp5tw==
+box-di@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/box-di/-/box-di-0.2.2.tgz#24946248497ffbdaea41a4ec32da99132069ac08"
+  integrity sha512-AfWzlF1372aKgVj0i57Y8D9+e/PgKhVm0zCIwdNV7rYKNmkMReUHHYOk+dnhvvc4v30QSi8poGUDqYc48mI/Qw==
   dependencies:
     "@babel/polyfill" "7.4.3"
     lodash.clonedeep "4.5.0"

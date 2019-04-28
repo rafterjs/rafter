@@ -1,6 +1,4 @@
-import {Box, IBox} from 'box-di';
-
-export type IDiContainer = IBox;
+import { Box, IDiContainer } from 'box-di';
 
 export default (): IDiContainer => {
   return Box;
