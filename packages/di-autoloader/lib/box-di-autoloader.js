@@ -16,12 +16,12 @@ class BoxDiAutoLoader {
   /**
    * Loads all the services
    */
-  load() {
-    Object.entries(this._serviceConfig).forEach(([name, config]) => {
+  async load() {
+    Object.entries(this._serviceConfig).forEach(async([name, config]) => {
       try {
         this._logger.debug(`Auto loading ${name}`);
         // eslint-disable-next-line import/no-dynamic-require,global-require
-        let service = require(config.path);
+        let service = await import(config.path);
         service = service.default || service;
 
         if (service instanceof Function) {

@@ -1,5 +1,6 @@
 import * as path from 'path';
 import recursive from 'recursive-readdir';
+import * as fs from "fs";
 import ConfigDto from './ConfigDto';
 import { ILogger } from './ILogger';
 import { IConfigAutoloader } from './IConfigAutoloader';
@@ -25,7 +26,6 @@ const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
  *
  * @return {ConfigAutoloaderService}
  */
-
 export default class ConfigAutoloaderService implements IConfigAutoloader {
   allowedFileNames: string[];
   configFileName: string;
@@ -67,10 +67,10 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   private isIgnoredDirectory(pathname: string): boolean {
     const directories = pathname.split('/');
     const lastDirectory = directories.pop();
-    return IGNORE_DIRECTORIES.includes(lastDirectory);
+    return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  private updateConfig(configDto: ConfigDto, config, file) {
+  private updateConfig(configDto: ConfigDto, config: any, file: string) {
     const filename = path.basename(file);
 
     switch (filename) {
@@ -94,25 +94,25 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     }
   }
 
-  private isAllowedFile(file) {
+  private isAllowedFile(file:string) {
     return this.allowedFileNames.includes(path.basename(file));
   }
 
-  async get(directory: string): Promise<ConfigDto> {
+  public async get(directory: string): Promise<ConfigDto> {
     const configDto = new ConfigDto();
 
-    const isIgnored = (file, stats) => {
+    const isIgnored = (file:string, stats: fs.Stats) => {
       return this.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
     };
 
     // get config files
     const files = await recursive(directory, [isIgnored]);
 
-    files.forEach(file => {
+    files.forEach(async (file: string) => {
       // eslint-disable-next-line
       try {
         // eslint-disable-next-line
-        const fileConfig = require(file);
+        const fileConfig = await import(file);
         this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
         // TODO dont mutate, instead create a new one and merge
