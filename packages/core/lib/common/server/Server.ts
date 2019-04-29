@@ -1,13 +1,13 @@
-import { IPreStartHookConfig } from '../pre-start-hooks/IPreStartHook';
 import { Express } from 'express';
+import * as http from 'http';
+import { RequestHandler } from 'express-serve-static-core';
+import { IPreStartHookConfig } from '../pre-start-hooks/IPreStartHook';
 import { IRoutesProvider } from '../router/RoutesProvider';
 import { IMiddlewareProvider } from '../middleware/MiddlewareProvider';
 import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider';
 import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddleWareConfig } from '../middleware/IMiddleware';
 import { ILogger } from '../../utils/ILogger';
-import * as http from 'http';
-import { RequestHandler } from 'express-serve-static-core';
 
 export interface IServer {
   start(): Promise<void>;
@@ -29,16 +29,25 @@ export interface IServer {
  * @return {Server}
  */
 export default class Server implements IServer {
-  serverInstance: http.Server;
-  express: Express;
-  routerProvider: IRoutesProvider;
-  middlewareProvider: IMiddlewareProvider;
-  preStartHookProvider: IPreStartHooksProvider;
-  middlewareConfig: IMiddleWareConfig[] = [];
-  routesConfig: IRouteConfig[] = [];
-  preStartHooks: IPreStartHookConfig[] = [];
-  serverPort: number;
-  logger: ILogger;
+  private serverInstance?: http.Server;
+
+  private readonly express: Express;
+
+  private readonly routerProvider: IRoutesProvider;
+
+  private readonly middlewareProvider: IMiddlewareProvider;
+
+  private readonly preStartHookProvider: IPreStartHooksProvider;
+
+  private readonly middlewareConfig: IMiddleWareConfig[] = [];
+
+  private readonly routesConfig: IRouteConfig[] = [];
+
+  private readonly preStartHooks: IPreStartHookConfig[] = [];
+
+  private readonly serverPort: number;
+
+  private readonly logger: ILogger;
 
   constructor(
     express: Express,
@@ -49,7 +58,7 @@ export default class Server implements IServer {
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
     serverPort: number = 3000,
-    logger: ILogger = console
+    logger: ILogger = console,
   ) {
     this.express = express;
     this.routerProvider = routerProvider;
@@ -67,15 +76,17 @@ export default class Server implements IServer {
    *
    * @private
    */
-  private async initPreStartHooks() {
+  private async initPreStartHooks(): Promise<void> {
     if (this.preStartHooks.length > 0) {
       // get the hooks from config
       const hooks = this.preStartHookProvider.createInstance(this.preStartHooks);
 
       // run the hooks
-      Object.values(hooks).forEach(async hook => {
-        await hook();
-      });
+      Object.values(hooks).forEach(
+        async (hook): Promise<void> => {
+          await hook();
+        },
+      );
     }
   }
 
@@ -84,7 +95,7 @@ export default class Server implements IServer {
    *
    * @private
    */
-  private async initMiddleware() {
+  private async initMiddleware(): Promise<void> {
     if (this.middlewareConfig.length > 0) {
       this.express.use(this.middlewareProvider.createInstance(this.middlewareConfig) as (
         | RequestHandler
@@ -95,7 +106,7 @@ export default class Server implements IServer {
   /**
    * @private
    */
-  private async initRoutes() {
+  private async initRoutes(): Promise<void> {
     if (this.routesConfig.length > 0) {
       this.express.use(this.routerProvider.createInstance(this.routesConfig));
     }
@@ -119,15 +130,18 @@ export default class Server implements IServer {
       await this.initRoutes();
 
       return new Promise((resolve, reject) => {
-        this.serverInstance = this.express.listen(this.serverPort, error => {
-          if (error) {
-            this.logger.error(error);
-            reject(error);
-          }
+        this.serverInstance = this.express.listen(
+          this.serverPort,
+          (error: Error): void => {
+            if (error) {
+              this.logger.error(error);
+              reject(error);
+            }
 
-          this.logger.info(`ExpressServer::start Server running on port ${this.serverPort}`);
-          resolve();
-        });
+            this.logger.info(`ExpressServer::start Server running on port ${this.serverPort}`);
+            resolve();
+          },
+        );
       });
     }
 
@@ -138,7 +152,7 @@ export default class Server implements IServer {
   /**
    * @return {Promise.<void>}
    */
-  public async stop() {
+  public async stop(): Promise<void> {
     if (this.serverInstance) {
       this.serverInstance.close();
       this.serverInstance = undefined;

@@ -1,7 +1,7 @@
+import { IRouter } from 'express-serve-static-core';
 import ConfigToRouteDtoTransformer from './ConfigToRouteDtoTransformer';
 import RouterProvider from './RouterProvider';
 import { ILogger } from '../../utils/ILogger';
-import { IRouter } from 'express-serve-static-core';
 import RouteDto from './RouteDto';
 import { IRouteConfig } from './IRouteConfig';
 
@@ -17,14 +17,16 @@ export interface IRoutesProvider {
  * @return {RoutesProvider}
  */
 export default class RoutesProvider implements IRoutesProvider {
-  configToRouteDtoTransformer: ConfigToRouteDtoTransformer;
-  routerProvider: RouterProvider;
-  logger: ILogger;
+  private readonly configToRouteDtoTransformer: ConfigToRouteDtoTransformer;
+
+  private readonly routerProvider: RouterProvider;
+
+  private readonly logger: ILogger;
 
   constructor(
     configToRouteDtoTransformer: ConfigToRouteDtoTransformer,
     routerProvider: RouterProvider,
-    logger: ILogger
+    logger: ILogger,
   ) {
     this.configToRouteDtoTransformer = configToRouteDtoTransformer;
     this.routerProvider = routerProvider;
@@ -37,18 +39,20 @@ export default class RoutesProvider implements IRoutesProvider {
    * @private
    */
   private applyRoutes(router: IRouter, routes: RouteDto[]) {
-    Object.values(routes).forEach(async route => {
-      const controller = route.getController();
+    Object.values(routes).forEach(
+      async (route): Promise<void> => {
+        const controller = route.getController();
 
-      // add the route to the router
-      if (router[route.getMethod()]) {
-        router[route.getMethod()](route.getEndpoint(), controller.bind(controller));
+        // add the route to the router
+        if (router[route.getMethod()]) {
+          router[route.getMethod()](route.getEndpoint(), controller.bind(controller));
 
-        this.logger.info(`    Added route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
-      } else {
-        this.logger.error(`    Failed to add route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
-      }
-    });
+          this.logger.info(`    Added route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
+        } else {
+          this.logger.error(`    Failed to add route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
+        }
+      },
+    );
   }
 
   /**

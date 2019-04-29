@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Server from './Server';
 
 describe('Common > Server', () => {
@@ -44,7 +45,7 @@ describe('Common > Server', () => {
       [],
       [],
       3000,
-      mockLogger
+      mockLogger,
     );
 
     await server.start();
@@ -61,7 +62,7 @@ describe('Common > Server', () => {
       [],
       [],
       3000,
-      mockLogger
+      mockLogger,
     );
 
     await server.start();
@@ -80,7 +81,7 @@ describe('Common > Server', () => {
       [],
       [],
       3000,
-      mockLogger
+      mockLogger,
     );
 
     await server.start();
@@ -97,7 +98,7 @@ describe('Common > Server', () => {
       [],
       [],
       3000,
-      mockLogger
+      mockLogger,
     );
 
     await server.start();
@@ -114,7 +115,7 @@ describe('Common > Server', () => {
       [],
       [],
       3000,
-      mockLogger
+      mockLogger,
     );
 
     await server.start();

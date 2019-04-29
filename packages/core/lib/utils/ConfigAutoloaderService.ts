@@ -1,6 +1,6 @@
 import * as path from 'path';
 import recursive from 'recursive-readdir';
-import * as fs from "fs";
+import * as fs from 'fs';
 import ConfigDto from './ConfigDto';
 import { ILogger } from './ILogger';
 import { IConfigAutoloader } from './IConfigAutoloader';
@@ -27,13 +27,19 @@ const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
  * @return {ConfigAutoloaderService}
  */
 export default class ConfigAutoloaderService implements IConfigAutoloader {
-  allowedFileNames: string[];
-  configFileName: string;
-  servicesFileName: string;
-  middlewareFileName: string;
-  routesFileName: string;
-  preStartHooksFileName: string;
-  logger: ILogger;
+  private readonly allowedFileNames: string[];
+
+  private readonly configFileName: string;
+
+  private readonly servicesFileName: string;
+
+  private readonly middlewareFileName: string;
+
+  private readonly routesFileName: string;
+
+  private readonly preStartHooksFileName: string;
+
+  private readonly logger: ILogger;
 
   constructor({
     configFileName = DEFAULT_FILENAMES.CONFIG,
@@ -64,13 +70,13 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
    * @return {boolean}
    * @private
    */
-  private isIgnoredDirectory(pathname: string): boolean {
+  private static isIgnoredDirectory(pathname: string): boolean {
     const directories = pathname.split('/');
     const lastDirectory = directories.pop();
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  private updateConfig(configDto: ConfigDto, config: any, file: string) {
+  private updateConfig(configDto: ConfigDto, config: any, file: string): void {
     const filename = path.basename(file);
 
     switch (filename) {
@@ -94,33 +100,33 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     }
   }
 
-  private isAllowedFile(file:string) {
+  private isAllowedFile(file: string): boolean {
     return this.allowedFileNames.includes(path.basename(file));
   }
 
   public async get(directory: string): Promise<ConfigDto> {
     const configDto = new ConfigDto();
 
-    const isIgnored = (file:string, stats: fs.Stats) => {
-      return this.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
+    const isIgnored = (file: string, stats: fs.Stats) => {
+      return ConfigAutoloaderService.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
     };
 
     // get config files
     const files = await recursive(directory, [isIgnored]);
 
-    files.forEach(async (file: string) => {
-      // eslint-disable-next-line
-      try {
-        // eslint-disable-next-line
-        const fileConfig = await import(file);
-        this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
+    files.forEach(
+      async (file: string): Promise<void> => {
+        try {
+          const fileConfig = await import(file);
+          this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
-        // TODO dont mutate, instead create a new one and merge
-        this.updateConfig(configDto, fileConfig.default || fileConfig, file);
-      } catch (error) {
-        this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);
-      }
-    });
+          // TODO dont mutate, instead create a new one and merge
+          this.updateConfig(configDto, fileConfig.default || fileConfig, file);
+        } catch (error) {
+          this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);
+        }
+      },
+    );
 
     return configDto;
   }

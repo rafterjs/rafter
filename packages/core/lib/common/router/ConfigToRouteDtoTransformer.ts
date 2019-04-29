@@ -1,6 +1,6 @@
+import { IDiContainer } from '@rafter/di-container';
 import RouteDto from './RouteDto';
-import { METHOD } from './RouteMethodConstants';
-import { IDiContainer } from '../../vendor/BoxDiFactory';
+import { METHODS } from './RouteMethodConstants';
 import { ITransformer } from '../mappers/ITransformer';
 import { IRouteConfig } from './IRouteConfig';
 import { IController, IControllerAction } from './IControllerAction';
@@ -12,7 +12,7 @@ import { IController, IControllerAction } from './IControllerAction';
  * @return {ConfigToRouteDtoTransformer}
  */
 export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteConfig[], RouteDto[]> {
-  diContainer: IDiContainer;
+  private readonly diContainer: IDiContainer;
 
   constructor(diContainer: IDiContainer) {
     this.diContainer = diContainer;
@@ -42,7 +42,7 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
    * @return {RouteDto}
    * @private
    */
-  private convertSingle({ method = METHOD.GET, endpoint, controller, action }: IRouteConfig): RouteDto {
+  private convertSingle({ method = METHODS.get, endpoint, controller, action }: IRouteConfig): RouteDto {
     return new RouteDto(method, endpoint, this.getControllerAction(controller, action));
   }
 

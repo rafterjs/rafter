@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     // Target latest version of ECMAScript.
     "target": "esnext",
     "module": "esnext",

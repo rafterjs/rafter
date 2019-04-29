@@ -1,8 +1,8 @@
-import { METHOD } from './RouteMethodConstants';
+import { METHODS } from './RouteMethodConstants';
 
-export type IRouteConfig = {
+export interface IRouteConfig {
   endpoint: string;
   controller: string;
   action: string;
-  method: METHOD;
-};
+  method: METHODS;
+}

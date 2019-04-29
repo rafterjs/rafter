@@ -5,13 +5,16 @@
  * @return {RouteDto}
  */
 import { IControllerAction } from './IControllerAction';
+import { MethodActions } from './RouteMethodConstants';
 
 export default class RouteDto {
-  method: string;
-  endpoint: string;
-  controller: IControllerAction;
+  private readonly method: MethodActions;
 
-  constructor(method: string, endpoint: string, controller: IControllerAction) {
+  private readonly endpoint: string;
+
+  private readonly controller: IControllerAction;
+
+  constructor(method: MethodActions, endpoint: string, controller: IControllerAction) {
     this.method = method;
     this.endpoint = endpoint;
     this.controller = controller;
@@ -34,7 +37,7 @@ export default class RouteDto {
   /**
    * @return {string}
    */
-  public getMethod(): string {
+  public getMethod(): MethodActions {
     return this.method;
   }
 }

@@ -1,6 +1,6 @@
 import { IMiddleWareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
-import { IPreStartHook, IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
+import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
 
 /**
@@ -11,15 +11,19 @@ import { IServiceConfig } from '../common/IService';
  */
 export default class ConfigDto {
   config: any = {};
+
   services: IServiceConfig = {};
+
   middleware: IMiddleWareConfig[] = [];
+
   routes: IRouteConfig[] = [];
+
   preStartHooks: IPreStartHookConfig[] = [];
 
   /**
    * @return {object}
    */
-  public getConfig() {
+  public getConfig(): any {
     return this.config;
   }
 
@@ -27,7 +31,7 @@ export default class ConfigDto {
    * @param {any} newConfig
    * @return {ConfigDto}
    */
-  public addConfig(newConfig: any) {
+  public addConfig(newConfig: any): ConfigDto {
     this.config = {
       ...this.config,
       ...newConfig,
@@ -46,7 +50,7 @@ export default class ConfigDto {
    * @param {IPreStartHook[]} newPreStartHooks
    * @return {ConfigDto}
    */
-  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[]) {
+  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[]): ConfigDto {
     this.preStartHooks = [...this.preStartHooks, ...newPreStartHooks];
     return this;
   }
@@ -62,7 +66,7 @@ export default class ConfigDto {
    * @param {IServiceConfig} newServices
    * @return {ConfigDto}
    */
-  public addServices(newServices: IServiceConfig) {
+  public addServices(newServices: IServiceConfig): ConfigDto {
     this.services = {
       ...this.services,
       ...newServices,
@@ -81,7 +85,7 @@ export default class ConfigDto {
    * @param {IMiddleWareConfig[]} newMiddleware
    * @return {ConfigDto}
    */
-  public addMiddleware(newMiddleware: IMiddleWareConfig[]) {
+  public addMiddleware(newMiddleware: IMiddleWareConfig[]): ConfigDto {
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }
@@ -97,7 +101,7 @@ export default class ConfigDto {
    * @param {IRouteConfig[]} newRoutes
    * @return {ConfigDto}
    */
-  public addRoutes(newRoutes: IRouteConfig[] = []) {
+  public addRoutes(newRoutes: IRouteConfig[] = []): ConfigDto {
     this.routes = [...this.routes, ...newRoutes];
     return this;
   }

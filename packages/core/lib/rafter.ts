@@ -4,10 +4,11 @@ import { ILogger } from './utils/ILogger';
 import { IConfigAutoloader } from './utils/IConfigAutoloader';
 import { IServer } from './common/server/Server';
 import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
+import ConfigDto from './utils/ConfigDto';
 
 const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}`;
 
-interface IRafter {
+export interface RafterConfig {
   appDirectory?: string;
   configAutoloaderService: IConfigAutoloader;
   logger?: ILogger;
@@ -22,13 +23,19 @@ interface IRafter {
  * @return {Rafter}
  */
 export default class Rafter {
-  boxDiAutoLoader?: IDiAutoloader;
-  server?: IServer;
-  appDirectory: string;
-  configAutoloaderService: IConfigAutoloader;
-  logger: ILogger;
+  private boxDiAutoLoader?: IDiAutoloader;
 
-  constructor({ appDirectory = `${__dirname}/../../`, configAutoloaderService, logger = console }: IRafter) {
+  private server?: IServer;
+
+  private readonly appDirectory: string;
+
+  private readonly configAutoloaderService: IConfigAutoloader;
+
+  private readonly logger: ILogger;
+
+  constructor(rafterConfig: RafterConfig) {
+    const { appDirectory = `${__dirname}/../../`, configAutoloaderService, logger = console } = rafterConfig;
+
     this.appDirectory = appDirectory;
     this.configAutoloaderService = configAutoloaderService;
     this.logger = logger;
@@ -38,7 +45,7 @@ export default class Rafter {
    * @return {Promise<ConfigDto>}
    * @private
    */
-  async getConfig() {
+  private async getConfig(): Promise<ConfigDto> {
     // load rafter config files first
     const configDto = await this.configAutoloaderService.get(RAFTER_AUTOLOADER_DIRECTORY);
 
@@ -58,7 +65,7 @@ export default class Rafter {
     return configDto;
   }
 
-  async getAutoloader(): Promise<IDiAutoloader> {
+  private async getAutoloader(): Promise<IDiAutoloader> {
     const configDto = await this.getConfig();
     // TODO namespace these DI services
 
@@ -80,7 +87,7 @@ export default class Rafter {
     return boxDiAutoloaderFactory(configDto.getServices(), this.logger);
   }
 
-  async start() {
+  public async start(): Promise<void> {
     try {
       this.boxDiAutoLoader = await this.getAutoloader();
       await this.boxDiAutoLoader.load();
@@ -100,7 +107,7 @@ export default class Rafter {
   /**
    * @return {Promise}
    */
-  async stop() {
+  public async stop(): Promise<void> {
     if (this.server) {
       // TODO empty the service container
       // boxDiAutoLoader.reset();

@@ -38,14 +38,14 @@ class Box {
       this.logger.log(
         LOG_LEVEL.DEBUG,
         `Registering service provider for '${serviceName}' using the factory pattern with ` +
-          `${dependencies ? dependencies.length : 'no'} dependencies`
+          `${dependencies ? dependencies.length : 'no'} dependencies`,
       );
     } else if (!isUndefined(serviceFactory)) {
       factory = new Factory(serviceFactory, dependencies);
       this.logger.log(
         LOG_LEVEL.DEBUG,
         `Registering service provider for '${serviceName}' with ` +
-          `${dependencies ? dependencies.length : 'no'} dependencies`
+          `${dependencies ? dependencies.length : 'no'} dependencies`,
       );
     } else {
       const err = `The arguments for ${serviceName} are not valid`;
@@ -105,7 +105,7 @@ class Box {
 
     if (!factory) {
       throw new Error(
-        `The factory for '${name}' does not exist. Please ensure that you registered the service correctly.`
+        `The factory for '${name}' does not exist. Please ensure that you registered the service correctly.`,
       );
     }
 
@@ -177,7 +177,7 @@ class Box {
     } else {
       this.logger.log(
         LOG_LEVEL.WARNING,
-        `Could not remove the provider '${name}' as it does not exist in the container`
+        `Could not remove the provider '${name}' as it does not exist in the container`,
       );
     }
   }

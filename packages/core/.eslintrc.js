@@ -1,21 +1,31 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  extends: ['plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'plugin:prettier/recommended'],
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      modules: true,
-    },
   },
   settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
     'import/resolver': {
       node: {
-        'extensions': [
-          '.ts',
-          '.tsx',
-        ],
+        extensions: ['.js', '.ts', '.tsx'],
       },
     },
+  },
+  rules: {
+    'import/prefer-default-export': 'off',
+    'import/no-unresolved': 'off',
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-member-accessibility': [
+      2,
+      {
+        overrides: {
+          constructors: 'no-public',
+        },
+      },
+    ],
   },
 };

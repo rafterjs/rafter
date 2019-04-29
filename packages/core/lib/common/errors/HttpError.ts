@@ -3,7 +3,7 @@
  *
  */
 export class HttpError extends Error {
-  status: number;
+  private readonly status: number;
 
   constructor(status: number, message: string) {
     super(message);
@@ -15,7 +15,7 @@ export class HttpError extends Error {
    *
    * @returns {Number}
    */
-  getStatus(): number {
+  public getStatus(): number {
     return this.status;
   }
 
@@ -24,7 +24,7 @@ export class HttpError extends Error {
    *
    * @returns {String}
    */
-  getMessage(): string {
+  public getMessage(): string {
     return this.message;
   }
 }

@@ -21,7 +21,7 @@ export default ({
   routesFileName = `.routes.js`,
   preStartHooksFileName = `.pre-start-hooks.js`,
   logger = console,
-}) => {
+}): Rafter => {
   const configAutoloaderService = new ConfigAutoloaderService({
     configFileName,
     servicesFileName,

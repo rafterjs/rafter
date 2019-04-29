@@ -1,8 +1,10 @@
-export enum METHOD {
-  GET = 'get',
-  POST = 'post',
-  PATCH = 'patch',
-  PUT = 'put',
-  DELETE = 'delete',
-  HEAD = 'head',
+export enum METHODS {
+  get = 'get',
+  post = 'post',
+  patch = 'patch',
+  put = 'put',
+  delete = 'delete',
+  head = 'head',
 }
+
+export type MethodActions = keyof typeof METHODS;

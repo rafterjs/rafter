@@ -1,14 +1,14 @@
+import * as Express from 'express';
+import { IRouter } from 'express-serve-static-core';
+
 /**
  * A provider that creates new router instances
  *
  * @param {object} express
  * @return {RouterProvider}
  */
-import * as Express from 'express';
-import { IRouter } from 'express-serve-static-core';
-
 export default class RouterProvider {
-  routerFactory: typeof Express.Router;
+  private readonly routerFactory: typeof Express.Router;
 
   constructor(express: typeof Express) {
     this.routerFactory = express.Router;
