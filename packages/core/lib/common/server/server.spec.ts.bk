@@ -1,4 +1,3 @@
-/* tslint:disable */
 import Server from './Server';
 
 describe('Common > Server', () => {
