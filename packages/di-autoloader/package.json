@@ -15,8 +15,8 @@
   "scripts": {
     "start": "",
     "test": "jest --notify",
-    "build-server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
-    "build": "yarn clean && yarn build-server",
+    "build:server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
+    "build": "yarn clean && yarn build:server",
     "clean": "rimraf ./dist",
     "lint": "./node_modules/.bin/eslint ./lib ./test",
     "prettier": "./node_modules/.bin/prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""

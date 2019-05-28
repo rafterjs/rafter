@@ -1,31 +1,31 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  extends: ['plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'plugin:prettier/recommended'],
+  parser: "@typescript-eslint/parser",
+  extends: ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: "module"
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    'import/resolver': {
+    "import/resolver": {
       node: {
-        extensions: ['.js', '.ts', '.tsx'],
-      },
-    },
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   },
   rules: {
-    'import/prefer-default-export': 'off',
-    'import/no-unresolved': 'off',
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-member-accessibility': [
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-member-accessibility": [
       2,
       {
         overrides: {
-          constructors: 'no-public',
-        },
-      },
-    ],
-  },
+          constructors: "no-public"
+        }
+      }
+    ]
+  }
 };
