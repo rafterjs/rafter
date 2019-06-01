@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "yarn build:di-container && yarn build:di-autoloader && yarn build:core",
+    "build": "yarn build:di-container && yarn build:di-autoloader && yarn build:core && yarn build:boilerplate",
+    "build:boilerplate": "cd packages/boilerplate && yarn build",
     "build:core": "cd packages/core && yarn build",
     "build:di-container": "cd packages/di-container && yarn build",
     "build:di-autoloader": "cd packages/di-autoloader && yarn build",

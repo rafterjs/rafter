@@ -22,7 +22,7 @@ The following configuration files are autoloaded during the Rafter service start
 - `.config.ts`: a general application or module config.
 - `.services.ts`: adds services and their dependencies to a service container.
 - `.middleware.js`: registers services as middleware.
-- `.routes.js`: links controller services to route definitions.
+- `.routes.ts`: links controller services to route definitions.
 - `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
 
 The Rafter autoloader will look for all of these files recursively throughout your project. This allows you to modularize your project rather than defining all your config in one place.
@@ -92,7 +92,7 @@ Note; the middleware must be registered in the `.services.ts` config.
 
 ### Routes
 
-The routes file (`.routes.js`) exports an array of objects which define the http method, route, controller and action. eg.
+The routes file (`.routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
 
 ```javascript
 export default [

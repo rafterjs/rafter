@@ -1,0 +1,37 @@
+{
+  "name": "@rafter/boilerplate",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "start": "node ./dist/index.js",
+    "test": "jest --notify ./lib",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "clean": "yarn clean:lib",
+    "clean:lib": "rimraf ./dist",
+    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
+    "copy": "copyfiles ./package.json ./dist/package.json"
+  },
+  "dependencies": {
+    "@rafter/core": "0.1.0"
+  },
+  "devDependencies": {
+
+  },
+  "description": "A simple boilerplate to start new projects",
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">9"
+  }
+}

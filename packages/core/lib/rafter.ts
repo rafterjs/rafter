@@ -62,6 +62,7 @@ export default class Rafter {
         .addRoutes(applicationConfigDto.getRoutes());
     }
 
+    console.log('-------------------', configDto)
     return configDto;
   }
 

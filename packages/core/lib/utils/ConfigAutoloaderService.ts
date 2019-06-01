@@ -56,7 +56,6 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
       routesFileName,
       preStartHooksFileName,
     ];
-
     this.configFileName = configFileName;
     this.servicesFileName = servicesFileName;
     this.middlewareFileName = middlewareFileName;
@@ -115,9 +114,9 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     const files = await recursive(directory, [isIgnored]);
 
     files.forEach(
-      async (file: string): Promise<void> => {
+       (file: string): void => {
         try {
-          const fileConfig = await import(file);
+          const fileConfig = require(file);
           this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
           // TODO dont mutate, instead create a new one and merge
@@ -127,7 +126,6 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
         }
       },
     );
-
     return configDto;
   }
 }
