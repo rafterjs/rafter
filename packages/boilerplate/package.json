@@ -13,7 +13,7 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "pm2 start ./dev.js --watch",
     "test": "jest --notify ./lib",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",

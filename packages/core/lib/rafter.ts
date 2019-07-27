@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Box } from '@rafter/di-container';
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/ILogger';
@@ -5,8 +6,12 @@ import { IConfigAutoloader } from './utils/IConfigAutoloader';
 import { IServer } from './common/server/Server';
 import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
 import ConfigDto from './utils/ConfigDto';
+import { IServiceConfig } from './common/IService';
+import { IRouteConfig } from './common/router/IRouteConfig';
+import { IMiddleWareConfig } from './common/middleware/IMiddleware';
+import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
 
-const RAFTER_AUTOLOADER_DIRECTORY = `${__dirname}`;
+const RAFTER_AUTOLOADER_DIRECTORY = __dirname;
 
 export interface RafterConfig {
   appDirectory?: string;
@@ -34,7 +39,7 @@ export default class Rafter {
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { appDirectory = `${__dirname}/../../`, configAutoloaderService, logger = console } = rafterConfig;
+    const { appDirectory = join(__dirname, '/../../'), configAutoloaderService, logger = console } = rafterConfig;
 
     this.appDirectory = appDirectory;
     this.configAutoloaderService = configAutoloaderService;
@@ -62,7 +67,6 @@ export default class Rafter {
         .addRoutes(applicationConfigDto.getRoutes());
     }
 
-    console.log('-------------------', configDto)
     return configDto;
   }
 
@@ -71,38 +75,29 @@ export default class Rafter {
     // TODO namespace these DI services
 
     // add the config to the DI container
-    Box.register(`config`, () => configDto.getConfig());
+    Box.register('config', (): object => configDto.getConfig());
 
     // add the services to the DI container
-    Box.register(`services`, () => configDto.getServices());
+    Box.register('services', (): IServiceConfig => configDto.getServices());
 
     // add the routes to the DI container
-    Box.register(`routes`, () => configDto.getRoutes());
+    Box.register('routes', (): IRouteConfig[] => configDto.getRoutes());
 
     // add the middleware to the DI container
-    Box.register(`middleware`, () => configDto.getMiddleware());
+    Box.register('middleware', (): IMiddleWareConfig[] => configDto.getMiddleware());
 
     // add the middleware to the DI container
-    Box.register(`preStartHooks`, () => configDto.getPreStartHooks());
+    Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
 
     return boxDiAutoloaderFactory(configDto.getServices(), this.logger);
   }
 
   public async start(): Promise<void> {
-    try {
-      this.boxDiAutoLoader = await this.getAutoloader();
-      await this.boxDiAutoLoader.load();
+    this.boxDiAutoLoader = await this.getAutoloader();
+    await this.boxDiAutoLoader.load();
 
-      /**
-       * @type {Server}
-       */
-      this.server = this.boxDiAutoLoader.get<IServer>('server');
-      return this.server.start();
-    } catch (error) {
-      this.logger.error(error);
-      return Promise.reject();
-      // process.exit(1);
-    }
+    this.server = this.boxDiAutoLoader.get<IServer>('server');
+    return this.server.start();
   }
 
   /**
@@ -115,6 +110,6 @@ export default class Rafter {
       return this.server.stop();
     }
 
-    throw new Error(`Rafter::stop the server has not been started`);
+    throw new Error('Rafter::stop the server has not been started');
   }
 }

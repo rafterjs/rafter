@@ -1,3 +1,4 @@
+import { json } from "express";
 import isFunction from 'lodash.isfunction';
 import cloneDeep from 'lodash.clonedeep';
 import get from 'lodash.get';
@@ -152,7 +153,7 @@ class Box {
 
       // save the instance back to the container
       if (!isUndefined(instance) && factory.isSingleton()) {
-        this.logger.log(LOG_LEVEL.DEBUG, `Saving the instance back to the '${name}'`);
+        this.logger.log(LOG_LEVEL.DEBUG, `Saving the instance back to '${name}'`);
         provider.setInstance(instance);
       }
     }
@@ -297,7 +298,6 @@ class Box {
    */
   _getProvider(name) {
     const serviceProvider = this.container[name];
-
     if (isUndefined(serviceProvider)) {
       this.logger.error(`Could not find the service '${name}'`);
       throw new Error(`Service ${name} not found`);

@@ -21,7 +21,7 @@ class BoxDiAutoLoader {
       try {
         this._logger.debug(`Auto loading ${name}`);
         // eslint-disable-next-line import/no-dynamic-require,global-require
-        let service = await import(config.path);
+        let service = require(config.path);
         service = service.default || service;
 
         if (service instanceof Function) {
