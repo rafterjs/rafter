@@ -6,7 +6,7 @@ import { ILogger } from './ILogger';
  * @return {Logger}
  */
 export default class LoggingService implements ILogger {
-  loggingService: ILogger;
+  private loggingService: ILogger;
 
   constructor(loggingService: ILogger) {
     this.loggingService = loggingService;

@@ -72,7 +72,7 @@ export default class Rafter {
 
   private async getAutoloader(): Promise<IDiAutoloader> {
     const configDto = await this.getConfig();
-    // TODO namespace these DI services
+    // TODO namespace these DI services so they dont inadvertently be overloaded
 
     // add the config to the DI container
     Box.register('config', (): object => configDto.getConfig());

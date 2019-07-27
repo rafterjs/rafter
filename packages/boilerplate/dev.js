@@ -1,4 +1,4 @@
-require("@babel/register")({
-  extensions: [".jsx", ".js", ".ts", ".tsx"]
+require('@babel/register')({
+  extensions: ['.jsx', '.js', '.ts', '.tsx'],
 });
-require("./index.ts");
+require('./index.ts');

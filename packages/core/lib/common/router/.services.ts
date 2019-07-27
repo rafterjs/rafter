@@ -8,7 +8,7 @@ export default {
     dependencies: [`diContainer`],
   },
   routesProvider: {
-    path: `${__dirname}/routes-provider`,
+    path: `${__dirname}/RoutesProvider`,
     dependencies: [`configToRouteDtoTransformer`, `routerProvider`, `logger`],
   },
 };

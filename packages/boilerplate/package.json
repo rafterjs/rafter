@@ -26,9 +26,7 @@
   "dependencies": {
     "@rafter/core": "0.1.0"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/index.js",
   "engines": {

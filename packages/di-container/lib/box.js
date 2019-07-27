@@ -1,4 +1,3 @@
-import { json } from "express";
 import isFunction from 'lodash.isfunction';
 import cloneDeep from 'lodash.clonedeep';
 import get from 'lodash.get';

@@ -42,13 +42,13 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   private readonly logger: ILogger;
 
   constructor({
-                configFileName = DEFAULT_FILENAMES.CONFIG,
-                servicesFileName = DEFAULT_FILENAMES.SERVICES,
-                middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
-                routesFileName = DEFAULT_FILENAMES.ROUTES,
-                preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
-                logger = console,
-              }) {
+    configFileName = DEFAULT_FILENAMES.CONFIG,
+    servicesFileName = DEFAULT_FILENAMES.SERVICES,
+    middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
+    routesFileName = DEFAULT_FILENAMES.ROUTES,
+    preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
+    logger = console,
+  }) {
     this.allowedFileNames = [
       configFileName,
       servicesFileName,

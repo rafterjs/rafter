@@ -38,7 +38,7 @@ export default class RoutesProvider implements IRoutesProvider {
    * @param {RouteDto[]} routes
    * @private
    */
-  private applyRoutes(router: IRouter, routes: RouteDto[]) {
+  private applyRoutes(router: IRouter, routes: RouteDto[]): void {
     Object.values(routes).forEach(
       async (route): Promise<void> => {
         const controller = route.getController();

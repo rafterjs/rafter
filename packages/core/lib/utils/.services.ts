@@ -1,10 +1,10 @@
 export default {
   logger: {
     path: `${__dirname}/LoggingService`,
-    dependencies: [`console`],
+    dependencies: ['console'],
   },
   console: {
-    path: `${__dirname}/console-logger-factory`,
+    path: `${__dirname}/ConsoleLoggerFactory`,
     dependencies: [],
   },
 };
