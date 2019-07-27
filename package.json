@@ -10,7 +10,7 @@
     "build:di-autoloader": "cd packages/di-autoloader && yarn build",
     "start": "lerna start",
     "start:boilerplate": "cd packages/boilerplate && yarn start",
-    "format:fix": "prettier --ignore-path \"**/dist/**/*.*\" --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:fix": "prettier --ignore-path \"**/dist/**\" --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "test": "yarn test:di-container && yarn test:di-autoloader && yarn test:core && yarn test:boilerplate",
     "test:lint": "eslint \"packages/**/*.{js,jsx}\"",
     "test:di-autoloader": "cd packages/di-autoloader && yarn test",
