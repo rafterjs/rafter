@@ -1,0 +1,5 @@
+!/**/.config.ts
+!/**/.routes.ts
+!/**/.services.ts
+!/**/.middleware.ts
+!/**/.pre-start-hooks.ts

@@ -1,0 +1,40 @@
+{
+  "name": "@rafter/boilerplate",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "start": "pm2 start ./dev.js --watch",
+    "stop": "pm2 stop ./dev.js",
+    "test": "jest --notify ./lib",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "clean": "yarn clean:lib",
+    "clean:lib": "rimraf ./dist",
+    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
+    "copy": "copyfiles ./package.json ./dist/package.json",
+    "lint": "eslint ./config/.config.ts ./config/.routes.ts ./lib/** ./index.ts ./dev.js"
+  },
+  "dependencies": {
+    "@babel/register": "7.5.5",
+    "@rafter/core": "*"
+  },
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*"
+  },
+  "description": "A simple boilerplate to start new projects",
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">=9"
+  }
+}

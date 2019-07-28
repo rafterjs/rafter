@@ -1,0 +1,40 @@
+{
+  "name": "@rafter/core",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "test": "jest --notify ./lib",
+    "build:lib": "babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "clean": "yarn clean:lib",
+    "clean:lib": "rimraf ./dist",
+    "build": "yarn clean && yarn build:lib",
+    "copy": "copyfiles ./package.json ./dist/package.json",
+    "types": "tsc",
+    "lint": "eslint ./lib/**",
+    "format": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
+  },
+  "dependencies": {
+    "@rafter/di-container": "*",
+    "@rafter/di-autoloader": "*",
+    "express": "4.17.1",
+    "recursive-readdir": "2.2.2"
+  },
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*"
+  },
+  "description": "A slightly opinionated JS framework that makes building apps easy and testable",
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">=9"
+  }
+}

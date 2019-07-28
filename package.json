@@ -1,42 +1,55 @@
 {
-    "name": "rafter",
-    "version": "0.0.4",
-    "contributors": [
-        {
-            "name": "Josh Stuart",
-            "email": "joshstuartx@gmail.com"
-        }
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/crimsonronin/rafter.git"
-    },
-    "scripts": {
-        "dev": "nodemon --watch ./lib --watch ./config --watch ./example --watch ./rafter.js ./example/rafter-example.js --exec babel-node",
-        "test": "TODO",
-        "build-lib": "babel ./index.js --out-dir ./dist && babel ./rafter.js --out-dir ./dist && babel --include-dotfiles ./lib --out-dir ./dist/lib",
-        "clean": "rm -rf ./dist && mkdir ./dist",
-        "build": "npm run clean && npm run build-lib && npm run copy",
-        "copy": "cp ./package.json ./dist/package.json"
-    },
-    "dependencies": {
-        "box-di-autoloader": "^0.2.0",
-        "express": "4.16.2"
-    },
-    "description": "A slightly opinionated JS framework that makes building apps easy and testable",
-    "main": "./index.js",
-    "devDependencies": {
-        "@babel/cli": "^7.0.0-beta.39",
-        "@babel/core": "^7.0.0-beta.39",
-        "@babel/node": "^7.0.0-beta.39",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.39",
-        "@babel/preset-env": "^7.0.0-beta.39",
-        "babel-eslint": "^7.2.3",
-        "eslint": "^4.17.0",
-        "nodemon": "^1.14.12"
-    },
-    "engines": {
-        "node": "9"
-    }
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint -- --fix",
+    "lint:core": "cd packages/core && yarn lint",
+    "lint:boilerplate": "cd packages/boilerplate && yarn lint",
+    "build:boilerplate": "cd packages/boilerplate && yarn build",
+    "build:core": "cd packages/core && yarn build",
+    "build:babel": "cd packages/babel-preset-rafter && yarn build",
+    "build:di-container": "cd packages/di-container && yarn build",
+    "build:di-autoloader": "cd packages/di-autoloader && yarn build",
+    "start:boilerplate": "cd packages/boilerplate && yarn start",
+    "stop:boilerplate": "cd packages/boilerplate && yarn stop",
+    "format": "prettier --ignore-path \"**/dist/**\" --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "test:di-autoloader": "cd packages/di-autoloader && yarn test",
+    "test:di-container": "cd packages/di-container && yarn test",
+    "test:core": "cd packages/core && yarn test",
+    "test:boilerplace": "cd packages/boilerplace && yarn test"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/node": "7.5.5",
+    "@types/express": "4.17.0",
+    "@types/express-serve-static-core": "4.16.7",
+    "@types/jest": "24.0.15",
+    "@types/node": "12.6.8",
+    "@types/recursive-readdir": "2.2.0",
+    "@typescript-eslint/eslint-plugin": "1.13.0",
+    "@typescript-eslint/parser": "1.13.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "10.0.2",
+    "babel-jest": "24.8.0",
+    "copyfiles": "2.1.1",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "17.1.1",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-prettier": "3.1.0",
+    "jest": "24.8.0",
+    "lerna": "3.16.4",
+    "pm2": "3.5.1",
+    "prettier": "1.18.2",
+    "rimraf": "2.6.3",
+    "ts-node": "8.3.0",
+    "tslint": "5.18.0",
+    "typescript": "3.5.3"
+  }
 }
