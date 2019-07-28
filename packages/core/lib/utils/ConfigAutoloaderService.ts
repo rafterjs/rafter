@@ -4,6 +4,11 @@ import * as fs from 'fs';
 import ConfigDto from './ConfigDto';
 import { ILogger } from './ILogger';
 import { IConfigAutoloader } from './IConfigAutoloader';
+import { IConfigTypes } from './IConfig';
+import { IServiceConfig } from '../common/IService';
+import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
+import { IRouteConfig } from '../common/router/IRouteConfig';
+import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 
 const DEFAULT_FILENAMES = {
   CONFIG: `.config.js`,
@@ -16,15 +21,6 @@ const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
 
 /**
  * A service that autoloads all the config from dotfiles in the project
- *
- * @param {string=} configFileName
- * @param {string=} servicesFileName
- * @param {string=} middlewareFileName
- * @param {string=} routesFileName
- * @param {string=} preStartHooksFileName
- * @param {Logger=} logger
- *
- * @return {ConfigAutoloaderService}
  */
 export default class ConfigAutoloaderService implements IConfigAutoloader {
   private readonly allowedFileNames: string[];
@@ -64,35 +60,30 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     this.logger = logger;
   }
 
-  /**
-   * @param {string} pathname
-   * @return {boolean}
-   * @private
-   */
   private static isIgnoredDirectory(pathname: string): boolean {
     const directories = pathname.split('/');
     const lastDirectory = directories.pop();
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  private updateConfig(configDto: ConfigDto, config: any, file: string): void {
+  private updateConfig(configDto: ConfigDto, config: IConfigTypes, file: string): void {
     const filename = path.basename(file);
 
     switch (filename) {
       case this.configFileName:
-        configDto.addConfig(config);
+        configDto.addConfig(config as object);
         break;
       case this.servicesFileName:
-        configDto.addServices(config);
+        configDto.addServices(config as IServiceConfig);
         break;
       case this.middlewareFileName:
-        configDto.addMiddleware(config);
+        configDto.addMiddleware(config as IMiddlewareConfig[]);
         break;
       case this.routesFileName:
-        configDto.addRoutes(config);
+        configDto.addRoutes(config as IRouteConfig[]);
         break;
       case this.preStartHooksFileName:
-        configDto.addPreStartHooks(config);
+        configDto.addPreStartHooks(config as IPreStartHookConfig[]);
         break;
       default:
         break;
@@ -106,7 +97,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   public async get(directory: string): Promise<ConfigDto> {
     const configDto = new ConfigDto();
 
-    const isIgnored = (file: string, stats: fs.Stats) => {
+    const isIgnored = (file: string, stats: fs.Stats): boolean => {
       return ConfigAutoloaderService.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
     };
 

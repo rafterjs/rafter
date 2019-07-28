@@ -5,7 +5,10 @@ interface IHomeController extends IController {
   index: IControllerAction;
 }
 
+// @ts-ignore
 export default class HomeController implements IHomeController {
+  // TODO figure out why this is required here
+  // eslint-disable-next-line class-methods-use-this
   public index(request: Request, response: Response): void {
     response.send(`
     Hi this is the home controller. 

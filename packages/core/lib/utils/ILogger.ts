@@ -1,14 +1,16 @@
+export type LoggingArguments = (string | number | Function | object | boolean)[];
+
 /**
  * A generic logger class. This takes a logger, which could even be console if needed.
  */
 export interface ILogger {
-  log(...args: any): void;
+  log(...args: LoggingArguments): void;
 
-  debug(...args: any): void;
+  debug(...args: LoggingArguments): void;
 
-  info(...args: any): void;
+  info(...args: LoggingArguments): void;
 
-  error(...args: any): void;
+  error(...args: LoggingArguments): void;
 
-  warn(...args: any): void;
+  warn(...args: LoggingArguments): void;
 }

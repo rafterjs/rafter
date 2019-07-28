@@ -1,9 +1,9 @@
 import { IDiContainer } from '@rafter/di-container';
 import { ILogger } from '../../utils/ILogger';
-import { IMiddleWare, IMiddleWareConfig } from './IMiddleware';
+import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 export interface IMiddlewareProvider {
-  createInstance(middlewareConfig: string[]): IMiddleWare | IMiddleWare[];
+  createInstance(middlewareConfig: string[]): IMiddleware | IMiddleware[];
 }
 
 /**
@@ -27,13 +27,13 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
    * @param {string[]} middlewareConfig
    * @return {Function|Function[]}
    */
-  public createInstance(middlewareConfig: IMiddleWareConfig[]): IMiddleWare | IMiddleWare[] {
-    const middlewareCollection: IMiddleWare | IMiddleWare[] = [];
+  public createInstance(middlewareConfig: IMiddlewareConfig[]): IMiddleware | IMiddleware[] {
+    const middlewareCollection: IMiddleware | IMiddleware[] = [];
 
-    Object.values(middlewareConfig).forEach(middlewareServiceName => {
+    Object.values(middlewareConfig).forEach((middlewareServiceName): void => {
       try {
         this.logger.info(`    Adding middleware: ${middlewareServiceName}`);
-        const middleware = this.diContainer.get<IMiddleWare>(middlewareServiceName);
+        const middleware = this.diContainer.get<IMiddleware>(middlewareServiceName);
         middlewareCollection.push(middleware);
       } catch (error) {
         this.logger.error(`    Could not add middleware: ${middlewareServiceName}`, error);

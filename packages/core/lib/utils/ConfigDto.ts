@@ -1,7 +1,8 @@
-import { IMiddleWareConfig } from '../common/middleware/IMiddleware';
+import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
+import { IConfig } from './IConfig';
 
 /**
  * A config dto which holds information about services, middleware, routes and misc config. This is used primarily for
@@ -9,12 +10,12 @@ import { IServiceConfig } from '../common/IService';
  *
  * @return {ConfigDto}
  */
-export default class ConfigDto {
+export default class ConfigDto implements IConfig {
   private config: object = {};
 
   private services: IServiceConfig = {};
 
-  private middleware: IMiddleWareConfig[] = [];
+  private middleware: IMiddlewareConfig[] = [];
 
   private routes: IRouteConfig[] = [];
 
@@ -53,11 +54,11 @@ export default class ConfigDto {
     return this;
   }
 
-  public getMiddleware(): IMiddleWareConfig[] {
+  public getMiddleware(): IMiddlewareConfig[] {
     return this.middleware;
   }
 
-  public addMiddleware(newMiddleware: IMiddleWareConfig[]): ConfigDto {
+  public addMiddleware(newMiddleware: IMiddlewareConfig[]): ConfigDto {
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }

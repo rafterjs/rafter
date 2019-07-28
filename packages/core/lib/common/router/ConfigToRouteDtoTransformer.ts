@@ -53,7 +53,7 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
   public convert(source: IRouteConfig[]): RouteDto[] {
     const routes: RouteDto[] = [];
 
-    Object.values(source).forEach(config => {
+    Object.values(source).forEach((config: IRouteConfig): void => {
       routes.push(this.convertSingle(config));
     });
 

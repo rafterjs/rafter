@@ -6,7 +6,7 @@ import { IRoutesProvider } from '../router/RoutesProvider';
 import { IMiddlewareProvider } from '../middleware/MiddlewareProvider';
 import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider';
 import { IRouteConfig } from '../router/IRouteConfig';
-import { IMiddleWareConfig } from '../middleware/IMiddleware';
+import { IMiddlewareConfig } from '../middleware/IMiddleware';
 import { ILogger } from '../../utils/ILogger';
 
 export interface IServer {
@@ -39,7 +39,7 @@ export default class Server implements IServer {
 
   private readonly preStartHookProvider: IPreStartHooksProvider;
 
-  private readonly middlewareConfig: IMiddleWareConfig[] = [];
+  private readonly middlewareConfig: IMiddlewareConfig[] = [];
 
   private readonly routesConfig: IRouteConfig[] = [];
 
@@ -54,7 +54,7 @@ export default class Server implements IServer {
     routerProvider: IRoutesProvider,
     middlewareProvider: IMiddlewareProvider,
     preStartHookProvider: IPreStartHooksProvider,
-    middlewareConfig: IMiddleWareConfig[] = [],
+    middlewareConfig: IMiddlewareConfig[] = [],
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
     serverPort: number = 3000,
@@ -88,6 +88,8 @@ export default class Server implements IServer {
         },
       );
     }
+
+    return Promise.resolve();
   }
 
   /**
@@ -129,7 +131,7 @@ export default class Server implements IServer {
       this.logger.info(`ExpressServer::start applying the router`);
       await this.initRoutes();
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject): void => {
         this.serverInstance = this.express.listen(this.serverPort, (error: Error): void => {
           if (error) {
             this.logger.error(error);

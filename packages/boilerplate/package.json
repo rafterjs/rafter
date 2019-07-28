@@ -23,9 +23,10 @@
     "clean:lib": "rimraf ./dist",
     "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint ./config/** ./lib/** ./index.ts ./dev.js"
+    "lint": "eslint ./config/.config.ts ./config/.routes.ts ./lib/** ./index.ts ./dev.js"
   },
   "dependencies": {
+    "@babel/register": "7.5.5",
     "@rafter/core": "*"
   },
   "devDependencies": {

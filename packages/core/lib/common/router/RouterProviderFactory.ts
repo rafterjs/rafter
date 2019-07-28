@@ -4,6 +4,6 @@ import RouterProvider from './RouterProvider';
 /**
  * @return {RouterProvider}
  */
-export default () => {
+export default (): RouterProvider => {
   return new RouterProvider(express);
 };

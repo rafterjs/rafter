@@ -8,7 +8,7 @@ import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
 import ConfigDto from './utils/ConfigDto';
 import { IServiceConfig } from './common/IService';
 import { IRouteConfig } from './common/router/IRouteConfig';
-import { IMiddleWareConfig } from './common/middleware/IMiddleware';
+import { IMiddlewareConfig } from './common/middleware/IMiddleware';
 import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
 
 const RAFTER_AUTOLOADER_DIRECTORY = __dirname;
@@ -84,7 +84,7 @@ export default class Rafter {
     Box.register('routes', (): IRouteConfig[] => configDto.getRoutes());
 
     // add the middleware to the DI container
-    Box.register('middleware', (): IMiddleWareConfig[] => configDto.getMiddleware());
+    Box.register('middleware', (): IMiddlewareConfig[] => configDto.getMiddleware());
 
     // add the middleware to the DI container
     Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());

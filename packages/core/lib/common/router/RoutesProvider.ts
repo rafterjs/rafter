@@ -9,13 +9,6 @@ export interface IRoutesProvider {
   createInstance(routesConfig: IRouteConfig[]): IRouter;
 }
 
-/**
- *
- * @param {ConfigToRouteDtoTransformer} configToRouteDtoTransformer
- * @param {RouterProvider} routerProvider
- * @param {ILogger} logger
- * @return {RoutesProvider}
- */
 export default class RoutesProvider implements IRoutesProvider {
   private readonly configToRouteDtoTransformer: ConfigToRouteDtoTransformer;
 
@@ -33,11 +26,6 @@ export default class RoutesProvider implements IRoutesProvider {
     this.logger = logger;
   }
 
-  /**
-   * @param {IRouter} router
-   * @param {RouteDto[]} routes
-   * @private
-   */
   private applyRoutes(router: IRouter, routes: RouteDto[]): void {
     Object.values(routes).forEach(
       async (route): Promise<void> => {
@@ -55,10 +43,6 @@ export default class RoutesProvider implements IRoutesProvider {
     );
   }
 
-  /**
-   * @param {IRouteConfig[]} routesConfig
-   * @return {IRouter}
-   */
   public createInstance(routesConfig: IRouteConfig[]): IRouter {
     const routes = this.configToRouteDtoTransformer.convert(routesConfig);
     const router = this.routerProvider.createInstance();

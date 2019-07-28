@@ -1,4 +1,4 @@
-import { ILogger } from './ILogger';
+import { ILogger, LoggingArguments } from './ILogger';
 
 /**
  * A generic logger class. This takes a logger, which could even be console if needed.
@@ -15,35 +15,35 @@ export default class LoggingService implements ILogger {
   /**
    * @param args
    */
-  log(...args) {
+  public log(...args: LoggingArguments): void {
     this.loggingService.log(...args);
   }
 
   /**
    * @param args
    */
-  debug(...args) {
+  public debug(...args: LoggingArguments): void {
     this.loggingService.debug(...args);
   }
 
   /**
    * @param args
    */
-  info(...args) {
+  public info(...args: LoggingArguments): void {
     this.loggingService.info(...args);
   }
 
   /**
    * @param args
    */
-  error(...args) {
+  public error(...args: LoggingArguments): void {
     this.loggingService.error(...args);
   }
 
   /**
    * @param args
    */
-  warn(...args) {
+  public warn(...args: LoggingArguments): void {
     this.loggingService.warn(...args);
   }
 }
