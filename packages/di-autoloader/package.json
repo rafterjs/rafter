@@ -19,7 +19,8 @@
     "build": "yarn clean && yarn build:server",
     "clean": "rimraf ./dist",
     "lint": "./node_modules/.bin/eslint ./lib ./test",
-    "prettier": "./node_modules/.bin/prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --check \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
+    "format:fix": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,9 @@
   "license": "MIT",
   "dependencies": {
     "@rafter/di-container": "0.2.2"
+  },
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*"
   },
   "engines": {
     "node": ">9"

@@ -1,4 +1,4 @@
-const babel = require('../../babel.config');
-
-const plugins = [...babel.plugins, ['@babel/plugin-proposal-decorators', { legacy: true }]];
-module.exports = { presets: babel.presets, plugins };
+module.exports = {
+  presets: [['@rafter/babel-preset-rafter']],
+  plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
+};

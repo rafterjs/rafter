@@ -1,0 +1,44 @@
+{
+  "name": "@rafter/babel-preset-rafter",
+  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "clean": "yarn clean:lib",
+    "clean:lib": "rimraf ./dist",
+    "build": "yarn clean && yarn build:index"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "dependencies": {
+    "@babel/cli": "7.4.3",
+    "@babel/core": "7.4.3",
+    "@babel/node": "7.2.2",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.4.3",
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
+    "@babel/preset-env": "7.4.5",
+    "@babel/preset-typescript": "7.1.0",
+    "@babel/register": "7.4.4",
+    "@babel/runtime-corejs2": "7.1.2",
+    "@babel/helper-plugin-utils": "7.0.0",
+    "@typescript-eslint/eslint-plugin": "1.7.0",
+    "@typescript-eslint/parser": "1.7.0",
+    "babel-eslint": "10.0.1",
+    "babel-jest": "24.7.1",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-prettier": "4.2.0",
+    "eslint-plugin-import": "2.17.2",
+    "eslint-plugin-prettier": "3.0.1"
+  }
+}

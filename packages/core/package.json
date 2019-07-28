@@ -20,11 +20,11 @@
     "clean:lib": "rimraf ./dist",
     "build": "yarn clean && yarn build:lib",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint": "yarn lint:eslint && yarn format",
     "test:types": "tsc",
     "lint:eslint": "eslint ./lib lib/index.ts ./rafter.ts",
-    "lint:prettier": "prettier --check \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\"",
-    "prettier": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
+    "format": "prettier --check \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\"",
+    "format:fix": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
   },
   "dependencies": {
     "@rafter/di-container": "0.2.2",
@@ -32,7 +32,9 @@
     "express": "4.16.4",
     "recursive-readdir": "2.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*"
+  },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./dist/index.js",
   "engines": {
