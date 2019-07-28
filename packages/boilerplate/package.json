@@ -22,7 +22,8 @@
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
     "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
-    "copy": "copyfiles ./package.json ./dist/package.json"
+    "copy": "copyfiles ./package.json ./dist/package.json",
+    "lint": "eslint ./config/** ./lib/** ./index.ts ./dev.js"
   },
   "dependencies": {
     "@rafter/core": "*"

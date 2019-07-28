@@ -22,9 +22,8 @@
     "build:lib": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "build": "yarn clean && yarn build:lib",
     "clean": "rimraf ./dist",
-    "lint": "eslint ./lib",
-    "format": "prettier --check \"{lib}/**/*.{js,jsx,ts,tsx}\"",
-    "format:fix": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
+    "lint": "eslint ./lib/**",
+    "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "lodash.clonedeep": "4.5.0",

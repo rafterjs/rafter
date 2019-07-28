@@ -13,18 +13,15 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "",
     "test": "jest --notify ./lib",
     "build:lib": "babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
     "build": "yarn clean && yarn build:lib",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "yarn lint:eslint && yarn format",
-    "test:types": "tsc",
-    "lint:eslint": "eslint ./lib lib/index.ts ./rafter.ts",
-    "format": "prettier --check \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\"",
-    "format:fix": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
+    "types": "tsc",
+    "lint": "eslint ./lib/**",
+    "format": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
   },
   "dependencies": {
     "@rafter/di-container": "*",

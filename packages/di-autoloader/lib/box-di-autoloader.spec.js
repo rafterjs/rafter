@@ -1,6 +1,6 @@
+import { join } from 'path';
 import BoxDiAutoLoader from './box-di-autoloader';
 import TestClass from '../test/fixtures/test-class';
-import { join } from 'path';
 
 const FIXTURES_DIR = join(__dirname, 'fixtures');
 
