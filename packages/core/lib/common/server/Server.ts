@@ -130,18 +130,15 @@ export default class Server implements IServer {
       await this.initRoutes();
 
       return new Promise((resolve, reject) => {
-        this.serverInstance = this.express.listen(
-          this.serverPort,
-          (error: Error): void => {
-            if (error) {
-              this.logger.error(error);
-              reject(error);
-            }
+        this.serverInstance = this.express.listen(this.serverPort, (error: Error): void => {
+          if (error) {
+            this.logger.error(error);
+            reject(error);
+          }
 
-            this.logger.info(`ExpressServer::start Server running on port ${this.serverPort}`);
-            resolve();
-          },
-        );
+          this.logger.info(`ExpressServer::start Server running on port ${this.serverPort}`);
+          resolve();
+        });
       });
     }
 

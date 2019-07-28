@@ -28,12 +28,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rafter/di-container": "0.2.2"
+    "@rafter/di-container": "*"
   },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*"
   },
   "engines": {
-    "node": ">9"
+    "node": ">=9"
   }
 }

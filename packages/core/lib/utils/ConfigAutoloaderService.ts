@@ -113,20 +113,18 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     // get config files
     const files = await recursive(directory, [isIgnored]);
 
-    files.forEach(
-      (file: string): void => {
-        try {
-          // eslint-disable-next-line
-          const fileConfig = require(file);
-          this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
+    files.forEach((file: string): void => {
+      try {
+        // eslint-disable-next-line
+        const fileConfig = require(file);
+        this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
-          // TODO dont mutate, instead create a new one and merge
-          this.updateConfig(configDto, fileConfig.default || fileConfig, file);
-        } catch (error) {
-          this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);
-        }
-      },
-    );
+        // TODO dont mutate, instead create a new one and merge
+        this.updateConfig(configDto, fileConfig.default || fileConfig, file);
+      } catch (error) {
+        this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);
+      }
+    });
     return configDto;
   }
 }
