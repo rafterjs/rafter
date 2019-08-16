@@ -22,7 +22,7 @@
     "build:lib": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "build": "yarn clean && yarn build:lib",
     "clean": "rimraf ./dist",
-    "lint": "eslint ./lib/**",
+    "lint": "eslint index.js babel.config.js ./lib/**",
     "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*",
-    "@babel/plugin-proposal-decorators": "7.4.4"
+    "@babel/plugin-proposal-decorators": "7.4.4",
+    "@rafter/eslint-config": "*"
   }
 }

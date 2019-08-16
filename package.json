@@ -10,6 +10,8 @@
     "lint:fix": "lerna run lint -- --fix",
     "lint:core": "cd packages/core && yarn lint",
     "lint:boilerplate": "cd packages/boilerplate && yarn lint",
+    "lint:di-container": "cd packages/di-container && yarn lint",
+    "lint:di-autoloader": "cd packages/di-autoloader && yarn lint",
     "build:boilerplate": "cd packages/boilerplate && yarn build",
     "build:core": "cd packages/core && yarn build",
     "build:babel": "cd packages/babel-preset-rafter && yarn build",
