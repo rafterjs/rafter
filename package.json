@@ -45,9 +45,9 @@
     "eslint-plugin-prettier": "3.1.0",
     "jest": "24.8.0",
     "lerna": "3.16.4",
-    "pm2": "3.5.1",
     "prettier": "1.18.2",
     "rimraf": "2.6.3",
+    "ts-jest": "^24.1.0",
     "ts-node": "8.3.0",
     "tslint": "5.18.0",
     "typescript": "3.5.3"

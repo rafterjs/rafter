@@ -5,6 +5,8 @@ import spreadPlugin from '@babel/plugin-proposal-object-rest-spread';
 import importPlugin from '@babel/plugin-syntax-dynamic-import';
 import typescriptPreset from '@babel/preset-typescript';
 
+const isTest = process.env.NODE_ENV ? process.env.NODE_ENV.toLocaleLowerCase() === 'test' : false;
+
 const presets = [
   [
     presetEnv,
@@ -12,6 +14,7 @@ const presets = [
       targets: {
         node: '9',
       },
+      modules: isTest ? 'commonjs' : false,
     },
   ],
 ];

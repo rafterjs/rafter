@@ -1,0 +1,28 @@
+{
+  "name": "@rafter/cors-rafter-plugin",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@babel/register": "7.5.5",
+    "@rafter/core": "*"
+  },
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*"
+  },
+  "description": "A simple CORS plugin",
+  "main": "./dist/lib/cors.js",
+  "engines": {
+    "node": ">=9"
+  }
+}

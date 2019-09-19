@@ -21,8 +21,9 @@ export interface RafterConfig {
 
 /**
  *
- * @param {string=} appDirectory This is the directory your application is located. Most of the time it
- *     will be 2 directories up from where Rafter is located, but that is not always the case.
+ * @param {string=} appDirectory This is the directory your application is located. Most of the
+ *   time it will be 2 directories up from where Rafter is located, but that is not always the
+ *   case.
  * @param {ConfigAutoloaderService} configAutoloaderService
  * @param {Logger=} logger a logging interface eg. winston, console, etc
  * @return {Rafter}
@@ -39,7 +40,12 @@ export default class Rafter {
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { appDirectory = join(__dirname, '/../../'), configAutoloaderService, logger = console } = rafterConfig;
+    const {
+      // TODO there may be a better way to get to the app dir without assuming it's 2 levels up
+      appDirectory = join(__dirname, '/../../'),
+      configAutoloaderService,
+      logger = console,
+    } = rafterConfig;
 
     this.appDirectory = appDirectory;
     this.configAutoloaderService = configAutoloaderService;
@@ -57,15 +63,22 @@ export default class Rafter {
     // load application specific config
     if (this.appDirectory) {
       const applicationConfigDto = await this.configAutoloaderService.get(this.appDirectory);
-
       // merge the application config
       configDto
         .addConfig(applicationConfigDto.getConfig())
+        .addPlugins(applicationConfigDto.getPlugins())
         .addServices(applicationConfigDto.getServices())
         .addMiddleware(applicationConfigDto.getMiddleware())
         .addPreStartHooks(applicationConfigDto.getPreStartHooks())
         .addRoutes(applicationConfigDto.getRoutes());
     }
+
+    // iterate through plugin directories and populate more services
+    Object.entries(configDto.getPlugins()).forEach(([key, conf]) => {
+      console.log('------', key, conf);
+      // get the pacakge directory
+      // iterate through the dir to add more services, configi etfc
+    });
 
     return configDto;
   }
@@ -88,7 +101,6 @@ export default class Rafter {
 
     // add the middleware to the DI container
     Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
-
     return boxDiAutoloaderFactory(configDto.getServices(), this.logger);
   }
 

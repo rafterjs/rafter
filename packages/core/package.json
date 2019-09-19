@@ -21,7 +21,7 @@
     "copy": "copyfiles ./package.json ./dist/package.json",
     "types": "tsc",
     "lint": "eslint ./lib/**",
-    "format": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@rafter/di-container": "*",

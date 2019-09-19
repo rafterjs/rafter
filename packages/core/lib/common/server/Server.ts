@@ -8,6 +8,7 @@ import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider
 import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddlewareConfig } from '../middleware/IMiddleware';
 import { ILogger } from '../../utils/ILogger';
+import { IPluginProvider } from '../plugins/PluginProvider';
 
 export interface IServer {
   start(): Promise<void>;
@@ -45,6 +46,8 @@ export default class Server implements IServer {
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
 
+  private readonly pluginProvider: IPluginProvider;
+
   private readonly serverPort: number;
 
   private readonly logger: ILogger;
@@ -54,6 +57,7 @@ export default class Server implements IServer {
     routerProvider: IRoutesProvider,
     middlewareProvider: IMiddlewareProvider,
     preStartHookProvider: IPreStartHooksProvider,
+    pluginProvider: IPluginProvider,
     middlewareConfig: IMiddlewareConfig[] = [],
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
@@ -64,6 +68,7 @@ export default class Server implements IServer {
     this.routerProvider = routerProvider;
     this.middlewareProvider = middlewareProvider;
     this.preStartHookProvider = preStartHookProvider;
+    this.pluginProvider = pluginProvider;
     this.middlewareConfig = middlewareConfig;
     this.routesConfig = routesConfig;
     this.preStartHooks = preStartHooks;
@@ -119,6 +124,8 @@ export default class Server implements IServer {
    */
   public async start(): Promise<void> {
     if (!this.serverInstance) {
+      // get all plugins
+
       // add all the middleware
       this.logger.info(`ExpressServer::start running pre-start hooks`);
       await this.initPreStartHooks();

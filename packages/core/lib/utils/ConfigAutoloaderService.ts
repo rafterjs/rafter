@@ -4,26 +4,41 @@ import * as fs from 'fs';
 import ConfigDto from './ConfigDto';
 import { ILogger } from './ILogger';
 import { IConfigAutoloader } from './IConfigAutoloader';
-import { IConfigTypes } from './IConfig';
+import { IConfig } from './IConfig';
 import { IServiceConfig } from '../common/IService';
 import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
+import { IPlugin } from '../common/plugins/IPlugin';
 
-const DEFAULT_FILENAMES = {
-  CONFIG: `.config.js`,
-  SERVICES: `.services.js`,
-  MIDDLEWARE: `.middleware.js`,
-  ROUTES: `.routes.js`,
-  PRE_START_HOOKS: `.pre-start-hooks.js`,
+export const DEFAULT_FILENAMES = {
+  CONFIG: `.config`,
+  SERVICES: `.services`,
+  PLUGINS: `.plugins`,
+  MIDDLEWARE: `.middleware`,
+  ROUTES: `.routes`,
+  PRE_START_HOOKS: `.pre-start-hooks`,
 };
 const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
+
+export interface IConfigAutoloaderServiceOptions {
+  configFileName?: string;
+  servicesFileName?: string;
+  pluginsFileName?: string;
+  middlewareFileName?: string;
+  routesFileName?: string;
+  preStartHooksFileName?: string;
+  logger?: ILogger;
+  failOnError?: boolean;
+}
 
 /**
  * A service that autoloads all the config from dotfiles in the project
  */
 export default class ConfigAutoloaderService implements IConfigAutoloader {
   private readonly allowedFileNames: string[];
+
+  private readonly pluginsFileName: string;
 
   private readonly configFileName: string;
 
@@ -37,27 +52,37 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
 
   private readonly logger: ILogger;
 
-  constructor({
-    configFileName = DEFAULT_FILENAMES.CONFIG,
-    servicesFileName = DEFAULT_FILENAMES.SERVICES,
-    middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
-    routesFileName = DEFAULT_FILENAMES.ROUTES,
-    preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
-    logger = console,
-  }) {
+  private readonly failOnError: boolean;
+
+  constructor(options?: IConfigAutoloaderServiceOptions) {
+    const {
+      configFileName = DEFAULT_FILENAMES.CONFIG,
+      servicesFileName = DEFAULT_FILENAMES.SERVICES,
+      pluginsFileName = DEFAULT_FILENAMES.PLUGINS,
+      middlewareFileName = DEFAULT_FILENAMES.MIDDLEWARE,
+      routesFileName = DEFAULT_FILENAMES.ROUTES,
+      preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
+      logger = console,
+      failOnError = false,
+    } = options || {};
+
     this.allowedFileNames = [
       configFileName,
       servicesFileName,
+      pluginsFileName,
       middlewareFileName,
       routesFileName,
       preStartHooksFileName,
     ];
+
     this.configFileName = configFileName;
     this.servicesFileName = servicesFileName;
+    this.pluginsFileName = pluginsFileName;
     this.middlewareFileName = middlewareFileName;
     this.routesFileName = routesFileName;
     this.preStartHooksFileName = preStartHooksFileName;
     this.logger = logger;
+    this.failOnError = failOnError;
   }
 
   private static isIgnoredDirectory(pathname: string): boolean {
@@ -66,10 +91,17 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  private updateConfig(configDto: ConfigDto, config: IConfigTypes, file: string): void {
-    const filename = path.basename(file);
+  public getConfigFromFile(file: string): ConfigDto {
+    const fileContents = require(file);
+    const config = fileContents.default || fileContents;
+
+    const filename = path.parse(file).name;
+    const configDto = new ConfigDto();
 
     switch (filename) {
+      case this.pluginsFileName:
+        configDto.addPlugins(config as IPlugin<IConfig>);
+        break;
       case this.configFileName:
         configDto.addConfig(config as object);
         break;
@@ -88,6 +120,8 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
       default:
         break;
     }
+
+    return configDto;
   }
 
   private isAllowedFile(file: string): boolean {
@@ -95,7 +129,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   }
 
   public async get(directory: string): Promise<ConfigDto> {
-    const configDto = new ConfigDto();
+    let configDto = new ConfigDto();
 
     const isIgnored = (file: string, stats: fs.Stats): boolean => {
       return ConfigAutoloaderService.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
@@ -107,15 +141,15 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     files.forEach((file: string): void => {
       try {
         // eslint-disable-next-line
-        const fileConfig = require(file);
         this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
-        // TODO dont mutate, instead create a new one and merge
-        this.updateConfig(configDto, fileConfig.default || fileConfig, file);
+        const fileConfig = this.getConfigFromFile(file);
+        configDto = new ConfigDto(configDto, fileConfig);
       } catch (error) {
         this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);
       }
     });
+
     return configDto;
   }
 }

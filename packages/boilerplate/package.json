@@ -13,7 +13,7 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "pm2 start ./dev.js --watch",
+    "start": "node ./dev.js",
     "stop": "pm2 stop ./dev.js",
     "test": "jest --notify ./lib",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@babel/register": "7.5.5",
-    "@rafter/core": "*"
+    "@rafter/core": "*",
+    "@rafter/cors-rafter-plugin": "*"
   },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*"

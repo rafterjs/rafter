@@ -2,6 +2,7 @@ import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
+import { IPlugin } from '../common/plugins/IPlugin';
 
 export interface IConfig {
   getConfig(): object;
@@ -23,6 +24,10 @@ export interface IConfig {
   getRoutes(): IRouteConfig[];
 
   addRoutes(newRoutes: IRouteConfig[]): IConfig;
+
+  getPlugins(): IPlugin<IConfig>;
+
+  addPlugins(plugin: IPlugin<IConfig>): IConfig;
 }
 
 export type IConfigTypes = IPreStartHookConfig | IServiceConfig | IMiddlewareConfig | IRouteConfig | object;
