@@ -3,7 +3,7 @@ import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
 import { IConfig } from './IConfig';
-import { IPlugin, IPluginConfig } from '../common/plugins/IPlugin';
+import { IPlugin } from '../common/plugins/IPlugin';
 
 /**
  * A config dto which holds information about services, middleware, routes and misc config. This is
@@ -55,7 +55,7 @@ export default class ConfigDto implements IConfig {
     return this.preStartHooks;
   }
 
-  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[]): ConfigDto {
+  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[] = []): ConfigDto {
     this.preStartHooks = [...this.preStartHooks, ...newPreStartHooks];
     return this;
   }
@@ -64,7 +64,7 @@ export default class ConfigDto implements IConfig {
     return this.services;
   }
 
-  public addServices(newServices: IServiceConfig): ConfigDto {
+  public addServices(newServices: IServiceConfig = {}): ConfigDto {
     this.services = {
       ...this.services,
       ...newServices,
@@ -76,7 +76,7 @@ export default class ConfigDto implements IConfig {
     return this.middleware;
   }
 
-  public addMiddleware(newMiddleware: IMiddlewareConfig[]): ConfigDto {
+  public addMiddleware(newMiddleware: IMiddlewareConfig[] = []): ConfigDto {
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }
@@ -94,7 +94,7 @@ export default class ConfigDto implements IConfig {
     return this.plugins;
   }
 
-  public addPlugins(plugins: IPlugin<IConfig>): ConfigDto {
+  public addPlugins(plugins: IPlugin<IConfig> = {}): ConfigDto {
     this.plugins = {
       ...this.plugins,
       ...plugins,
