@@ -58,11 +58,11 @@ export default class Rafter {
    */
   private async getConfig(): Promise<ConfigDto> {
     // load rafter config files first
-    const configDto = await this.configAutoloaderService.get(RAFTER_AUTOLOADER_DIRECTORY);
+    const configDto = await this.configAutoloaderService.getConfigFromDirectory(RAFTER_AUTOLOADER_DIRECTORY);
 
     // load application specific config
     if (this.appDirectory) {
-      const applicationConfigDto = await this.configAutoloaderService.get(this.appDirectory);
+      const applicationConfigDto = await this.configAutoloaderService.getConfigFromDirectory(this.appDirectory);
       // merge the application config
       configDto
         .addConfig(applicationConfigDto.getConfig())

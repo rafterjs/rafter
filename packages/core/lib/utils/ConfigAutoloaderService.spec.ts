@@ -43,15 +43,13 @@ describe('ConfigAutoloaderService', () => {
 
       const routes = configDto.getRoutes();
       expect(routes).toHaveLength(2);
-      expect(routes[0])
-        .toEqual({ action: 'index', controller: 'homeController', endpoint: '/', method: 'get' });
-      expect(routes[1])
-        .toEqual({
-          action: 'index',
-          controller: 'otherController',
-          endpoint: '/other',
-          method: 'post',
-        });
+      expect(routes[0]).toEqual({ action: 'index', controller: 'homeController', endpoint: '/', method: 'get' });
+      expect(routes[1]).toEqual({
+        action: 'index',
+        controller: 'otherController',
+        endpoint: '/other',
+        method: 'post',
+      });
     });
 
     it('should retrieve pre-start hook config from a .pre-start-hooks file', async () => {
@@ -65,6 +63,10 @@ describe('ConfigAutoloaderService', () => {
   });
 
   describe('Get config from directory', () => {
+    it('should retrieve pre-start from directory', async () => {
+      const configDto = await configAutoloaderService.getConfigFromDirectory(testFixturesDir);
 
+      const hooks = configDto.getPreStartHooks();
+    });
   });
 });

@@ -1,5 +1,5 @@
 import ConfigDto from './ConfigDto';
 
 export interface IConfigAutoloader {
-  get(directory: string): Promise<ConfigDto>;
+  getConfigFromDirectory(directory: string): Promise<ConfigDto>;
 }

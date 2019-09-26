@@ -1,4 +1,5 @@
-
-
-it('renders without crashing', async () => {]
+describe('rafter', () => {
+  it('renders without crashing', () => {
+    return false;
+  });
 });

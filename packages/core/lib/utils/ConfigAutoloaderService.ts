@@ -92,6 +92,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   }
 
   public getConfigFromFile(file: string): ConfigDto {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
     const fileContents = require(file);
     const config = fileContents.default || fileContents;
 
@@ -128,7 +129,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     return this.allowedFileNames.includes(path.basename(file));
   }
 
-  public async get(directory: string): Promise<ConfigDto> {
+  public async getConfigFromDirectory(directory: string): Promise<ConfigDto> {
     let configDto = new ConfigDto();
 
     const isIgnored = (file: string, stats: fs.Stats): boolean => {
