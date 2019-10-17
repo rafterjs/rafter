@@ -1,12 +1,12 @@
 FROM node:latest
 
-RUN mkdir /packages
-WORKDIR /packages
+RUN mkdir /app
+WORKDIR /app
 
-ENV PATH /packages/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json yarn.lock .eslintignore .eslintrc.js .prettierrc.js /packages/
+COPY package.json yarn.lock .eslintignore .eslintrc.js .prettierrc.js lerna.json /app/
 RUN yarn install
-RUN yarn bootstrap
 
-COPY . /packages/
+COPY packages/ app/packages/
+RUN yarn bootstrap
