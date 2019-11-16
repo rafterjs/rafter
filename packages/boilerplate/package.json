@@ -31,7 +31,8 @@
     "@rafter/cors-rafter-plugin": "*"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*"
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
   },
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/index.js",
