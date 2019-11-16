@@ -12,7 +12,12 @@
     "type": "git",
     "url": "https://github.com/crimsonronin/rafter.git"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "echo \"TODO\"",
+    "test": "echo \"TODO\"",
+    "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
+    "clean:modules": "rimraf ./node_modules"
+  },
   "dependencies": {
     "@babel/register": "7.5.5",
     "@rafter/core": "*"

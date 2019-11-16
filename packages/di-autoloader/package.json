@@ -18,7 +18,8 @@
     "build:server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "build": "yarn clean && yarn build:server",
     "clean": "rimraf ./dist",
-    "lint": "eslint ./lib/** ./test/** ./index.js",
+    "clean:modules": "rimraf ./node_modules",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./index.js",
     "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""
   },
   "repository": {

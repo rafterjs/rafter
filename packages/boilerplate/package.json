@@ -14,16 +14,17 @@
   },
   "scripts": {
     "start": "node ./dev.js",
-    "stop": "pm2 stop ./dev.js",
+    "stop": "echo 'stop'",
     "test": "jest --notify ./lib",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
+    "clean:modules": "rimraf ./node_modules",
     "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint ./config/.config.ts ./config/.routes.ts ./lib/** ./index.ts ./dev.js"
+    "lint": "eslint \"./config/**/*\" \"./lib/**/*\" ./index.ts ./dev.js ./babel.config.js"
   },
   "dependencies": {
     "@babel/register": "7.5.5",

@@ -17,10 +17,11 @@
     "build:lib": "babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
+    "clean:modules": "rimraf ./node_modules",
     "build": "yarn clean && yarn build:lib",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "types": "tsc",
-    "lint": "eslint ./lib/**",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {

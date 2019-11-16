@@ -13,7 +13,7 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "lint": "eslint ./config/.config.ts ./config/.routes.ts ./lib/** ./index.ts ./dev.js"
+    "lint": "eslint ./index.js ./typescript.js"
   },
   "description": "eslint rules for rafter projects",
   "main": "./index.js",
