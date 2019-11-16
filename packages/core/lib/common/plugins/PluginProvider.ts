@@ -2,18 +2,18 @@ import { IDiContainer } from '@rafter/di-container';
 import { ILogger } from '../../utils/ILogger';
 import { IPlugin, IPluginConfig } from './IPlugin';
 
-export interface IPluginProvider {
-  createInstance(pluginConfig: string[]): IPlugin | IPlugin[];
+export interface IPluginProvider<T> {
+  createInstance(pluginConfig: IPluginConfig<T>): IPlugin<T> | IPlugin<T>[];
 }
 
 /**
  *
  * @param {IDiContainer} diContainer
- * @param {Logger} logger
+ * @param {ILogger} logger
  * @return {PluginProvider}
  */
 
-export default class PluginProvider implements IPluginProvider {
+export default class PluginProvider<T> implements IPluginProvider<T> {
   private readonly diContainer: IDiContainer;
 
   private readonly logger: ILogger;
@@ -27,10 +27,10 @@ export default class PluginProvider implements IPluginProvider {
    * @param {IPluginConfig} pluginsConfig
    * @return {Function|Function[]}
    */
-  public createInstance(pluginsConfig: IPluginConfig): IPlugin | IPlugin[] {
-    const plugins: IPlugin | IPlugin[] = [];
+  public createInstance(pluginsConfig: IPluginConfig<T>): IPlugin<T> | IPlugin<T>[] {
+    const plugins: IPlugin<T> | IPlugin<T>[] = [];
 
-    console.log('--------------', pluginsConfig);
+    this.logger.debug('--------------', pluginsConfig);
     return plugins;
   }
 }

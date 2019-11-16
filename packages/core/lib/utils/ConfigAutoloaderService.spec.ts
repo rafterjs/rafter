@@ -67,6 +67,7 @@ describe('ConfigAutoloaderService', () => {
       const configDto = await configAutoloaderService.getConfigFromDirectory(testFixturesDir);
 
       const hooks = configDto.getPreStartHooks();
+      expect(hooks).toBeDefined();
     });
   });
 });

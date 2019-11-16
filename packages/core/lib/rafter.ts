@@ -74,10 +74,13 @@ export default class Rafter {
     }
 
     // iterate through plugin directories and populate more services
-    Object.entries(configDto.getPlugins()).forEach(([key, conf]) => {
-      console.log('------', key, conf);
-      // get the pacakge directory
-      // iterate through the dir to add more services, configi etfc
+    Object.entries(configDto.getPlugins()).forEach(plugin => {
+      const [key, config]: [string, any] = plugin;
+      this.logger.debug('------', key, config);
+
+      // TODO
+      // get the package directory
+      // iterate through the dir to add more services
     });
 
     return configDto;
