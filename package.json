@@ -28,7 +28,7 @@
     "test:di-autoloader": "cd packages/di-autoloader && yarn test",
     "test:di-container": "cd packages/di-container && yarn test",
     "test:core": "cd packages/core && yarn test",
-    "test:boilerplace": "cd packages/boilerplace && yarn test"
+    "test:boilerplate": "cd packages/boilerplate && yarn test"
   },
   "devDependencies": {
     "@babel/cli": "7.6.2",

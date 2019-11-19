@@ -2,7 +2,7 @@ import { join } from 'path';
 import BoxDiAutoLoader from './box-di-autoloader';
 import TestClass from '../test/fixtures/test-class';
 
-const FIXTURES_DIR = join(__dirname, 'fixtures');
+const FIXTURES_DIR = join(__dirname, '../test', 'fixtures');
 
 describe('BoxDI autoloader', () => {
   let mockLogger;

@@ -24,6 +24,7 @@
     "clean": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
     "lint": "eslint ./index.js ./babel.config.js \"./lib/**/*\"",
+    "test": "jest --notify",
     "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
