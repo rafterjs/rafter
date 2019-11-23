@@ -9,7 +9,7 @@ import { IServiceConfig } from '../common/IService';
 import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
-import { IPlugin } from '../common/plugins/IPlugin';
+import { IPluginConfig } from '../common/plugins/IPlugin';
 
 export const DEFAULT_FILENAMES = {
   CONFIG: `.config`,
@@ -101,7 +101,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
 
     switch (filename) {
       case this.pluginsFileName:
-        configDto.addPlugins(config as IPlugin<IConfig>);
+        configDto.addPlugins(config as IPluginConfig<IConfig>);
         break;
       case this.configFileName:
         configDto.addConfig(config as object);

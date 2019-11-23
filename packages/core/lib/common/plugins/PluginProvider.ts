@@ -30,7 +30,11 @@ export default class PluginProvider<T> implements IPluginProvider<T> {
   public createInstance(pluginsConfig: IPluginConfig<T>): IPlugin<T> | IPlugin<T>[] {
     const plugins: IPlugin<T> | IPlugin<T>[] = [];
 
-    this.logger.debug('--------------', pluginsConfig);
+    Object.entries(pluginsConfig).forEach(([config, pluginName]): void => {
+      this.logger.debug('-------------pluginName-', pluginName);
+      this.logger.debug('-------------config-', config);
+    });
+
     return plugins;
   }
 }
