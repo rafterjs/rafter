@@ -16,7 +16,13 @@
     "start": "echo \"TODO\"",
     "test": "echo \"TODO\"",
     "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
-    "clean:modules": "rimraf ./node_modules"
+
+    "clean": "yarn clean:lib",
+    "clean:lib": "rimraf ./dist",
+    "clean:modules": "rimraf ./node_modules",
+
+    "build:types": "tsc --emitDeclarationOnly",
+    "build": "yarn clean && yarn build:lib && yarn build:types"
   },
   "dependencies": {
     "@babel/register": "7.5.5",

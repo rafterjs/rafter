@@ -5,6 +5,7 @@
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start",
     "build": "lerna run build",
+    "build:types": "lerna run build:types",
     "test": "lerna run test",
     "lint": "lerna run lint",
     "clean": "lerna run clean",

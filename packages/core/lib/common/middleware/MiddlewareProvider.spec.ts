@@ -3,7 +3,6 @@ import MiddlewareProvider from './MiddlewareProvider';
 import { IDiContainer } from '@rafter/di-container';
 import { ILogger } from '../../utils/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
-import { jestPreset } from 'ts-jest';
 
 const testFixturesDir = join(__dirname, '../../test/fixtures/config');
 

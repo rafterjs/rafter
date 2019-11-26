@@ -14,6 +14,7 @@
   },
   "scripts": {
     "start": "node ./dev.js",
+    "start:prod": "node ./dist/index.js",
     "stop": "echo 'stop'",
     "test": "jest --notify ./lib",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",

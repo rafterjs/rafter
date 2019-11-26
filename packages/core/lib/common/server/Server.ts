@@ -9,6 +9,7 @@ import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddlewareConfig } from '../middleware/IMiddleware';
 import { ILogger } from '../../utils/ILogger';
 import { IPluginProvider } from '../plugins/PluginProvider';
+import { IConfig } from '../../utils/IConfig';
 
 export interface IServer {
   start(): Promise<void>;
@@ -46,7 +47,7 @@ export default class Server implements IServer {
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
 
-  private readonly pluginProvider: IPluginProvider;
+  private readonly pluginProvider: IPluginProvider<IConfig>;
 
   private readonly serverPort: number;
 
@@ -57,7 +58,7 @@ export default class Server implements IServer {
     routerProvider: IRoutesProvider,
     middlewareProvider: IMiddlewareProvider,
     preStartHookProvider: IPreStartHooksProvider,
-    pluginProvider: IPluginProvider,
+    pluginProvider: IPluginProvider<IConfig>,
     middlewareConfig: IMiddlewareConfig[] = [],
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
@@ -125,6 +126,8 @@ export default class Server implements IServer {
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
+      this.logger.info(`ExpressServer::start loading plugins`);
+      // TODO get plugins
 
       // add all the middleware
       this.logger.info(`ExpressServer::start running pre-start hooks`);
