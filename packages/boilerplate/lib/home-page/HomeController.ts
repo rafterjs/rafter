@@ -5,6 +5,7 @@ interface IHomeController extends IController {
   index: IControllerAction;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 export default class HomeController implements IHomeController {
   // TODO figure out why this is required here

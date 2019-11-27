@@ -4,11 +4,12 @@ import { Request, Response } from 'express';
 interface IOtherController extends IController {
   index: IControllerAction;
 }
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 export default class OtherController implements IOtherController {
   private readonly message: string;
 
-  constructor(message) {
+  constructor(message: string) {
     this.message = message;
   }
 

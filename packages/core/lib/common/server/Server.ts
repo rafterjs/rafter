@@ -62,7 +62,7 @@ export default class Server implements IServer {
     middlewareConfig: IMiddlewareConfig[] = [],
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
-    serverPort: number = 3000,
+    serverPort = 3000,
     logger: ILogger = console,
   ) {
     this.express = express;
@@ -105,9 +105,9 @@ export default class Server implements IServer {
    */
   private async initMiddleware(): Promise<void> {
     if (this.middlewareConfig.length > 0) {
-      this.express.use(this.middlewareProvider.createInstance(this.middlewareConfig) as (
-        | RequestHandler
-        | RequestHandler[]));
+      this.express.use(
+        this.middlewareProvider.createInstance(this.middlewareConfig) as RequestHandler | RequestHandler[],
+      );
     }
   }
 

@@ -74,9 +74,9 @@ export default class Rafter {
     }
 
     // iterate through plugin directories and populate more services
-    console.log('-----------', configDto.getPlugins())
+    this.logger.log('-----------', configDto.getPlugins());
     Object.entries(configDto.getPlugins()).forEach(plugin => {
-      const [key, config]: [string, any] = plugin;
+      const [key, config]: [string, object] = plugin;
       this.logger.debug('------', key, config);
 
       // TODO

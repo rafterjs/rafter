@@ -13,19 +13,19 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "node ./dev.js",
-    "start:prod": "node ./dist/index.js",
-    "stop": "echo 'stop'",
-    "test": "jest --notify ./lib",
+    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
+    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
-    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint \"./config/**/*\" \"./lib/**/*\" ./index.ts ./dev.js ./babel.config.js"
+    "lint": "eslint \"./config/**/*\" \"./lib/**/*\" ./index.ts ./dev.js ./babel.config.js",
+    "start": "node ./dev.js",
+    "start:prod": "node ./dist/index.js",
+    "stop": "echo 'stop'",
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
     "@babel/register": "7.5.5",

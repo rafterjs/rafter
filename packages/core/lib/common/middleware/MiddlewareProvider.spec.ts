@@ -1,10 +1,7 @@
-import { join } from 'path';
-import MiddlewareProvider from './MiddlewareProvider';
 import { IDiContainer } from '@rafter/di-container';
+import MiddlewareProvider from './MiddlewareProvider';
 import { ILogger } from '../../utils/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
-
-const testFixturesDir = join(__dirname, '../../test/fixtures/config');
 
 describe('MiddlewareProvider', () => {
   let mockDiContainer: IDiContainer;
@@ -13,9 +10,9 @@ describe('MiddlewareProvider', () => {
   let mockMiddleware2: IMiddleware;
 
   beforeEach(() => {
-    mockDiContainer = {
+    mockDiContainer = ({
       get: jest.fn(),
-    };
+    } as unknown) as IDiContainer;
     mockLogger = console;
 
     mockMiddleware1 = jest.fn();
@@ -24,9 +21,7 @@ describe('MiddlewareProvider', () => {
 
   it('should instantiate middleware collection from config', async () => {
     const config: IMiddlewareConfig[] = ['mockMiddleware1', 'mockMiddleware2'];
-    mockDiContainer.get
-      .mockReturnValueOnce(mockMiddleware1)
-      .mockReturnValueOnce(mockMiddleware2);
+    mockDiContainer.get.mockReturnValueOnce(mockMiddleware1).mockReturnValueOnce(mockMiddleware2);
 
     const middlewareProvider = new MiddlewareProvider(mockDiContainer, mockLogger);
 
@@ -37,5 +32,5 @@ describe('MiddlewareProvider', () => {
     expect(middleware[0]).toBe(mockMiddleware1);
   });
 
-  it.skip('should not fail on error',()=>{})
+  it.skip('should not fail on error', () => {});
 });

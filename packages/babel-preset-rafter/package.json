@@ -9,12 +9,13 @@
   ],
   "main": "dist/index.js",
   "scripts": {
+    "build": "yarn clean && yarn build:index",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean:modules": "rimraf ./node_modules",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
-    "build": "yarn clean && yarn build:index",
-    "lint": "eslint ./index.ts ./babel.config.js"
+    "lint": "eslint ./index.ts ./babel.config.js",
+    "update:latest": "yarn upgrade --latest"
   },
   "license": "MIT",
   "repository": {
@@ -22,25 +23,25 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "dependencies": {
-    "@babel/cli": "7.5.5",
-    "@babel/core": "7.5.5",
+    "@babel/cli": "7.7.4",
+    "@babel/core": "7.7.4",
     "@babel/helper-plugin-utils": "7.0.0",
-    "@babel/node": "7.5.5",
-    "@babel/plugin-proposal-class-properties": "7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.5.5",
-    "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/preset-env": "7.5.5",
-    "@babel/preset-typescript": "7.3.3",
-    "@babel/register": "7.5.5",
-    "@babel/runtime-corejs2": "7.5.5",
-    "@typescript-eslint/eslint-plugin": "1.13.0",
-    "@typescript-eslint/parser": "1.13.0",
-    "babel-eslint": "10.0.2",
-    "babel-jest": "24.8.0",
-    "eslint": "6.1.0",
-    "eslint-config-airbnb": "17.1.1",
-    "eslint-config-prettier": "6.0.0",
+    "@babel/node": "7.7.4",
+    "@babel/plugin-proposal-class-properties": "7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "7.7.4",
+    "@babel/preset-env": "7.7.4",
+    "@babel/preset-typescript": "7.7.4",
+    "@babel/register": "7.7.4",
+    "@babel/runtime-corejs2": "7.7.4",
+    "@typescript-eslint/eslint-plugin": "2.9.0",
+    "@typescript-eslint/parser": "2.9.0",
+    "babel-eslint": "10.0.3",
+    "babel-jest": "24.9.0",
+    "eslint": "6.7.1",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-prettier": "6.7.0",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-prettier": "3.1.0"
+    "eslint-plugin-prettier": "3.1.1"
   }
 }

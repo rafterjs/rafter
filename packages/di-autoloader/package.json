@@ -13,14 +13,13 @@
   ],
   "main": "dist/index.js",
   "scripts": {
-    "start": "",
-    "test": "jest --notify",
-    "build:server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "build": "yarn clean && yarn build:server",
+    "build:server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib --ignore \"**/*.spec.js\"",
     "clean": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
+    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./index.js",
-    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""
+    "test": "jest --notify"
   },
   "repository": {
     "type": "git",

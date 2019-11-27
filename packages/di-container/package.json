@@ -18,14 +18,14 @@
   },
   "main": "./dist/index.js",
   "scripts": {
-    "start": "",
-    "build:lib": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "build": "yarn clean && yarn build:lib",
+    "build:lib": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "clean": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
     "lint": "eslint ./index.js ./babel.config.js \"./lib/**/*\"",
+    "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\"",
     "test": "jest --notify",
-    "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\""
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
     "lodash.clonedeep": "4.5.0",

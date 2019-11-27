@@ -13,19 +13,17 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "echo \"TODO\"",
-    "test": "echo \"TODO\"",
-    "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
-
+    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:types",
+    "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
-
-    "build:types": "tsc --emitDeclarationOnly",
-    "build": "yarn clean && yarn build:lib && yarn build:types"
+    "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
+    "start": "echo \"TODO\""
   },
   "dependencies": {
-    "@babel/register": "7.5.5",
     "@rafter/core": "*"
   },
   "devDependencies": {

@@ -13,7 +13,6 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "test": "jest --notify ./lib",
     "build": "yarn clean && yarn build:lib && yarn build:types",
     "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
@@ -21,9 +20,11 @@
     "clean:lib": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "types": "tsc",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\""
+    "test": "jest --notify ./lib",
+    "types": "tsc",
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
     "@rafter/di-container": "*",

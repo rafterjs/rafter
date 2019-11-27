@@ -35,7 +35,11 @@ describe('scope', () => {
   });
 
   it('should thrown an error when the factory does not have the correct interface', () => {
-    expect(() => scope()(() => console.log('invalid'))).toThrow();
+    expect(() =>
+      scope()(() => {
+        return null;
+      }),
+    ).toThrow();
     expect(Box.setFactoryScope.notCalled).toBeTruthy();
   });
 });
