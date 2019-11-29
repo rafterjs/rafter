@@ -63,6 +63,7 @@ export default class Rafter {
     // load application specific config
     if (this.appDirectory) {
       const applicationConfigDto = await this.configAutoloaderService.getConfigFromDirectory(this.appDirectory);
+
       // merge the application config
       configDto
         .addConfig(applicationConfigDto.getConfig())
@@ -74,7 +75,6 @@ export default class Rafter {
     }
 
     // iterate through plugin directories and populate more services
-    this.logger.log('-----------', configDto.getPlugins());
     Object.entries(configDto.getPlugins()).forEach(plugin => {
       const [key, config]: [string, object] = plugin;
       this.logger.debug('------', key, config);

@@ -19,7 +19,7 @@ export const DEFAULT_FILENAMES = {
   ROUTES: `.routes`,
   PRE_START_HOOKS: `.pre-start-hooks`,
 };
-const IGNORE_DIRECTORIES = [`node_modules`, `.git`];
+const IGNORE_DIRECTORIES = [`dist`, `node_modules`, `.git`];
 
 export interface IConfigAutoloaderServiceOptions {
   configFileName?: string;
@@ -86,8 +86,9 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   }
 
   private static isIgnoredDirectory(pathname: string): boolean {
-    const directories = pathname.split('/');
+    const directories = pathname.split(path.sep);
     const lastDirectory = directories.pop();
+
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
@@ -126,14 +127,17 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
   }
 
   private isAllowedFile(file: string): boolean {
-    return this.allowedFileNames.includes(path.basename(file));
+    return this.allowedFileNames.includes(path.parse(file).name);
   }
 
   public async getConfigFromDirectory(directory: string): Promise<ConfigDto> {
     let configDto = new ConfigDto();
 
     const isIgnored = (file: string, stats: fs.Stats): boolean => {
-      return ConfigAutoloaderService.isIgnoredDirectory(file) || (!stats.isDirectory() && !this.isAllowedFile(file));
+      return (
+        (stats.isDirectory() && ConfigAutoloaderService.isIgnoredDirectory(file)) ||
+        (!stats.isDirectory() && !this.isAllowedFile(file))
+      );
     };
 
     // get config files

@@ -6,6 +6,7 @@ export default {
       'routesProvider',
       'middlewareProvider',
       'preStartHooksProvider',
+      'pluginProvider',
       'middleware',
       'routes',
       'preStartHooks',
