@@ -1,16 +1,42 @@
+import { CameraState, JsIrSdk } from 'node-irsdk';
+import { CameraGroupNumber, CameraNumber } from './CameraConstants';
+
 export interface ICameraControlDao {
   hideUi(): void;
 }
 
 export default class CameraControlDao implements ICameraControlDao {
-  private readonly irsdk: object;
+  private readonly irsdk: JsIrSdk;
 
-  constructor(irsdk: object) {
+  constructor(irsdk: JsIrSdk) {
     this.irsdk = irsdk;
   }
 
   public hideUi(): void {
-    const States = this.irsdk.Consts.CameraState;
-    this.irsdk.camControls.setState(States.UIHidden);
+    this.irsdk.camControls.setState(CameraState.UIHidden);
+  }
+
+  public switchToCar(
+    carNumber: string,
+    cameraGroupNumber?: CameraGroupNumber,
+    cameraNumber?: CameraNumber,
+  ): void {
+    this.irsdk.camControls.switchToCar(
+      carNumber,
+      cameraGroupNumber,
+      cameraNumber
+    );
+  }
+
+  public switchToPosition(
+    carNumber: string,
+    cameraGroupNumber?: CameraGroupNumber,
+    cameraNumber?: CameraNumber,
+  ): void {
+    this.irsdk.camControls.switchToPos(
+      carNumber,
+      cameraGroupNumber,
+      cameraNumber
+    );
   }
 }
