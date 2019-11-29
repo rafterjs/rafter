@@ -1,4 +1,4 @@
-import { CameraState, JsIrSdk } from 'node-irsdk';
+import { JsIrSdk } from 'node-irsdk';
 import { CameraGroupNumber, CameraNumber } from './CameraConstants';
 
 export interface ICameraControlService {
@@ -13,7 +13,7 @@ export default class CameraControlService implements ICameraControlService {
   }
 
   public hideUi(): void {
-    this.irsdk.camControls.setState(CameraState.UIHidden);
+    this.irsdk.camControls.setState(this.irsdk.Consts.CameraState.UIHidden);
   }
 
   public switchToCar(carNumber: string, cameraGroupNumber?: CameraGroupNumber, cameraNumber?: CameraNumber): void {

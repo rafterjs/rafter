@@ -3,6 +3,7 @@ export default {
     port: 3000,
   },
   irsdk: {
-    telemetryUpdateInterval: 105,
+    telemetryUpdateInterval: 10000,
+    sessionInfoUpdateInterval: 100,
   },
 };
