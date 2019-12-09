@@ -23,14 +23,11 @@
     "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
     "start": "echo \"TODO\""
   },
-  "dependencies": {
-    "@rafter/core": "*"
-  },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*"
   },
   "description": "A simple CORS plugin",
-  "main": "./dist/lib/cors.js",
+  "main": "./dist/cors.js",
   "engines": {
     "node": ">=9"
   }

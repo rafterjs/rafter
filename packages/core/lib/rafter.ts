@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { Box } from '@rafter/di-container';
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/ILogger';
@@ -10,6 +10,7 @@ import { IServiceConfig } from './common/IService';
 import { IRouteConfig } from './common/router/IRouteConfig';
 import { IMiddlewareConfig } from './common/middleware/IMiddleware';
 import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
+import { IConfig } from './utils/IConfig';
 
 const RAFTER_AUTOLOADER_DIRECTORY = __dirname;
 
@@ -24,8 +25,7 @@ export interface RafterConfig {
  * @param {string=} appDirectory This is the directory your application is located. Most of the
  *   time it will be 2 directories up from where Rafter is located, but that is not always the
  *   case.
- * @param {ConfigAutoloaderService} configAutoloaderService
- * @param {Logger=} logger a logging interface eg. winston, console, etc
+ * @param {RafterConfig} rafterConfig
  * @return {Rafter}
  */
 export default class Rafter {
@@ -56,40 +56,75 @@ export default class Rafter {
    * @return {Promise<ConfigDto>}
    * @private
    */
-  private async getConfig(): Promise<ConfigDto> {
-    // load rafter config files first
-    const configDto = await this.configAutoloaderService.getConfigFromDirectory(RAFTER_AUTOLOADER_DIRECTORY);
+  private async getConfig(
+    loadRafterConfig = true,
+    applicationDirectory: string = this.appDirectory,
+    configDto?: ConfigDto,
+  ): Promise<ConfigDto> {
+    let compiledConfig: ConfigDto = new ConfigDto();
+    this.logger.info('----------LOADING');
 
-    // load application specific config
-    if (this.appDirectory) {
-      const applicationConfigDto = await this.configAutoloaderService.getConfigFromDirectory(this.appDirectory);
+    // load rafter config files first. These are the services that load in the application
+    // dependencies.
+    if (loadRafterConfig) {
+      this.logger.info('----------RAFTER CONFIG');
+      compiledConfig = await this.configAutoloaderService.getConfigFromDirectory(
+        RAFTER_AUTOLOADER_DIRECTORY);
+    }
+
+    // load application config
+    if (applicationDirectory) {
+      this.logger.info('----------APP DIR', applicationDirectory);
+
+      const applicationConfigDto = await this.configAutoloaderService.getConfigFromDirectory(
+        applicationDirectory);
+      this.logger.info('----------APP CONFIG', applicationConfigDto);
 
       // merge the application config
-      configDto
+      compiledConfig
         .addConfig(applicationConfigDto.getConfig())
         .addPlugins(applicationConfigDto.getPlugins())
         .addServices(applicationConfigDto.getServices())
         .addMiddleware(applicationConfigDto.getMiddleware())
         .addPreStartHooks(applicationConfigDto.getPreStartHooks())
         .addRoutes(applicationConfigDto.getRoutes());
+
+      this.logger.info(
+        '----------compiledConfig',
+        compiledConfig.getMiddleware(),
+        applicationConfigDto.getMiddleware(),
+      );
     }
 
-    // iterate through plugin directories and populate more services
-    Object.entries(configDto.getPlugins()).forEach(plugin => {
-      const [key, config]: [string, object] = plugin;
-      this.logger.debug('------', key, config);
+    // TODO rip this bad boy out.
+    for (const [key, config] of Object.entries(compiledConfig.getPlugins())) {
+      try {
+        this.logger.info(`Loading module: ${key}`);
+        const pluginPath = dirname(require.resolve(key));
+        this.logger.debug(`Loading dependencies for module from: ${pluginPath}`);
 
-      // TODO
-      // get the package directory
-      // iterate through the dir to add more services
-    });
+        // TODO, dont make it mutate, but combine after each iteration. This is potentially
+        // slow, but we can speed it up by having a dependency cache. compiledConfig = this.l
+        this.logger.debug(`-------START ${key}`);
+        await this.getConfig(false, pluginPath, compiledConfig);
 
-    return configDto;
+        // TODO add module config after dependencies so overrides will happen
+        this.logger.debug(`-------END ${key}`);
+
+      } catch (exception) {
+        this.logger.error(`Failed to load module ${key}`);
+        this.logger.debug(`------- ${key} exception`, exception);
+      }
+    }
+
+    this.logger.info('----------END');
+    return compiledConfig;
   }
 
   private async getAutoloader(): Promise<IDiAutoloader> {
     const configDto = await this.getConfig();
     // TODO namespace these DI services so they dont inadvertently be overloaded
+    this.logger.info('---------------------------AUTOLOADER', configDto);
 
     // add the config to the DI container
     Box.register('config', (): object => configDto.getConfig());

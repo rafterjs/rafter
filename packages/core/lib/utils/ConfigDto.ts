@@ -77,6 +77,7 @@ export default class ConfigDto implements IConfig {
   }
 
   public addMiddleware(newMiddleware: IMiddlewareConfig[] = []): ConfigDto {
+    console.log('-------------------------MIDDLEWARE', ...this.middleware, ...newMiddleware);
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }
