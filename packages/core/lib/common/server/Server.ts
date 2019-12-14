@@ -104,7 +104,7 @@ export default class Server implements IServer {
    * @private
    */
   private async initMiddleware(): Promise<void> {
-    this.logger.info('--------------middleware', this.middlewareConfig)
+    this.logger.info('--------------middleware', this.middlewareConfig);
     if (this.middlewareConfig.length > 0) {
       this.express.use(
         this.middlewareProvider.createInstance(this.middlewareConfig) as RequestHandler | RequestHandler[],

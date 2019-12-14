@@ -1,17 +1,17 @@
 import { join } from 'path';
-import ConfigAutoloaderService from './ConfigAutoloaderService';
+import ConfigFileLoaderStrategy from './ConfigFileLoaderStrategy';
 
 const testFixturesDir = join(__dirname, '../../test/fixtures/config');
-let configAutoloaderService: ConfigAutoloaderService;
+let configAutoloaderService: ConfigFileLoaderStrategy;
 
-describe('ConfigAutoloaderService', () => {
+describe('ConfigFileLoaderStrategy', () => {
   describe('Get config from file', () => {
     beforeEach(() => {
-      configAutoloaderService = new ConfigAutoloaderService();
+      configAutoloaderService = new ConfigFileLoaderStrategy();
     });
 
     it('should retrieve config from a .config file', async () => {
-      const configDto = configAutoloaderService.getConfigFromFile(`${testFixturesDir}/.config.ts`);
+      const configDto = configAutoloaderService.getConfig(`${testFixturesDir}/.config.ts`);
 
       expect(configDto.getConfig()).toEqual({
         logger: {
@@ -21,7 +21,7 @@ describe('ConfigAutoloaderService', () => {
     });
 
     it('should retrieve services config from a .services file', async () => {
-      const configDto = configAutoloaderService.getConfigFromFile(`${testFixturesDir}/.services.ts`);
+      const configDto = configAutoloaderService.getConfig(`${testFixturesDir}/.services.ts`);
 
       const services = configDto.getServices();
       expect(services.myService).toBeDefined();
@@ -30,7 +30,7 @@ describe('ConfigAutoloaderService', () => {
     });
 
     it('should retrieve middleware config from a .middleware file', async () => {
-      const configDto = configAutoloaderService.getConfigFromFile(`${testFixturesDir}/.middleware.ts`);
+      const configDto = configAutoloaderService.getConfig(`${testFixturesDir}/.middleware.ts`);
 
       const middleware = configDto.getMiddleware();
       expect(middleware).toHaveLength(2);
@@ -39,7 +39,7 @@ describe('ConfigAutoloaderService', () => {
     });
 
     it('should retrieve route config from a .routes file', async () => {
-      const configDto = configAutoloaderService.getConfigFromFile(`${testFixturesDir}/.routes.ts`);
+      const configDto = configAutoloaderService.getConfig(`${testFixturesDir}/.routes.ts`);
 
       const routes = configDto.getRoutes();
       expect(routes).toHaveLength(2);
@@ -53,7 +53,7 @@ describe('ConfigAutoloaderService', () => {
     });
 
     it('should retrieve pre-start hook config from a .pre-start-hooks file', async () => {
-      const configDto = configAutoloaderService.getConfigFromFile(`${testFixturesDir}/.pre-start-hooks.ts`);
+      const configDto = configAutoloaderService.getConfig(`${testFixturesDir}/.pre-start-hooks.ts`);
 
       const hooks = configDto.getPreStartHooks();
       expect(hooks).toHaveLength(2);

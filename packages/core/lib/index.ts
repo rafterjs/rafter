@@ -1,5 +1,7 @@
 import Rafter from './rafter';
-import ConfigAutoloaderService, { DEFAULT_FILENAMES } from './utils/ConfigAutoloaderService';
+import ConfigFileLoaderStrategy, { DEFAULT_FILENAMES } from './utils/ConfigFileLoaderStrategy';
+import ConfigLoaderService from './utils/ConfigLoaderService';
+import { IRafterOptions } from './IRafterOptions';
 
 /**
  * This is a simple factory for Rafter that sets up all the basic stuff.
@@ -25,8 +27,8 @@ export default ({
   preStartHooksFileName = DEFAULT_FILENAMES.PRE_START_HOOKS,
   logger = console,
   failOnError = false,
-}): Rafter => {
-  const configAutoloaderService = new ConfigAutoloaderService({
+}: IRafterOptions): Rafter => {
+  const configFileLoaderStrategy = new ConfigFileLoaderStrategy({
     configFileName,
     servicesFileName,
     middlewareFileName,
@@ -37,9 +39,10 @@ export default ({
     failOnError,
   });
 
+  const configLoaderService = new ConfigLoaderService(configFileLoaderStrategy, appDirectory, logger);
+
   return new Rafter({
-    appDirectory,
-    configAutoloaderService,
+    configLoaderService,
     logger,
   });
 };

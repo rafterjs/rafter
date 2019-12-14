@@ -3,13 +3,14 @@ import recursive from 'recursive-readdir';
 import * as fs from 'fs';
 import ConfigDto from './ConfigDto';
 import { ILogger } from './ILogger';
-import { IConfigAutoloader } from './IConfigAutoloader';
+import { IConfigLoaderStrategy } from './IConfigLoaderStrategy';
 import { IConfig } from './IConfig';
 import { IServiceConfig } from '../common/IService';
 import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IPluginConfig } from '../common/plugins/IPlugin';
+import { IConfigAutoloaderServiceOptions } from './IConfigAutoloaderServiceOptions';
 
 export const DEFAULT_FILENAMES = {
   CONFIG: `.config`,
@@ -21,21 +22,10 @@ export const DEFAULT_FILENAMES = {
 };
 const IGNORE_DIRECTORIES = [`dist`, `node_modules`, `.git`];
 
-export interface IConfigAutoloaderServiceOptions {
-  configFileName?: string;
-  servicesFileName?: string;
-  pluginsFileName?: string;
-  middlewareFileName?: string;
-  routesFileName?: string;
-  preStartHooksFileName?: string;
-  logger?: ILogger;
-  failOnError?: boolean;
-}
-
 /**
  * A service that autoloads all the config from dotfiles in the project
  */
-export default class ConfigAutoloaderService implements IConfigAutoloader {
+export default class ConfigFileLoaderStrategy implements IConfigLoaderStrategy {
   private readonly allowedFileNames: string[];
 
   private readonly pluginsFileName: string;
@@ -92,7 +82,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  public getConfigFromFile(file: string): ConfigDto {
+  public getConfig(file: string): IConfig {
     // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
     const fileContents = require(file);
     const config = fileContents.default || fileContents;
@@ -135,7 +125,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
 
     const isIgnored = (file: string, stats: fs.Stats): boolean => {
       return (
-        (stats.isDirectory() && ConfigAutoloaderService.isIgnoredDirectory(file)) ||
+        (stats.isDirectory() && ConfigFileLoaderStrategy.isIgnoredDirectory(file)) ||
         (!stats.isDirectory() && !this.isAllowedFile(file))
       );
     };
@@ -148,7 +138,7 @@ export default class ConfigAutoloaderService implements IConfigAutoloader {
         // eslint-disable-next-line
         this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
-        const fileConfig = this.getConfigFromFile(file);
+        const fileConfig = this.getConfig(file);
         configDto = new ConfigDto(configDto, fileConfig);
       } catch (error) {
         this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);

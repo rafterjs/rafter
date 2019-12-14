@@ -5,7 +5,9 @@ const run = async (): Promise<void> => {
     appDirectory: `${__dirname}`,
     logger: console,
   });
-  await rafterServer.start();
+  return rafterServer.start().catch(error => {
+    console.error(`Failed to start rafter`, error);
+  });
 };
 
 run();

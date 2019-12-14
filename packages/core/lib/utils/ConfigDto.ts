@@ -4,6 +4,7 @@ import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
 import { IConfig } from './IConfig';
 import { IPluginConfig } from '../common/plugins/IPlugin';
+import { merge } from './ConfigUtils';
 
 /**
  * A config dto which holds information about services, middleware, routes and misc config. This is
@@ -27,15 +28,7 @@ export default class ConfigDto implements IConfig {
 
   constructor(...configDtos: IConfig[]) {
     if (configDtos) {
-      configDtos.forEach(configDto => {
-        // copy from other config
-        this.addPlugins(configDto.getPlugins())
-          .addConfig(configDto.getConfig())
-          .addMiddleware(configDto.getMiddleware())
-          .addPreStartHooks(configDto.getPreStartHooks())
-          .addRoutes(configDto.getRoutes())
-          .addServices(configDto.getServices());
-      });
+      merge(this, ...configDtos);
     }
   }
 
@@ -77,7 +70,6 @@ export default class ConfigDto implements IConfig {
   }
 
   public addMiddleware(newMiddleware: IMiddlewareConfig[] = []): ConfigDto {
-    console.log('-------------------------MIDDLEWARE', ...this.middleware, ...newMiddleware);
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }
