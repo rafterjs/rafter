@@ -82,7 +82,7 @@ export default class ConfigFileLoaderStrategy implements IConfigLoaderStrategy {
     return !!lastDirectory && IGNORE_DIRECTORIES.includes(lastDirectory);
   }
 
-  public getConfig(file: string): IConfig {
+  public getConfigFile(file: string): IConfig {
     // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
     const fileContents = require(file);
     const config = fileContents.default || fileContents;
@@ -120,7 +120,7 @@ export default class ConfigFileLoaderStrategy implements IConfigLoaderStrategy {
     return this.allowedFileNames.includes(path.parse(file).name);
   }
 
-  public async getConfigFromDirectory(directory: string): Promise<ConfigDto> {
+  public async getConfig(directory: string): Promise<IConfig> {
     let configDto = new ConfigDto();
 
     const isIgnored = (file: string, stats: fs.Stats): boolean => {
@@ -138,7 +138,7 @@ export default class ConfigFileLoaderStrategy implements IConfigLoaderStrategy {
         // eslint-disable-next-line
         this.logger.debug(`RecursiveConfigLoader::get Loading from ${file}`);
 
-        const fileConfig = this.getConfig(file);
+        const fileConfig = this.getConfigFile(file);
         configDto = new ConfigDto(configDto, fileConfig);
       } catch (error) {
         this.logger.error(`RecursiveConfigLoader::get Failed to load ${file}`, error);

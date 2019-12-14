@@ -349,4 +349,4 @@ export default new Box();
  * @return {Box}
  */
 const createInstance = () => new Box();
-export { createInstance };
+export { createInstance, Box };

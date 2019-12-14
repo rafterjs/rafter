@@ -1,5 +1,4 @@
 import { dirname, join } from 'path';
-import ConfigDto from './ConfigDto';
 import { IConfigLoaderStrategy } from './IConfigLoaderStrategy';
 import { IConfigLoaderService } from './IConfigLoaderService';
 import { ILogger } from './ILogger';
@@ -19,7 +18,7 @@ export default class ConfigLoaderService implements IConfigLoaderService {
 
   constructor(
     configLoaderStrategy: IConfigLoaderStrategy,
-    applicationDirectory: string = join(__dirname, '/../../../'),
+    applicationDirectory: string = join(__dirname, '/../../'),
     logger: ILogger = console,
   ) {
     this.configLoaderStrategy = configLoaderStrategy;
@@ -40,7 +39,6 @@ export default class ConfigLoaderService implements IConfigLoaderService {
     configDto: IConfig,
     applicationDirectory: string = this.applicationDirectory,
   ): Promise<void> {
-
     // load application config
     if (applicationDirectory) {
       this.logger.info('----------APP DIR', applicationDirectory);
@@ -60,7 +58,14 @@ export default class ConfigLoaderService implements IConfigLoaderService {
       this.logger.info('----------compiledConfig', configDto.getMiddleware(), applicationConfigDto.getMiddleware());
     }
 
-    // TODO rip this bad boy out.
+    this.loadPlugins(configDto);
+
+    this.logger.info('----------END');
+  }
+
+  private async loadPlugins(configDto: IConfig): Promise<void> {
+    this.logger.info(`Loading plugins`);
+    // TODO rip this out
     for (const [key] of Object.entries(configDto.getPlugins())) {
       try {
         this.logger.info(`Loading module: ${key}`);
@@ -70,7 +75,7 @@ export default class ConfigLoaderService implements IConfigLoaderService {
         // TODO, dont make it mutate, but combine after each iteration. This is potentially
         // slow, but we can speed it up by having a dependency cache. compiledConfig = this.l
         this.logger.debug(`-------load plugins from ${key}`);
-        this.loadConfigFromFiles(configDto, pluginPath);
+        await this.loadConfigFromFiles(configDto, pluginPath);
 
         // TODO add module config after dependencies so overrides will happen
         this.logger.debug(`-------END ${key}`);
@@ -79,7 +84,5 @@ export default class ConfigLoaderService implements IConfigLoaderService {
         this.logger.debug(`------- ${key} exception`, exception);
       }
     }
-
-    this.logger.info('----------END');
   }
 }

@@ -1,5 +1,5 @@
 import { IConfig } from './IConfig';
 
 export interface IConfigLoaderStrategy {
-  getConfig(directory: string): IConfig;
+  getConfig(directory: string): Promise<IConfig>;
 }

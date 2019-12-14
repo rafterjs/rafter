@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { Box } from '@rafter/di-container';
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/ILogger';

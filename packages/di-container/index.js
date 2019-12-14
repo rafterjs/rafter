@@ -1,4 +1,4 @@
-import Box from './lib/box';
+import { createInstance, default as Box } from './lib/box';
 import inject from './lib/inject';
 import { scope } from './lib/scope';
 import { prototype, singleton } from './lib/scope-constants';
@@ -12,7 +12,8 @@ export default {
   prototype,
   singleton,
   FactoryInterface,
+  createInstance,
 };
 
 // es6 exports
-export { Box, inject, scope, singleton, prototype, FactoryInterface };
+export { Box, inject, scope, singleton, prototype, FactoryInterface, createInstance };
