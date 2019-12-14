@@ -9,4 +9,5 @@ Rafter TODO
 - [ ] An example of a "modern" app eg using React, GraphQL Api
 
 ### Smaller tasks
-- [ ] Convert the babel package to js. This is because babel is missing types which is causing errors.
+- [x] Convert the babel package to js. This is because babel is missing types which is causing errors.
+- [_] this 

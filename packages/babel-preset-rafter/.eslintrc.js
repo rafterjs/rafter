@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@rafter/eslint-config/typescript'],
+  extends: ['@rafter/eslint-config'],
 };

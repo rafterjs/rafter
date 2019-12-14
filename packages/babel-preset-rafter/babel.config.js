@@ -1,5 +1,3 @@
-// TODO look into how I can use the exact same config as `index.ts`
-
 const presets = [
   [
     '@babel/env',
