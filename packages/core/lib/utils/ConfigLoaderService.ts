@@ -65,16 +65,16 @@ export default class ConfigLoaderService implements IConfigLoaderService {
 
   private async loadPlugins(configDto: IConfig): Promise<void> {
     this.logger.info(`Loading plugins`);
-    // TODO rip this out
+
+    // eslint-disable-next-line no-restricted-syntax
     for (const [key] of Object.entries(configDto.getPlugins())) {
       try {
         this.logger.info(`Loading module: ${key}`);
         const pluginPath = dirname(require.resolve(key));
         this.logger.debug(`Loading dependencies for module from: ${pluginPath}`);
 
-        // TODO, dont make it mutate, but combine after each iteration. This is potentially
-        // slow, but we can speed it up by having a dependency cache. compiledConfig = this.l
         this.logger.debug(`-------load plugins from ${key}`);
+        // eslint-disable-next-line no-await-in-loop
         await this.loadConfigFromFiles(configDto, pluginPath);
 
         // TODO add module config after dependencies so overrides will happen

@@ -3,7 +3,7 @@ import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
 import { IServiceConfig } from '../common/IService';
 import { IConfig } from './IConfig';
-import { IPluginConfig } from '../common/plugins/IPlugin';
+import { IPluginsConfig } from '../common/plugins/IPlugin';
 import { merge } from './ConfigUtils';
 
 /**
@@ -24,7 +24,7 @@ export default class ConfigDto implements IConfig {
 
   private preStartHooks: IPreStartHookConfig[] = [];
 
-  private plugins: IPluginConfig<IConfig> = {};
+  private plugins: IPluginsConfig = new Map();
 
   constructor(...configDtos: IConfig[]) {
     if (configDtos) {
@@ -83,15 +83,17 @@ export default class ConfigDto implements IConfig {
     return this;
   }
 
-  public getPlugins(): IPluginConfig<IConfig> {
+  public getPlugins(): IPluginsConfig {
     return this.plugins;
   }
 
-  public addPlugins(plugins: IPluginConfig<IConfig> = {}): ConfigDto {
-    this.plugins = {
-      ...this.plugins,
-      ...plugins,
-    };
+  public addPlugins<T>(plugins: IPluginsConfig): ConfigDto {
+    for (const [plugin, config] of plugins.entries()) {
+      if (!this.plugins.has(plugin)) {
+        this.plugins.set(plugin, config);
+      }
+    }
+
     return this;
   }
 }

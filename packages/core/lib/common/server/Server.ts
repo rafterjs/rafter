@@ -47,7 +47,7 @@ export default class Server implements IServer {
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
 
-  private readonly pluginProvider: IPluginProvider<IConfig>;
+  private readonly pluginProvider: IPluginProvider;
 
   private readonly serverPort: number;
 
@@ -58,7 +58,7 @@ export default class Server implements IServer {
     routerProvider: IRoutesProvider,
     middlewareProvider: IMiddlewareProvider,
     preStartHookProvider: IPreStartHooksProvider,
-    pluginProvider: IPluginProvider<IConfig>,
+    pluginProvider: IPluginProvider,
     middlewareConfig: IMiddlewareConfig[] = [],
     routesConfig: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],

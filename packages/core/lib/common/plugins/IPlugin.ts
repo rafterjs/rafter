@@ -1,4 +1,9 @@
-export interface IPluginConfig<T> {
-  [moduleName: string]: Partial<T>;
+export interface IPluginConfigFile {
+  [moduleName: string]: IPluginConfig;
 }
-export type IPlugin<T> = Partial<T>;
+
+export type IPluginConfig = object;
+
+export type IPlugin = {};
+
+export type IPluginsConfig = Map<IPlugin, IPluginConfig>;

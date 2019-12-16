@@ -1,9 +1,9 @@
 import { IDiContainer } from '@rafter/di-container';
 import { ILogger } from '../../utils/ILogger';
-import { IPlugin, IPluginConfig } from './IPlugin';
+import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
-export interface IPluginProvider<T> {
-  createInstance(pluginConfig: IPluginConfig<T>): IPlugin<T> | IPlugin<T>[];
+export interface IPluginProvider {
+  createInstance(pluginConfig: IPluginsConfig): IPlugin | IPlugin[];
 }
 
 /**
@@ -13,7 +13,7 @@ export interface IPluginProvider<T> {
  * @return {PluginProvider}
  */
 
-export default class PluginProvider<T> implements IPluginProvider<T> {
+export default class PluginProvider<T extends IPluginConfig> implements IPluginProvider {
   private readonly diContainer: IDiContainer;
 
   private readonly logger: ILogger;
@@ -27,8 +27,8 @@ export default class PluginProvider<T> implements IPluginProvider<T> {
    * @param {IPluginConfig} pluginsConfig
    * @return {Function|Function[]}
    */
-  public createInstance(pluginsConfig: IPluginConfig<T>): IPlugin<T> | IPlugin<T>[] {
-    const plugins: IPlugin<T> | IPlugin<T>[] = [];
+  public createInstance(pluginsConfig: IPluginsConfig): IPlugin | IPlugin[] {
+    const plugins: IPlugin | IPlugin[] = [];
 
     Object.entries(pluginsConfig).forEach(([config, pluginName]): void => {
       this.logger.debug('-------------pluginName-', pluginName);

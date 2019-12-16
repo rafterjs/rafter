@@ -1,6 +1,4 @@
 {
-  "ignore": [
-    "dist"
-  ],
+  "ignore": ["dist"],
   "ext": "ts"
 }
