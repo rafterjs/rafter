@@ -1,3 +1,7 @@
+import { CorsOptions } from 'cors';
+
 export default {
-  header: 'hi ya',
+  cors: {
+    methods: ['get'],
+  } as CorsOptions,
 };

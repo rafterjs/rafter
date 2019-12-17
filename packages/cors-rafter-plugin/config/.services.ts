@@ -1,6 +1,6 @@
 export default {
   cors: {
-    path: `${__dirname}/../lib/cors`,
-    dependencies: ['logger'],
+    path: `${__dirname}/../cors`,
+    dependencies: ['config.cors', 'logger'],
   },
 };

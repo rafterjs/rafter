@@ -14,16 +14,20 @@
   },
   "scripts": {
     "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:types",
-    "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel cors.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "yarn clean:lib",
     "clean:lib": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
-    "lint": "eslint \"./lib/**/*\" \"./config/**/*\"",
+    "lint": "eslint \"./cors.ts\" \"./config/**/*\"",
     "start": "echo \"TODO\""
   },
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
     "@rafter/babel-preset-rafter": "*"
   },
   "description": "A simple CORS plugin",

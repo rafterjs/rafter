@@ -10,7 +10,7 @@
     "build:local:all": "yarn build:babel && yarn build:di-container && yarn build:di-autoloader && yarn build:core && yarn build:cors-rafter-plugin",
     "build:local:boilerplate": "yarn build:core && yarn build:cors-rafter-plugin && yarn build:boilerplate",
     "build:core": "cd packages/core && yarn build",
-    "build:watch:core": "cd packages/core && yarn build:watch",
+    "build:core:watch": "cd packages/core && yarn build:watch",
     "build:cors-rafter-plugin": "cd packages/cors-rafter-plugin && yarn build",
     "build:babel": "cd packages/babel-preset-rafter && yarn build",
     "build:di-container": "cd packages/di-container && yarn build",

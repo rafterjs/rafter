@@ -9,7 +9,7 @@ import { IServiceConfig } from '../common/IService';
 import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
 import { IRouteConfig } from '../common/router/IRouteConfig';
 import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
-import { IPluginConfig, IPluginsConfig } from '../common/plugins/IPlugin';
+import { IPluginsConfig } from '../common/plugins/IPlugin';
 import { IConfigAutoloaderServiceOptions } from './IConfigAutoloaderServiceOptions';
 
 export const DEFAULT_FILENAMES = {
@@ -92,8 +92,7 @@ export default class ConfigFileLoaderStrategy implements IConfigLoaderStrategy {
 
     switch (filename) {
       case this.pluginsFileName:
-        // TODO, fix this type to accommodate both the map and the object
-        configDto.addPlugins(config as IPluginsConfig);
+        configDto.addPluginsConfig(config as IPluginsConfig);
         break;
       case this.configFileName:
         configDto.addConfig(config as object);

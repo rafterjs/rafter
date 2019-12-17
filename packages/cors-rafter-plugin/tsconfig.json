@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "include": ["./config", "./lib"],
+  "include": ["./config", "./cors.ts"],
   "exclude": ["./test", "./**/*.spec.ts"]
 }

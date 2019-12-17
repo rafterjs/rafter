@@ -37,7 +37,7 @@ class BoxDiAutoLoader {
           this._box.register(name, () => service, config.dependencies);
         }
       } catch (error) {
-        this._logger.error(`Failed to load ${name}`);
+        this._logger.error(`Failed to load ${name}`, error);
       }
     });
   }

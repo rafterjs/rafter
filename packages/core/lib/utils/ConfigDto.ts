@@ -24,7 +24,7 @@ export default class ConfigDto implements IConfig {
 
   private preStartHooks: IPreStartHookConfig[] = [];
 
-  private plugins: IPluginsConfig = new Map();
+  private pluginsConfig: IPluginsConfig = {};
 
   constructor(...configDtos: IConfig[]) {
     if (configDtos) {
@@ -38,8 +38,8 @@ export default class ConfigDto implements IConfig {
 
   public addConfig(newConfig: object): ConfigDto {
     this.config = {
-      ...this.config,
       ...newConfig,
+      ...this.config,
     };
     return this;
   }
@@ -83,14 +83,14 @@ export default class ConfigDto implements IConfig {
     return this;
   }
 
-  public getPlugins(): IPluginsConfig {
-    return this.plugins;
+  public getPluginsConfig(): IPluginsConfig {
+    return this.pluginsConfig;
   }
 
-  public addPlugins<T>(plugins: IPluginsConfig): ConfigDto {
-    for (const [plugin, config] of plugins.entries()) {
-      if (!this.plugins.has(plugin)) {
-        this.plugins.set(plugin, config);
+  public addPluginsConfig<T>(pluginsConfig: IPluginsConfig = {}): ConfigDto {
+    for (const [pluginName, pluginConfig] of Object.entries(pluginsConfig)) {
+      if (!this.pluginsConfig[pluginName]) {
+        this.pluginsConfig[pluginName] = pluginConfig;
       }
     }
 

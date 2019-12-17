@@ -3,6 +3,9 @@ import { IConfigLoaderStrategy } from './IConfigLoaderStrategy';
 import { IConfigLoaderService } from './IConfigLoaderService';
 import { ILogger } from './ILogger';
 import { IConfig } from './IConfig';
+import { IPluginsConfig } from '../common/plugins/IPlugin';
+import ConfigDto from './ConfigDto';
+import { merge } from './ConfigUtils';
 
 const RAFTER_AUTOLOADER_DIRECTORY = join(__dirname, '/../');
 
@@ -28,61 +31,64 @@ export default class ConfigLoaderService implements IConfigLoaderService {
 
   public async getConfig(): Promise<IConfig> {
     this.logger.debug('----------Load rafter dependencies config', RAFTER_AUTOLOADER_DIRECTORY);
-    const configDto = await this.configLoaderStrategy.getConfig(RAFTER_AUTOLOADER_DIRECTORY);
+    const config = await this.configLoaderStrategy.getConfig(RAFTER_AUTOLOADER_DIRECTORY);
 
-    await this.loadConfigFromFiles(configDto);
+    const applicationConfigDto = await this.loadConfigFromFiles(this.applicationDirectory);
 
-    return configDto;
+    // TODO, split the app config loading and override because we actually want out App config to
+    // take precedence. ??
+
+    // merge the application config
+    merge(config, applicationConfigDto);
+
+    this.logger.info(`----------FINAL CONFIG`, config);
+
+    return config;
   }
 
-  private async loadConfigFromFiles(
-    configDto: IConfig,
-    applicationDirectory: string = this.applicationDirectory,
-  ): Promise<void> {
-    // load application config
-    if (applicationDirectory) {
-      this.logger.info('----------APP DIR', applicationDirectory);
-
-      const applicationConfigDto = await this.configLoaderStrategy.getConfig(applicationDirectory);
-      this.logger.info('----------APP CONFIG', applicationConfigDto);
-
-      // merge the application config
-      configDto
-        .addConfig(applicationConfigDto.getConfig())
-        .addPlugins(applicationConfigDto.getPlugins())
-        .addServices(applicationConfigDto.getServices())
-        .addMiddleware(applicationConfigDto.getMiddleware())
-        .addPreStartHooks(applicationConfigDto.getPreStartHooks())
-        .addRoutes(applicationConfigDto.getRoutes());
-
-      this.logger.info('----------compiledConfig', configDto.getMiddleware(), applicationConfigDto.getMiddleware());
+  private async loadConfigFromFiles(directory: string): Promise<IConfig> {
+    // check dir exists
+    if (!directory) {
+      throw new Error(`Directory not found ${directory}`);
     }
 
-    this.loadPlugins(configDto);
+    this.logger.info('----------DIR', directory);
 
-    this.logger.info('----------END');
+    const config = await this.configLoaderStrategy.getConfig(directory);
+
+    this.logger.info(`----------CONFIG ${directory}`, config);
+
+    const pluginsConfig = await this.loadPluginsConfig(config.getPluginsConfig());
+
+    merge(config, pluginsConfig);
+
+    return config;
   }
 
-  private async loadPlugins(configDto: IConfig): Promise<void> {
+  private async loadPluginsConfig(pluginsConfig: IPluginsConfig): Promise<IConfig> {
     this.logger.info(`Loading plugins`);
+    const mergedPluginsConfig = new ConfigDto();
 
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key] of Object.entries(configDto.getPlugins())) {
+    for (const [key] of Object.entries(pluginsConfig)) {
       try {
-        this.logger.info(`Loading module: ${key}`);
-        const pluginPath = dirname(require.resolve(key));
-        this.logger.debug(`Loading dependencies for module from: ${pluginPath}`);
+        this.logger.info(`Loading plugin: ${key}`);
 
-        this.logger.debug(`-------load plugins from ${key}`);
+        console.log('--------------------pluginPath', pluginPath);
+        const pluginPath = require.resolve(key);
+        console.log('--------------------pluginPath', pluginPath);
+        const pluginDirectory = dirname(pluginPath);
+
+        this.logger.debug(`Loading dependencies for plugin from: ${pluginDirectory}`);
         // eslint-disable-next-line no-await-in-loop
-        await this.loadConfigFromFiles(configDto, pluginPath);
+        const pluginConfig = await this.loadConfigFromFiles(pluginDirectory);
 
-        // TODO add module config after dependencies so overrides will happen
-        this.logger.debug(`-------END ${key}`);
+        merge(mergedPluginsConfig, pluginConfig);
       } catch (exception) {
-        this.logger.error(`Failed to load module ${key}`);
-        this.logger.debug(`------- ${key} exception`, exception);
+        this.logger.error(`Failed to load module ${key}`, exception);
       }
     }
+
+    return mergedPluginsConfig;
   }
 }
