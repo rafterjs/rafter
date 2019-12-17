@@ -74,7 +74,6 @@ export default class ConfigLoaderService implements IConfigLoaderService {
       try {
         this.logger.info(`Loading plugin: ${key}`);
 
-        console.log('--------------------pluginPath', pluginPath);
         const pluginPath = require.resolve(key);
         console.log('--------------------pluginPath', pluginPath);
         const pluginDirectory = dirname(pluginPath);
