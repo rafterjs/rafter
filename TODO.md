@@ -5,14 +5,15 @@ Rafter TODO
 - [x] An eslint preset package
 - [x] A plugin architecture
 - [ ] "create react app" style boilerplate
-- [ ] Example of middleware being autoloaded
+- [x] Example of middleware being autoloaded
 - [ ] An example of a "modern" app eg using React, GraphQL Api
 - [ ] Create CI pipelines for PRs
 - [ ] Create CI pipelines for docs releases
-- [ ] Enhancement: Create dist file for DI autoloading 
+- [ ] Enhancement: Create cached dist file for DI autoloading 
 
 ### Smaller tasks
 - [x] Convert the babel package to js. This is because babel is missing types which is causing errors.
+- [ ] share the same logger instance from rafter into DI
 - [ ] Convert the DI packages to TS
 - [ ] Create tests for existing services in CORE
 - [ ] Fix config merging

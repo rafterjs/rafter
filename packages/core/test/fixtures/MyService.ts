@@ -1,4 +1,4 @@
-import { ILogger } from '../../lib/utils/ILogger';
+import { ILogger } from '../../lib/utils/logger/ILogger';
 
 export default class MyService {
   private readonly logger: ILogger;

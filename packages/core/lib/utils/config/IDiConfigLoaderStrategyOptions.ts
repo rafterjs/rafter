@@ -1,6 +1,6 @@
-import { ILogger } from './ILogger';
+import { ILogger } from '../logger/ILogger';
 
-export interface IConfigAutoloaderServiceOptions {
+export interface IDiConfigLoaderStrategyOptions {
   configFileName?: string;
   servicesFileName?: string;
   pluginsFileName?: string;

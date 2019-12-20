@@ -40,6 +40,9 @@
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest"
   },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "@babel/cli": "7.7.4",
     "@babel/core": "7.7.4",

@@ -1,19 +1,19 @@
-import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
-import { IRouteConfig } from '../common/router/IRouteConfig';
-import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
-import { IServiceConfig } from '../common/IService';
+import { IMiddlewareConfig } from '../../common/middleware/IMiddleware';
+import { IRouteConfig } from '../../common/router/IRouteConfig';
+import { IPreStartHookConfig } from '../../common/pre-start-hooks/IPreStartHook';
+import { IServiceConfig } from '../../common/IService';
 import { IConfig } from './IConfig';
-import { IPluginsConfig } from '../common/plugins/IPlugin';
-import { merge } from './ConfigUtils';
+import { IPluginsConfig } from '../../common/plugins/IPlugin';
+import { mergeDiConfig } from './configHelpers';
 
 /**
  * A config dto which holds information about services, middleware, routes and misc config. This is
  * used primarily for the autoloaders and to be put into the DI container for later use by
  * services.
  *
- * @return {ConfigDto}
+ * @return {DiConfigDto}
  */
-export default class ConfigDto implements IConfig {
+export default class DiConfigDto implements IConfig {
   private config: object = {};
 
   private services: IServiceConfig = {};
@@ -28,7 +28,7 @@ export default class ConfigDto implements IConfig {
 
   constructor(...configDtos: IConfig[]) {
     if (configDtos) {
-      merge(this, ...configDtos);
+      mergeDiConfig(this, ...configDtos);
     }
   }
 
@@ -36,7 +36,7 @@ export default class ConfigDto implements IConfig {
     return this.config;
   }
 
-  public addConfig(newConfig: object): ConfigDto {
+  public addConfig(newConfig: object): DiConfigDto {
     this.config = {
       ...newConfig,
       ...this.config,
@@ -48,7 +48,7 @@ export default class ConfigDto implements IConfig {
     return this.preStartHooks;
   }
 
-  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[] = []): ConfigDto {
+  public addPreStartHooks(newPreStartHooks: IPreStartHookConfig[] = []): DiConfigDto {
     this.preStartHooks = [...this.preStartHooks, ...newPreStartHooks];
     return this;
   }
@@ -57,7 +57,7 @@ export default class ConfigDto implements IConfig {
     return this.services;
   }
 
-  public addServices(newServices: IServiceConfig = {}): ConfigDto {
+  public addServices(newServices: IServiceConfig = {}): DiConfigDto {
     this.services = {
       ...this.services,
       ...newServices,
@@ -69,7 +69,7 @@ export default class ConfigDto implements IConfig {
     return this.middleware;
   }
 
-  public addMiddleware(newMiddleware: IMiddlewareConfig[] = []): ConfigDto {
+  public addMiddleware(newMiddleware: IMiddlewareConfig[] = []): DiConfigDto {
     this.middleware = [...this.middleware, ...newMiddleware];
     return this;
   }
@@ -78,7 +78,7 @@ export default class ConfigDto implements IConfig {
     return this.routes;
   }
 
-  public addRoutes(newRoutes: IRouteConfig[] = []): ConfigDto {
+  public addRoutes(newRoutes: IRouteConfig[] = []): DiConfigDto {
     this.routes = [...this.routes, ...newRoutes];
     return this;
   }
@@ -87,7 +87,7 @@ export default class ConfigDto implements IConfig {
     return this.pluginsConfig;
   }
 
-  public addPluginsConfig<T>(pluginsConfig: IPluginsConfig = {}): ConfigDto {
+  public addPluginsConfig<T>(pluginsConfig: IPluginsConfig = {}): DiConfigDto {
     for (const [pluginName, pluginConfig] of Object.entries(pluginsConfig)) {
       if (!this.pluginsConfig[pluginName]) {
         this.pluginsConfig[pluginName] = pluginConfig;

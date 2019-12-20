@@ -1,5 +1,5 @@
-import { IConfigAutoloaderServiceOptions } from './utils/IConfigAutoloaderServiceOptions';
+import { IDiConfigLoaderStrategyOptions } from './utils/config/IDiConfigLoaderStrategyOptions';
 
-export interface IRafterOptions extends IConfigAutoloaderServiceOptions {
+export interface IRafterOptions extends IDiConfigLoaderStrategyOptions {
   appDirectory?: string;
 }

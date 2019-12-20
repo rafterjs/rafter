@@ -1,29 +1,29 @@
-import Rafter from './rafter';
-import ConfigDto from './utils/ConfigDto';
 import { join } from 'path';
-import { IConfigLoaderService } from './utils/IConfigLoaderService';
-import { mock, instance, when } from 'ts-mockito';
-import ConfigLoaderService from './utils/ConfigLoaderService';
+import { instance, mock, when } from 'ts-mockito';
+import Rafter from './rafter';
+import DiConfigDto from './utils/config/DiConfigDto';
+import DiConfigLoaderService from './utils/config/DiConfigLoaderService';
+import { IDiConfigLoaderService } from './utils/config/IDiConfigLoaderService';
 
 let rafter: Rafter;
-const mockedConfigLoaderService: IConfigLoaderService = mock(ConfigLoaderService);
-const configLoaderService: IConfigLoaderService = instance(mockedConfigLoaderService);
+const mockedDiConfigLoaderService: IDiConfigLoaderService = mock(DiConfigLoaderService);
+const diConfigLoaderService: IDiConfigLoaderService = instance(mockedDiConfigLoaderService);
 
 describe('Rafter', () => {
   beforeEach(() => {
-    rafter = new Rafter({ configLoaderService });
+    rafter = new Rafter({ diConfigLoaderService });
   });
 
   describe('start', () => {
     it('should start the server when the dependencies are loaded', async () => {
-      const config = new ConfigDto().addServices({
+      const config = new DiConfigDto().addServices({
         server: {
           path: join(__dirname, '../test/fixtures/MyService.ts'),
           dependencies: ['logger'],
         },
       });
 
-      when(mockedConfigLoaderService.getConfig()).thenResolve(config);
+      when(mockedDiConfigLoaderService.getDiConfig()).thenResolve(config);
 
       rafter.start();
     });

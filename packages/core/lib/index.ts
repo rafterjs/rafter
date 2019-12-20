@@ -1,6 +1,6 @@
 import Rafter from './rafter';
-import ConfigFileLoaderStrategy, { DEFAULT_FILENAMES } from './utils/ConfigFileLoaderStrategy';
-import ConfigLoaderService from './utils/ConfigLoaderService';
+import DiConfigLoaderStrategy, { DEFAULT_FILENAMES } from './utils/config/DiConfigLoaderStrategy';
+import DiConfigLoaderService from './utils/config/DiConfigLoaderService';
 import { IRafterOptions } from './IRafterOptions';
 
 /**
@@ -28,7 +28,7 @@ export default ({
   logger = console,
   failOnError = false,
 }: IRafterOptions): Rafter => {
-  const configFileLoaderStrategy = new ConfigFileLoaderStrategy({
+  const configFileLoaderStrategy = new DiConfigLoaderStrategy({
     configFileName,
     servicesFileName,
     middlewareFileName,
@@ -39,7 +39,7 @@ export default ({
     failOnError,
   });
 
-  const configLoaderService = new ConfigLoaderService(configFileLoaderStrategy, appDirectory, logger);
+  const configLoaderService = new DiConfigLoaderService(configFileLoaderStrategy, appDirectory, logger);
 
   return new Rafter({
     configLoaderService,

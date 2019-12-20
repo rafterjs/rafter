@@ -1,52 +1,52 @@
 import { dirname, join } from 'path';
-import { IConfigLoaderStrategy } from './IConfigLoaderStrategy';
-import { IConfigLoaderService } from './IConfigLoaderService';
-import { ILogger } from './ILogger';
+import { IDiConfigLoaderStrategy } from './IDiConfigLoaderStrategy';
+import { IDiConfigLoaderService } from './IDiConfigLoaderService';
+import { ILogger } from '../logger/ILogger';
 import { IConfig } from './IConfig';
-import { IPluginsConfig } from '../common/plugins/IPlugin';
-import ConfigDto from './ConfigDto';
-import { merge } from './ConfigUtils';
+import { IPluginsConfig } from '../../common/plugins/IPlugin';
+import DiConfigDto from './DiConfigDto';
+import { mergeDiConfig } from './configHelpers';
 
 const RAFTER_AUTOLOADER_DIRECTORY = join(__dirname, '/../');
 
 /**
- * A service that loads config for rafter
+ * A service that loads t config for rafter
  */
-export default class ConfigLoaderService implements IConfigLoaderService {
-  private readonly configLoaderStrategy: IConfigLoaderStrategy;
+export default class DiConfigLoaderService implements IDiConfigLoaderService {
+  private readonly diConfigLoaderStrategy: IDiConfigLoaderStrategy;
 
   private readonly applicationDirectory: string;
 
   private readonly logger: ILogger;
 
   constructor(
-    configLoaderStrategy: IConfigLoaderStrategy,
+    configLoaderStrategy: IDiConfigLoaderStrategy,
     applicationDirectory: string = join(__dirname, '/../../'),
     logger: ILogger = console,
   ) {
-    this.configLoaderStrategy = configLoaderStrategy;
+    this.diConfigLoaderStrategy = configLoaderStrategy;
     this.applicationDirectory = applicationDirectory;
     this.logger = logger;
   }
 
-  public async getConfig(): Promise<IConfig> {
+  public async getDiConfig(): Promise<IConfig> {
     this.logger.debug('----------Load rafter dependencies config', RAFTER_AUTOLOADER_DIRECTORY);
-    const config = await this.configLoaderStrategy.getConfig(RAFTER_AUTOLOADER_DIRECTORY);
+    const config = await this.diConfigLoaderStrategy.getConfigFromDirectory(RAFTER_AUTOLOADER_DIRECTORY);
 
-    const applicationConfigDto = await this.loadConfigFromFiles(this.applicationDirectory);
+    const applicationConfigDto = await this.loadConfigFromDirectory(this.applicationDirectory);
 
     // TODO, split the app config loading and override because we actually want out App config to
     // take precedence. ??
 
-    // merge the application config
-    merge(config, applicationConfigDto);
+    // mergeDiConfig the application config
+    mergeDiConfig(config, applicationConfigDto);
 
     this.logger.info(`----------FINAL CONFIG`, config);
 
     return config;
   }
 
-  private async loadConfigFromFiles(directory: string): Promise<IConfig> {
+  private async loadConfigFromDirectory(directory: string): Promise<IConfig> {
     // check dir exists
     if (!directory) {
       throw new Error(`Directory not found ${directory}`);
@@ -54,20 +54,20 @@ export default class ConfigLoaderService implements IConfigLoaderService {
 
     this.logger.info('----------DIR', directory);
 
-    const config = await this.configLoaderStrategy.getConfig(directory);
+    const config = await this.diConfigLoaderStrategy.getConfigFromDirectory(directory);
 
     this.logger.info(`----------CONFIG ${directory}`, config);
 
     const pluginsConfig = await this.loadPluginsConfig(config.getPluginsConfig());
 
-    merge(config, pluginsConfig);
+    mergeDiConfig(config, pluginsConfig);
 
     return config;
   }
 
   private async loadPluginsConfig(pluginsConfig: IPluginsConfig): Promise<IConfig> {
     this.logger.info(`Loading plugins`);
-    const mergedPluginsConfig = new ConfigDto();
+    const mergedPluginsConfig = new DiConfigDto();
 
     // eslint-disable-next-line no-restricted-syntax
     for (const [key] of Object.entries(pluginsConfig)) {
@@ -79,9 +79,9 @@ export default class ConfigLoaderService implements IConfigLoaderService {
 
         this.logger.debug(`Loading dependencies for plugin from: ${pluginDirectory}`);
         // eslint-disable-next-line no-await-in-loop
-        const pluginConfig = await this.loadConfigFromFiles(pluginDirectory);
+        const pluginConfig = await this.loadConfigFromDirectory(pluginDirectory);
 
-        merge(mergedPluginsConfig, pluginConfig);
+        mergeDiConfig(mergedPluginsConfig, pluginConfig);
       } catch (exception) {
         this.logger.error(`Failed to load module ${key}`, exception);
       }

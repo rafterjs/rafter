@@ -1,17 +1,17 @@
 import { join } from 'path';
-import ConfigFileLoaderStrategy from './ConfigFileLoaderStrategy';
+import DiConfigLoaderStrategy from './DiConfigLoaderStrategy';
 
 const testFixturesDir = join(__dirname, '../../test/fixtures/config');
-let configAutoloaderService: ConfigFileLoaderStrategy;
+let diConfigLoaderStrategy: DiConfigLoaderStrategy;
 
-describe('ConfigFileLoaderStrategy', () => {
+describe('DiConfigLoaderStrategy', () => {
   describe('Get config from file', () => {
     beforeEach(() => {
-      configAutoloaderService = new ConfigFileLoaderStrategy();
+      diConfigLoaderStrategy = new DiConfigLoaderStrategy();
     });
 
     it('should retrieve config from a .config file', async () => {
-      const configDto = configAutoloaderService.getConfigFile(`${testFixturesDir}/.config.ts`);
+      const configDto = diConfigLoaderStrategy.getConfigFromFile(`${testFixturesDir}/.config.ts`);
 
       expect(configDto.getConfig()).toEqual({
         logger: {
@@ -21,7 +21,7 @@ describe('ConfigFileLoaderStrategy', () => {
     });
 
     it('should retrieve services config from a .services file', async () => {
-      const configDto = configAutoloaderService.getConfigFile(`${testFixturesDir}/.services.ts`);
+      const configDto = diConfigLoaderStrategy.getConfigFromFile(`${testFixturesDir}/.services.ts`);
 
       const services = configDto.getServices();
       expect(services.myService).toBeDefined();
@@ -30,7 +30,7 @@ describe('ConfigFileLoaderStrategy', () => {
     });
 
     it('should retrieve middleware config from a .middleware file', async () => {
-      const configDto = configAutoloaderService.getConfigFile(`${testFixturesDir}/.middleware.ts`);
+      const configDto = diConfigLoaderStrategy.getConfigFromFile(`${testFixturesDir}/.middleware.ts`);
 
       const middleware = configDto.getMiddleware();
       expect(middleware).toHaveLength(2);
@@ -39,7 +39,7 @@ describe('ConfigFileLoaderStrategy', () => {
     });
 
     it('should retrieve route config from a .routes file', async () => {
-      const configDto = configAutoloaderService.getConfigFile(`${testFixturesDir}/.routes.ts`);
+      const configDto = diConfigLoaderStrategy.getConfigFromFile(`${testFixturesDir}/.routes.ts`);
 
       const routes = configDto.getRoutes();
       expect(routes).toHaveLength(2);
@@ -53,7 +53,7 @@ describe('ConfigFileLoaderStrategy', () => {
     });
 
     it('should retrieve pre-start hook config from a .pre-start-hooks file', async () => {
-      const configDto = configAutoloaderService.getConfigFile(`${testFixturesDir}/.pre-start-hooks.ts`);
+      const configDto = diConfigLoaderStrategy.getConfigFromFile(`${testFixturesDir}/.pre-start-hooks.ts`);
 
       const hooks = configDto.getPreStartHooks();
       expect(hooks).toHaveLength(2);
@@ -64,7 +64,7 @@ describe('ConfigFileLoaderStrategy', () => {
 
   describe('Get config from directory', () => {
     it('should retrieve pre-start from directory', async () => {
-      const configDto = await configAutoloaderService.getConfigFromDirectory(testFixturesDir);
+      const configDto = await diConfigLoaderStrategy.getConfigFromDirectory(testFixturesDir);
 
       const hooks = configDto.getPreStartHooks();
       expect(hooks).toBeDefined();

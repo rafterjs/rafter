@@ -1,6 +1,6 @@
 import { IDiContainer } from '@rafter/di-container';
 import MiddlewareProvider from './MiddlewareProvider';
-import { ILogger } from '../../utils/ILogger';
+import { ILogger } from '../../utils/logger/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 describe('MiddlewareProvider', () => {

@@ -7,9 +7,9 @@ import { IMiddlewareProvider } from '../middleware/MiddlewareProvider';
 import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider';
 import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddlewareConfig } from '../middleware/IMiddleware';
-import { ILogger } from '../../utils/ILogger';
+import { ILogger } from '../../utils/logger/ILogger';
 import { IPluginProvider } from '../plugins/PluginProvider';
-import { IConfig } from '../../utils/IConfig';
+import { IConfig } from '../../utils/config/IConfig';
 
 export interface IServer {
   start(): Promise<void>;

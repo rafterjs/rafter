@@ -2,48 +2,46 @@ import { ILogger, LoggingArguments } from './ILogger';
 
 /**
  * A generic logger class. This takes a logger, which could even be console if needed.
- * @param {object} loggingService
- * @return {Logger}
  */
 export default class LoggingService implements ILogger {
-  private loggingService: ILogger;
+  private loggingStrategy: ILogger;
 
-  constructor(loggingService: ILogger) {
-    this.loggingService = loggingService;
+  constructor(loggingStrategy: ILogger) {
+    this.loggingStrategy = loggingStrategy;
   }
 
   /**
    * @param args
    */
   public log(...args: LoggingArguments): void {
-    this.loggingService.log(...args);
+    this.loggingStrategy.log(...args);
   }
 
   /**
    * @param args
    */
   public debug(...args: LoggingArguments): void {
-    this.loggingService.debug(...args);
+    this.loggingStrategy.debug(...args);
   }
 
   /**
    * @param args
    */
   public info(...args: LoggingArguments): void {
-    this.loggingService.info(...args);
+    this.loggingStrategy.info(...args);
   }
 
   /**
    * @param args
    */
   public error(...args: LoggingArguments): void {
-    this.loggingService.error(...args);
+    this.loggingStrategy.error(...args);
   }
 
   /**
    * @param args
    */
   public warn(...args: LoggingArguments): void {
-    this.loggingService.warn(...args);
+    this.loggingStrategy.warn(...args);
   }
 }

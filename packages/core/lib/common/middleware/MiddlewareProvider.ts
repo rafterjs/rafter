@@ -1,5 +1,5 @@
 import { IDiContainer } from '@rafter/di-container';
-import { ILogger } from '../../utils/ILogger';
+import { ILogger } from '../../utils/logger/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 export interface IMiddlewareProvider {

@@ -1,8 +1,14 @@
-import { IMiddlewareConfig } from '../common/middleware/IMiddleware';
-import { IRouteConfig } from '../common/router/IRouteConfig';
-import { IPreStartHookConfig } from '../common/pre-start-hooks/IPreStartHook';
-import { IServiceConfig } from '../common/IService';
-import { IPluginsConfig } from '../common/plugins/IPlugin';
+import { IMiddlewareConfig } from '../../common/middleware/IMiddleware';
+import { IRouteConfig } from '../../common/router/IRouteConfig';
+import { IPreStartHookConfig } from '../../common/pre-start-hooks/IPreStartHook';
+import { IServiceConfig } from '../../common/IService';
+import { IPluginsConfig } from '../../common/plugins/IPlugin';
+
+/**
+ * IConfig = the config for the rafter server and the plugin specific config
+ * IPluginsConfig = IConfig
+ * DiServiceConfig
+ */
 
 export interface IConfig {
   getConfig(): object;

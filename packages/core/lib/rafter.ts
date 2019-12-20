@@ -1,16 +1,16 @@
 import { Box } from '@rafter/di-container';
 import { IDiAutoloader } from '@rafter/di-autoloader';
-import { ILogger } from './utils/ILogger';
+import { ILogger } from './utils/logger/ILogger';
 import { IServer } from './common/server/Server';
 import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
 import { IServiceConfig } from './common/IService';
 import { IRouteConfig } from './common/router/IRouteConfig';
 import { IMiddlewareConfig } from './common/middleware/IMiddleware';
 import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
-import { IConfigLoaderService } from './utils/IConfigLoaderService';
+import { IDiConfigLoaderService } from './utils/config/IDiConfigLoaderService';
 
 export interface RafterConfig {
-  configLoaderService: IConfigLoaderService;
+  diConfigLoaderService: IDiConfigLoaderService;
   logger?: ILogger;
 }
 
@@ -27,19 +27,19 @@ export default class Rafter {
 
   private server?: IServer;
 
-  private readonly configLoaderService: IConfigLoaderService;
+  private readonly diConfigLoaderService: IDiConfigLoaderService;
 
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { configLoaderService, logger = console } = rafterConfig;
+    const { diConfigLoaderService, logger = console } = rafterConfig;
 
-    this.configLoaderService = configLoaderService;
+    this.diConfigLoaderService = diConfigLoaderService;
     this.logger = logger;
   }
 
   private async loadDependencies(): Promise<void> {
-    const configDto = await this.configLoaderService.getConfig();
+    const configDto = await this.diConfigLoaderService.getDiConfig();
     // TODO namespace these DI services so they dont inadvertently be overloaded
     this.logger.debug('rafter::loadDependencies', configDto);
 
