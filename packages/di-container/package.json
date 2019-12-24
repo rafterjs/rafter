@@ -19,10 +19,10 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "yarn clean && yarn build:lib",
-    "build:lib": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
+    "build:lib": "babel index.ts --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
     "clean": "rimraf ./dist",
     "clean:modules": "rimraf ./node_modules",
-    "lint": "eslint ./index.js ./babel.config.js \"./lib/**/*\"",
+    "lint": "eslint index.ts ./babel.config.js \\\"./lib/**/*\\\"",
     "format": "prettier --write \"{lib}/**/*.{js,jsx,ts,tsx}\"",
     "test": "jest --notify",
     "update:latest": "yarn upgrade --latest"

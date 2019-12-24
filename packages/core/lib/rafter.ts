@@ -1,8 +1,8 @@
 import { Box } from '@rafter/di-container';
-import { IDiAutoloader } from '@rafter/di-autoloader';
+import { DiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/logger/ILogger';
 import { IServer } from './common/server/Server';
-import boxDiAutoloaderFactory from './vendor/BoxDiAutoloaderFactory';
+import diAutoloaderFactory from './vendor/DiAutoloaderFactory';
 import { IServiceConfig } from './common/IService';
 import { IRouteConfig } from './common/router/IRouteConfig';
 import { IMiddlewareConfig } from './common/middleware/IMiddleware';
@@ -14,16 +14,8 @@ export interface RafterConfig {
   logger?: ILogger;
 }
 
-/**
- *
- * @param {string=} appDirectory This is the directory your application is located. Most of the
- *   time it will be 2 directories up from where Rafter is located, but that is not always the
- *   case.
- * @param {RafterConfig} rafterConfig
- * @return {Rafter}
- */
 export default class Rafter {
-  private boxDiAutoLoader?: IDiAutoloader;
+  private boxDiAutoLoader?: DiAutoloader;
 
   private server?: IServer;
 
@@ -58,7 +50,7 @@ export default class Rafter {
     // add the middleware to the DI container
     Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
 
-    this.boxDiAutoLoader = boxDiAutoloaderFactory(configDto.getServices(), this.logger);
+    this.boxDiAutoLoader = diAutoloaderFactory(configDto.getServices(), this.logger);
 
     await this.boxDiAutoLoader.load();
   }
