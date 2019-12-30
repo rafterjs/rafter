@@ -24,6 +24,7 @@ export default class DiAutoloader implements IDiAutoloader {
     Object.entries(this.serviceConfig).forEach(([name, config]) => {
       try {
         this.logger.debug(`Auto loading ${name}`);
+        // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
         let service = require(config.path);
         service = service.default || service;
 

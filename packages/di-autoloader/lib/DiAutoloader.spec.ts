@@ -1,11 +1,12 @@
 import { join } from 'path';
-import BoxDiAutoLoader from './box-di-autoloader';
-import TestClass from '../test/fixtures/test-class';
+import DiAutoloader from './DiAutoloader';
+import TestClass from '../test/fixtures/TestClass';
+import {TestConfig} from '../test/fixtures/TestConfig';
 
 const FIXTURES_DIR = join(__dirname, '../test', 'fixtures');
 
 describe('BoxDI autoloader', () => {
-  let mockLogger;
+  let mockLogger: ILogger;
 
   beforeEach(() => {
     mockLogger = {
@@ -17,36 +18,36 @@ describe('BoxDI autoloader', () => {
     };
   });
 
-  it('successfully loads a simple object', () => {
+  it('successfully load a simple object', () => {
     const servicesConfig = {
       config: {
-        path: join(FIXTURES_DIR, 'test-config'),
+        path: join(FIXTURES_DIR, 'TestConfig'),
         dependencies: [],
       },
     };
 
-    const boxDiAutoLoader = new BoxDiAutoLoader(servicesConfig, undefined, mockLogger);
-    boxDiAutoLoader.load();
+    const diAutoloader = new DiAutoloader(servicesConfig, undefined, mockLogger);
+    diAutoloader.load();
 
-    const config = boxDiAutoLoader.get('config');
+    const config = diAutoloader.get<TestConfig>('config');
     expect(config.foo.bar).toBe('test something');
 
-    const bar = boxDiAutoLoader.get('config.foo.bar');
+    const bar = diAutoloader.get<string>('config.foo.bar');
     expect(bar).toBe('test something');
   });
 
   it('successfully loads a simple function', () => {
     const servicesConfig = {
       testFunction: {
-        path: join(FIXTURES_DIR, 'test-function'),
+        path: join(FIXTURES_DIR, 'TestFunction'),
         dependencies: [],
       },
     };
 
-    const boxDiAutoLoader = new BoxDiAutoLoader(servicesConfig, undefined, mockLogger);
-    boxDiAutoLoader.load();
+    const diAutoloader = new DiAutoloader(servicesConfig, undefined, mockLogger);
+    diAutoloader.load();
 
-    const testFunction = boxDiAutoLoader.get('testFunction');
+    const testFunction = diAutoloader.get('testFunction');
 
     expect(testFunction).toBeInstanceOf(Function);
     expect(testFunction()).toBe('This is a function');
@@ -55,23 +56,23 @@ describe('BoxDI autoloader', () => {
   it('successfully loads a class that has dependencies', () => {
     const servicesConfig = {
       config: {
-        path: join(FIXTURES_DIR, 'test-config'),
+        path: join(FIXTURES_DIR, 'TestConfig'),
         dependencies: [],
       },
       testClass: {
-        path: join(FIXTURES_DIR, 'test-class'),
+        path: join(FIXTURES_DIR, 'TestClass'),
         dependencies: [`config.foo`, `config.foo.bar`, 'testFunction'],
       },
       testFunction: {
-        path: join(FIXTURES_DIR, 'test-function'),
+        path: join(FIXTURES_DIR, 'TestFunction'),
         dependencies: [],
       },
     };
 
-    const boxDiAutoLoader = new BoxDiAutoLoader(servicesConfig, undefined, mockLogger);
-    boxDiAutoLoader.load();
+    const diAutoloader = new DiAutoloader(servicesConfig, undefined, mockLogger);
+    diAutoloader.load();
 
-    const testClass = boxDiAutoLoader.get('testClass');
+    const testClass = diAutoloader.get<TestClass>('testClass');
 
     expect(testClass).toBeInstanceOf(TestClass);
     expect(testClass.getData()).toBe(`here's some data`);
@@ -89,8 +90,8 @@ describe('BoxDI autoloader', () => {
       },
     };
 
-    const boxDiAutoLoader = new BoxDiAutoLoader(servicesConfig, undefined, mockLogger);
-    boxDiAutoLoader.load();
+    const diAutoloader = new DiAutoloader(servicesConfig, undefined, mockLogger);
+    diAutoloader.load();
     expect(mockLogger.debug.mock.calls.length).toBe(1);
   });
 
@@ -104,11 +105,11 @@ describe('BoxDI autoloader', () => {
       },
     };
 
-    const boxDiAutoLoader = new BoxDiAutoLoader(servicesConfig, undefined, mockLogger);
-    boxDiAutoLoader.load();
+    const diAutoloader = new DiAutoloader(servicesConfig, undefined, mockLogger);
+    diAutoloader.load();
 
     expect(() => {
-      boxDiAutoLoader.get('missingDependency');
+      diAutoloader.get('missingDependency');
     }).toThrow();
   });
 });
