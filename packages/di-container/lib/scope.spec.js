@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { scope } from './scope';
 import Box from './box';
-import { singleton, prototype } from './scope-constants';
+import { singleton, prototype } from './ScopeConstants';
 
 describe('scope', () => {
   let TEST_FACTORY;

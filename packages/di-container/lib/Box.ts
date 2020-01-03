@@ -1,55 +1,56 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import isFunction from 'lodash/isfunction';
 import cloneDeep from 'lodash/clonedeep';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isundefined';
 import find from 'lodash/find';
 import forEach from 'lodash/foreach';
-import winston from 'winston';
-import Provider from './provider';
-import Factory from './factory';
+import { ILogger, LogLevel } from '@rafter/utils';
+import { IServiceProvider, ServiceProvider } from './ServiceProvider';
+import { FactoryProvider, IFactory, IFactoryClass, IFactoryProvider, LengthWise, Service } from './FactoryProvider';
+import { IScope } from './ScopeConstants';
 
-const LOG_LEVEL = {
-  DEBUG: 'debug',
-  INFO: 'info',
-  WARNING: 'warn',
-};
+type IContainer = Map<string, IServiceProvider<Service>>;
 
 class Box {
-  private readonly container: object;
+  private readonly container: IContainer;
 
-  private readonly factories: Function[];
+  private readonly factoryProviders: IFactoryProvider<Service>[];
 
-  private readonly logger: any;
+  private logger: ILogger;
 
-  constructor(container: object = {}, factories: Function[] = [], logger: any = console) {
+  constructor(
+    container: IContainer = new Map(),
+    factories: IFactoryProvider<Service>[] = [],
+    logger: ILogger = console,
+  ) {
     this.container = container;
-    this.factories = factories;
+    this.factoryProviders = factories;
     this.logger = logger;
   }
 
-  /**
-   *
-   * @param {String} serviceName
-   * @param {FactoryInterface|Function|Object} serviceFactory
-   * @param {Array=} dependencies
-   * @param {Boolean=} isInvokable
-   * @public
-   */
-  public register(serviceName, serviceFactory, dependencies, isInvokable = false) {
-    let factory;
+  public register<T extends Service>(
+    serviceName: string,
+    factory: IFactory<T>,
+    dependencies: string[],
+    isInvokable = false,
+  ): void {
+    let factoryProvider: IFactoryProvider<T>;
 
     // check for the factory pattern
-    if (isFunction(serviceFactory.createInstance)) {
-      factory = this.getFactory(serviceFactory.createInstance);
+    if (isFunction((factory as IFactoryClass<T>).createInstance)) {
+      factoryProvider = this.getFactoryProvider<T>((factory as IFactoryClass<T>).createInstance);
+
       this.logger.log(
-        LOG_LEVEL.DEBUG,
+        LogLevel.DEBUG,
         `Registering service provider for '${serviceName}' using the factory pattern with ` +
         `${dependencies ? dependencies.length : 'no'} dependencies`,
       );
-    } else if (!isUndefined(serviceFactory)) {
-      factory = new Factory(serviceFactory, dependencies);
+    } else if (!isUndefined(factory)) {
+      factoryProvider = new FactoryProvider<T>(factory, dependencies);
+
       this.logger.log(
-        LOG_LEVEL.DEBUG,
+        LogLevel.DEBUG,
         `Registering service provider for '${serviceName}' with ` +
         `${dependencies ? dependencies.length : 'no'} dependencies`,
       );
@@ -59,42 +60,20 @@ class Box {
       throw new Error(err);
     }
 
-    this.registerProvider(serviceName, factory, isInvokable);
+    this.registerProvider(serviceName, factoryProvider, isInvokable);
   }
 
-  /**
-   * This function name was a typo. Just leaving it here for
-   * 1 release so people have time to change it out.
-   *
-   * @deprecated
-   * @param {String} serviceName
-   * @param {FactoryInterface|Function|Object} serviceFactory
-   * @param {Array=} dependencies
-   */
-  public registerInvokeable(serviceName, serviceFactory, dependencies) {
-    this.registerInvokable(serviceName, serviceFactory, dependencies);
-  }
-
-  /**
-   * @param {String} serviceName
-   * @param {FactoryInterface|Function|Object} serviceFactory
-   * @param {Array=} dependencies
-   */
-  public registerInvokable(serviceName, serviceFactory, dependencies) {
+  public registerInvokable<T extends Service>(
+    serviceName: string,
+    serviceFactory: IFactoryProvider<T>,
+    dependencies: string[],
+  ): void {
     this.register(serviceName, serviceFactory, dependencies, true);
   }
 
-  /**
-   * Returns the invoked service if it exists in the container.
-   * TODO clean up this method a bit; it is starting to become very big and complex.
-   *
-   * @param {String} name
-   * @returns {Object}
-   * @public
-   */
-  public get<T>(name: string): T {
-    this.logger.log(LOG_LEVEL.DEBUG, `Getting service '${name}'`);
-    let deepObjectProperty;
+  public get<T extends Service>(name: string): T {
+    this.logger.log(LogLevel.DEBUG, `Getting service '${name}'`);
+    let deepObjectProperty: string;
 
     // check if the service name is actually requesting some deep properties.
     if (name.includes('.')) {
@@ -105,26 +84,26 @@ class Box {
       name = name.split('.')[0]; // eslint-disable-line
     }
 
-    const provider = this.getProvider(name);
-    const factory = provider.getFactory();
-    let instance = provider.getInstance();
+    const provider = this.getProvider<T>(name);
+    const factoryProvider = provider.getFactoryProvider();
+    let instance: T | undefined = provider.getInstance();
 
-    if (!factory) {
+    if (!factoryProvider) {
       throw new Error(
         `The factory for '${name}' does not exist. Please ensure that you registered the service correctly.`,
       );
     }
 
-    if (isUndefined(instance) || !factory.isSingleton()) {
+    if (isUndefined(instance) || !factoryProvider.isSingleton()) {
       // check if the instance is already defined or if it's not a singleton
-      if (!factory.isSingleton()) {
+      if (!factoryProvider.isSingleton()) {
         this.logger.log(
-          LOG_LEVEL.DEBUG,
+          LogLevel.DEBUG,
           `The service '${name}' is not a singleton, creating a new instance now...`,
         );
       } else {
         this.logger.log(
-          LOG_LEVEL.DEBUG,
+          LogLevel.DEBUG,
           `No existing instance found for service '${name}', creating one now...`,
         );
       }
@@ -136,46 +115,51 @@ class Box {
 
       // get the provider dependencies
       const dependencies = provider.getDependencies();
-      const factoryMethod = factory.getFactoryMethod();
+      const factory = factoryProvider.getFactory();
 
       // we can only check the argument length of functions, not class constructors
       // TODO, figure out a way to test number of arguments in a class constructor
-      if (isFunction(factory) && factoryMethod.length !== dependencies.length) {
+      if (isFunction(factoryProvider) && (factory as LengthWise).length !== dependencies.length) {
         throw new Error(`Module ${name} factory function arguments don't match the passed
             dependencies`);
       }
 
       // invoke the factory
       if (provider.isInvokable()) {
-        this.logger.log(LOG_LEVEL.DEBUG, `Invoking an instance for the provider '${name}'`);
+        this.logger.log(LogLevel.DEBUG, `Invoking an instance for the provider '${name}'`);
 
         const invokableDependencies = cloneDeep(dependencies);
-        invokableDependencies.unshift(null);
+        invokableDependencies.unshift((null as unknown) as object);
 
-        instance = new (Function.prototype.bind.apply(factoryMethod, invokableDependencies))();
-      } else if (isFunction(factoryMethod)) {
+        instance = new (Function.prototype.bind.apply(factory as Function, invokableDependencies))();
+      } else if (isFunction(factory)) {
         this.logger.log(
-          LOG_LEVEL.DEBUG,
+          LogLevel.DEBUG,
           `Calling the factory for the provider '${name}'`,
-          factoryMethod,
+          factory,
         );
 
-        instance = factoryMethod(...dependencies);
+        instance = factory(...dependencies);
       } else {
-        this.logger.log(LOG_LEVEL.DEBUG, `Assigning the factory to the provider '${name}'`);
-        instance = factoryMethod;
+        this.logger.log(LogLevel.DEBUG, `Assigning the factory to the provider '${name}'`);
+        instance = factory;
       }
 
       // save the instance back to the container
-      if (!isUndefined(instance) && factory.isSingleton()) {
-        this.logger.log(LOG_LEVEL.DEBUG, `Saving the instance back to '${name}'`);
+      if (!isUndefined(instance) && factoryProvider.isSingleton()) {
+        this.logger.log(LogLevel.DEBUG, `Saving the instance back to '${name}'`);
         provider.setInstance(instance);
       }
     }
 
     // return the deep object instead
+    // @ts-ignore
     if (deepObjectProperty) {
       return get(instance, deepObjectProperty);
+    }
+
+    if (!instance) {
+      throw new Error(`Instance is not defined for name: ${name}`);
     }
 
     return instance;
@@ -187,12 +171,12 @@ class Box {
    * @param {String} name
    */
   public remove(name: string): void {
-    if (this.container[name]) {
-      delete this.container[name];
-      this.logger.log(LOG_LEVEL.DEBUG, `Removed the provider '${name}' from the container`);
+    if (this.container.has(name)) {
+      this.container.delete(name);
+      this.logger.log(LogLevel.DEBUG, `Removed the provider '${name}' from the container`);
     } else {
       this.logger.log(
-        LOG_LEVEL.WARNING,
+        LogLevel.WARNING,
         `Could not remove the provider '${name}' as it does not exist in the container`,
       );
     }
@@ -202,53 +186,37 @@ class Box {
    * Removes all providers in this container.
    */
   public reset(): void {
-    forEach(this.container, (provider, name) => {
-      this.remove(name);
-    });
+    this.container.clear();
   }
 
-  /**
-   * Registers the factory to the box. This is invoked by @inject
-   * so we can store the dependencies for later
-   * consumption in the register method.
-   *
-   * @param {FactoryInterface} factoryMethod
-   * @param {Array=} dependencies
-   * @param {Symbol=} scope
-   * @returns {Factory}
-   * @public
-   */
-  public registerFactory(factoryMethod, dependencies = [], scope) {
-    if (this.isFactoryRegistered(factoryMethod)) {
-      throw new Error(`Module ${factoryMethod.name} is already registered. Use swap() instead.`);
+  public registerFactory<T extends Service>(
+    factory: IFactory<T>,
+    dependencies: string[] = [],
+    scope?: IScope,
+  ): IFactoryProvider<T> {
+    if (this.isFactoryRegistered(factory)) {
+      throw new Error(`Module ${factory} is already registered. Use swap() instead.`);
     }
 
-    const factory = new Factory(factoryMethod, dependencies, scope);
-    this.factories.push(factory);
-    return factory;
+    const factoryProvider = new FactoryProvider(factory, dependencies, scope);
+    this.factoryProviders.push(factoryProvider);
+    return factoryProvider;
   }
 
-  /**
-   * Checks if the factory is registered
-   *
-   * @param factory
-   * @return {boolean}
-   */
-  public isFactoryRegistered(factory) {
-    const registeredFactory = this.getFactory(factory);
+  public isFactoryRegistered<T extends Service>(factory: IFactory<T>): boolean {
+    const registeredFactory = this.getFactoryProvider(factory);
     return !!registeredFactory;
   }
 
   /**
    * @param {FactoryInterface} factory
-   * @returns {Factory}
+   * @returns {FactoryProvider}
    * @public
    */
-  public getFactory(factory) {
-    return find(
-      this.factories,
-      registeredFactory => factory === registeredFactory.getFactoryMethod(),
-    );
+  public getFactoryProvider<T extends Service>(factory: IFactory<T>): IFactoryProvider<T> | undefined {
+    return this.factoryProviders.find(
+      registeredFactoryProvider => factory === registeredFactoryProvider.getFactory(),
+    ) as IFactoryProvider<T>;
   }
 
   /**
@@ -256,116 +224,77 @@ class Box {
    * @param factory
    * @param scope
    */
-  public setFactoryScope(factory, scope): void {
-    let serviceFactory;
+  public setFactoryScope<T extends Service>(factory: IFactory<T>, scope: IScope): void {
+    let factoryProvider: IFactoryProvider<T>;
 
     if (!this.isFactoryRegistered(factory)) {
-      serviceFactory = this.registerFactory(factory);
+      factoryProvider = this.registerFactory<T>(factory);
     } else {
-      serviceFactory = this.getFactory(factory);
+      factoryProvider = this.getFactoryProvider<T>(factory);
     }
 
-    serviceFactory.setScope(scope);
+    factoryProvider.setScope(scope);
   }
 
-  /**
-   *
-   * @param factory
-   * @param dependencies
-   */
-  public setFactoryDependencies(factory, dependencies): void {
-    let serviceFactory;
+  public setFactoryDependencies<T extends Service>(factory: IFactory<T>, dependencies: string[] = []): void {
+    let factoryProvider: IFactoryProvider<T>;
 
     if (!this.isFactoryRegistered(factory)) {
-      serviceFactory = this.registerFactory(factory);
+      factoryProvider = this.registerFactory<T>(factory);
     } else {
-      serviceFactory = this.getFactory(factory);
+      factoryProvider = this.getFactoryProvider<T>(factory);
     }
 
-    serviceFactory.setDependencies(dependencies);
+    factoryProvider.setDependencies(dependencies);
   }
 
-  /**
-   * Sets the logger to use.
-   *
-   * @param logger
-   */
-  public setLogger(logger): void {
+  public setLogger(logger: ILogger): void {
     this.logger = logger;
   }
 
-  /**
-   * Registers the service provider to the container.
-   *
-   * @param {String} serviceName
-   * @param {Factory} factory
-   * @param {Boolean=} isInvokable
-   * @private
-   */
-  private registerProvider(serviceName, factory, isInvokable = false) {
-    if (!isUndefined(this.container[serviceName])) {
+  private registerProvider<T extends Service>(
+    serviceName: string,
+    factoryProvider: IFactoryProvider<T>,
+    isInvokable = false,
+  ): void {
+    if (this.container.has(serviceName)) {
       throw new Error(`Module ${serviceName} is already registered. Use swap() instead.`);
     }
-    this.container[serviceName] = new Provider(serviceName, factory, isInvokable);
+    this.container.set(serviceName, new ServiceProvider<T>(serviceName, factoryProvider, isInvokable));
   }
 
-  /**
-   * @param name
-   * @return {Provider}
-   * @private
-   */
-  private getProvider(name) {
-    const serviceProvider = this.container[name];
-    if (isUndefined(serviceProvider)) {
+  private getProvider<T extends Service>(name: string): IServiceProvider<T> {
+    const serviceProvider = this.container.get(name);
+
+    if (serviceProvider === undefined) {
       this.logger.error(`Could not find the service '${name}'`);
       throw new Error(`Service ${name} not found`);
     }
 
-    return serviceProvider;
+    return serviceProvider as IServiceProvider<T>;
   }
 
   /**
-   * @param {Provider} provider
+   * @param {ServiceProvider} serviceProvider
    * @return {Array}
    * @private
    */
-  private resolveProviderDependencies(provider) {
-    const factory = provider.getFactory();
+  private resolveProviderDependencies<T extends Service>(serviceProvider: IServiceProvider<T>): void {
+    const factoryProvider = serviceProvider.getFactoryProvider();
 
-    forEach(factory.getDependencies(), dependencyName => {
-      if (dependencyName !== provider.getName()) {
+    forEach(factoryProvider.getDependencies(), dependencyName => {
+      if (dependencyName !== serviceProvider.getName()) {
         const dependency = this.get(dependencyName);
 
-        provider.addDependency(dependency);
+        serviceProvider.addDependency(dependency);
       } else {
-        throw new Error(`The service ${provider.getName()} cannot depend on itself`);
+        throw new Error(`The service ${serviceProvider.getName()} cannot depend on itself`);
       }
     });
 
-    provider.setResolvedDependencies(true);
-  }
-
-  /**
-   *
-   * @param {FactoryInterface} factory
-   * @returns {Array}
-   * @private
-   */
-  private getDependencies(factory) {
-    const registeredFactory = this.getFactory(factory);
-
-    if (registeredFactory) {
-      return registeredFactory.getDependencies();
-    }
-
-    throw new Error(`Could not find registered factory ${registeredFactory.name}`);
+    serviceProvider.setResolvedDependencies(true);
   }
 }
 
 export default new Box();
-/**
- * Helper to return new instances of Box.
- * @return {Box}
- */
-const createInstance = () => new Box();
-export { createInstance, Box };
+export { Box };

@@ -1,5 +1,5 @@
 {
-  "name": "@rafter/core",
+  "name": "@rafter/utils",
   "version": "0.1.0",
   "contributors": [
     {
@@ -28,15 +28,11 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafter/di-container": "*",
-    "@rafter/di-autoloader": "*",
-    "express": "4.17.1",
-    "recursive-readdir": "2.2.2"
   },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*"
   },
-  "description": "A slightly opinionated JS framework that makes building apps easy and testable",
+  "description": "Utils for Rafter projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",

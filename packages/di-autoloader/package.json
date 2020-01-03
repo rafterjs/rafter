@@ -12,6 +12,8 @@
     "solid"
   ],
   "main": "dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "yarn clean && yarn build:server",
     "build:server": "babel index.ts --out-dir ./dist && babel ./lib --out-dir ./dist/lib --ignore \\\"**/*.spec.js\\\"",

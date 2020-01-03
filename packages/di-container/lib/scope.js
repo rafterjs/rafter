@@ -1,5 +1,5 @@
 import isFunction from 'lodash/isfunction';
-import { singleton } from './scope-constants';
+import { singleton } from './ScopeConstants';
 import Box from './box';
 
 /**
