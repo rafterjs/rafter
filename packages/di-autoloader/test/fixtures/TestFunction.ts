@@ -3,5 +3,5 @@
  * frameworks, which allows it to be tested very cleanly and easily (ie. just pass in the mock config in your tests)!
  */
 export default () => {
-  return () => 'This is a function';
+  return (): string => 'This is a function';
 };

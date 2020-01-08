@@ -3,39 +3,34 @@
  * frameworks, which allows it to be tested very cleanly and easily (ie. just pass in the mock config in your tests)!
  */
 class TestClass {
-  constructor(foo, bar, testFunction) {
-    this._foo = foo;
-    this._bar = bar;
-    this._testFunction = testFunction;
-    this._data = `here's some data`;
+  private readonly bar: object;
+
+  private readonly testFunction: Function;
+
+  private readonly data: string;
+
+  constructor(bar: object, testFunction: Function) {
+    this.bar = bar;
+    this.testFunction = testFunction;
+    this.data = `here's some data`;
   }
 
-  /**
-   * @return {string}
-   */
-  getBar() {
-    return this._bar;
-  }
-
-  /**
-   * @return {string}
-   */
-  getFoo() {
-    return this._foo;
+  public getBar(): object {
+    return this.bar;
   }
 
   /**
    * @return {Function}
    */
-  getFunction() {
-    return this._testFunction;
+  public getFunction(): Function {
+    return this.testFunction;
   }
 
   /**
    * @return {string}
    */
-  getData() {
-    return this._data;
+  public getData(): string {
+    return this.data;
   }
 }
 

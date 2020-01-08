@@ -1,13 +1,9 @@
 export type TestConfig = {
-  foo: {
-    bar: string
-  }
-}
+  bar: string;
+};
 
 const config: TestConfig = {
-  foo: {
-    bar: 'test something',
-  },
+  bar: 'test something',
 };
 
 export default config;
