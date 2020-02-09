@@ -2,8 +2,8 @@ export type TestConfig = {
   bar: string;
 };
 
-const config: TestConfig = {
+const config = () => ({
   bar: 'test something',
-};
+});
 
 export default config;

@@ -9,7 +9,7 @@ import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddlewareConfig } from '../middleware/IMiddleware';
 import { ILogger } from '../../utils/logger/ILogger';
 import { IPluginProvider } from '../plugins/PluginProvider';
-import { IConfig } from '../../utils/config/IConfig';
+import { IConfig } from '../../utils/loader/IConfig';
 
 export interface IServer {
   start(): Promise<void>;

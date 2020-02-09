@@ -1,4 +1,4 @@
-import { IDiContainer } from '@rafter/di-container';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from '../../utils/logger/ILogger';
 import { IPreStartHook, IPreStartHookConfig } from './IPreStartHook';
 
@@ -7,17 +7,17 @@ export interface IPreStartHooksProvider {
 }
 
 /**
- * @param {IDiContainer} diContainer
+ * @param {IDiAutoloader} diContainer
  * @param {ILogger} logger
  * @return {PreStartHooksProvider}
  */
 export default class PreStartHooksProvider implements IPreStartHooksProvider {
-  private readonly diContainer: IDiContainer;
+  private readonly diAutoloader: IDiAutoloader;
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiContainer, logger: ILogger) {
-    this.diContainer = diContainer;
+  constructor(diContainer: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diContainer;
     this.logger = logger;
   }
 
@@ -32,7 +32,7 @@ export default class PreStartHooksProvider implements IPreStartHooksProvider {
       async (preStartHookServiceName): Promise<void> => {
         try {
           this.logger.info(`    Adding pre-start hook: ${preStartHookServiceName}`);
-          const hook = this.diContainer.get<IPreStartHook>(preStartHookServiceName);
+          const hook = this.diAutoloader.get<IPreStartHook>(preStartHookServiceName);
           hooksCollection.push(hook);
         } catch (error) {
           this.logger.error(`    Could not add pre-start hook: ${preStartHookServiceName}`, error);

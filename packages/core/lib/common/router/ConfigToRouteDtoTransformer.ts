@@ -1,4 +1,4 @@
-import { IDiContainer } from '@rafter/di-container';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import RouteDto from './RouteDto';
 import { METHODS } from './RouteMethodConstants';
 import { ITransformer } from '../mappers/ITransformer';
@@ -8,14 +8,14 @@ import { IController, IControllerAction } from './IControllerAction';
 /**
  * A config to route mapper.
  *
- * @param {IDiContainer} diContainer
+ * @param {IDiAutoloader} diContainer
  * @return {ConfigToRouteDtoTransformer}
  */
 export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteConfig[], RouteDto[]> {
-  private readonly diContainer: IDiContainer;
+  private readonly diAutoloader: IDiAutoloader;
 
-  constructor(diContainer: IDiContainer) {
-    this.diContainer = diContainer;
+  constructor(diContainer: IDiAutoloader) {
+    this.diAutoloader = diContainer;
   }
 
   /**
@@ -26,7 +26,7 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
    * @private
    */
   private getControllerAction(controllerName: string, action: string): IControllerAction {
-    const controller = this.diContainer.get<IController>(controllerName);
+    const controller = this.diAutoloader.get<IController>(controllerName);
     if (!controller[action]) {
       throw new Error(`Could not register the controller ${controllerName} with the action ${action}`);
     }

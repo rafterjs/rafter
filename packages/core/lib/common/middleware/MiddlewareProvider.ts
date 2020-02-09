@@ -1,4 +1,4 @@
-import { IDiContainer } from '@rafter/di-container';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from '../../utils/logger/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
@@ -8,18 +8,17 @@ export interface IMiddlewareProvider {
 
 /**
  *
- * @param {IDiContainer} diContainer
- * @param {Logger} logger
+ * @param {IDiAutoloader} diContainer
+ * @param {ILogger} logger
  * @return {MiddlewareProvider}
  */
-
 export default class MiddlewareProvider implements IMiddlewareProvider {
-  private readonly diContainer: IDiContainer;
+  private readonly diAutoloader: IDiAutoloader;
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiContainer, logger: ILogger) {
-    this.diContainer = diContainer;
+  constructor(diContainer: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diContainer;
     this.logger = logger;
   }
 
@@ -33,7 +32,7 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     Object.values(middlewareConfig).forEach((middlewareServiceName): void => {
       try {
         this.logger.info(`    Adding middleware: ${middlewareServiceName}`);
-        const middleware = this.diContainer.get<IMiddleware>(middlewareServiceName);
+        const middleware = this.diAutoloader.get<IMiddleware>(middlewareServiceName);
         middlewareCollection.push(middleware);
       } catch (error) {
         this.logger.error(`    Could not add middleware: ${middlewareServiceName}`, error);

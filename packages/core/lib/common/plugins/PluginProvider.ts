@@ -1,4 +1,4 @@
-import { IDiContainer } from '@rafter/di-container';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from '../../utils/logger/ILogger';
 import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
@@ -8,18 +8,18 @@ export interface IPluginProvider {
 
 /**
  *
- * @param {IDiContainer} diContainer
+ * @param {IDiAutoloader} diContainer
  * @param {ILogger} logger
  * @return {PluginProvider}
  */
 
 export default class PluginProvider<T extends IPluginConfig> implements IPluginProvider {
-  private readonly diContainer: IDiContainer;
+  private readonly diAutoloader: IDiAutoloader;
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiContainer, logger: ILogger) {
-    this.diContainer = diContainer;
+  constructor(diContainer: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diContainer;
     this.logger = logger;
   }
 

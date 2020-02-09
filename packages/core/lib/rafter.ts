@@ -1,13 +1,13 @@
-import { Box } from '@rafter/di-container';
-import { DiAutoloader } from '@rafter/di-autoloader';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 import { ILogger } from './utils/logger/ILogger';
 import { IServer } from './common/server/Server';
 import diAutoloaderFactory from './vendor/DiAutoloaderFactory';
-import { IServiceConfig } from './common/IService';
-import { IRouteConfig } from './common/router/IRouteConfig';
-import { IMiddlewareConfig } from './common/middleware/IMiddleware';
-import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
-import { IDiConfigLoaderService } from './utils/config/IDiConfigLoaderService';
+import containerFactory from './vendor/ContainerFactory';
+// import { IServiceConfig } from './common/IService';
+// import { IRouteConfig } from './common/router/IRouteConfig';
+// import { IMiddlewareConfig } from './common/middleware/IMiddleware';
+// import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
+import { IDiConfigLoaderService } from './utils/loader/IDiConfigLoaderService';
 
 export interface RafterConfig {
   diConfigLoaderService: IDiConfigLoaderService;
@@ -15,7 +15,7 @@ export interface RafterConfig {
 }
 
 export default class Rafter {
-  private boxDiAutoLoader?: DiAutoloader;
+  private boxDiAutoLoader?: IDiAutoloader;
 
   private server?: IServer;
 
@@ -32,25 +32,25 @@ export default class Rafter {
 
   private async loadDependencies(): Promise<void> {
     const configDto = await this.diConfigLoaderService.getDiConfig();
-    // TODO namespace these DI services so they dont inadvertently be overloaded
-    this.logger.debug('rafter::loadDependencies', configDto);
 
-    // add the config to the DI container
-    Box.register('config', (): object => configDto.getConfig());
+    // this.logger.debug('rafter::loadDependencies', configDto);
+    //
+    // // add the config to the DI container
+    // Box.register('config', (): object => configDto.getConfig());
+    //
+    // // add the services to the DI container
+    // Box.register('services', (): IServiceConfig => configDto.getServices());
+    //
+    // // add the routes to the DI container
+    // Box.register('routes', (): IRouteConfig[] => configDto.getRoutes());
+    //
+    // // add the middleware to the DI container
+    // Box.register('middleware', (): IMiddlewareConfig[] => configDto.getMiddleware());
+    //
+    // // add the middleware to the DI container
+    // Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
 
-    // add the services to the DI container
-    Box.register('services', (): IServiceConfig => configDto.getServices());
-
-    // add the routes to the DI container
-    Box.register('routes', (): IRouteConfig[] => configDto.getRoutes());
-
-    // add the middleware to the DI container
-    Box.register('middleware', (): IMiddlewareConfig[] => configDto.getMiddleware());
-
-    // add the middleware to the DI container
-    Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
-
-    this.boxDiAutoLoader = diAutoloaderFactory(configDto.getServices(), this.logger);
+    this.boxDiAutoLoader = diAutoloaderFactory(configDto.getServices(), containerFactory(), this.logger);
 
     await this.boxDiAutoLoader.load();
   }

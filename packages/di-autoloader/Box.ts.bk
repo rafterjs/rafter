@@ -5,10 +5,10 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isundefined';
 import find from 'lodash/find';
 import forEach from 'lodash/foreach';
-import { ILogger, LogLevel } from '@rafter/utils';
-import { IServiceProvider, ServiceProvider } from './ServiceProvider';
-import { FactoryProvider, IFactory, IFactoryClass, IFactoryProvider, LengthWise, Service } from './FactoryProvider';
-import { IScope } from './ScopeConstants';
+import { ILogger, LogLevel } from 'packages/utils/dist';
+import { IServiceProvider, ServiceProvider } from '../di-container/lib/ServiceProvider';
+import { FactoryProvider, IFactory, IFactoryClass, IFactoryProvider, LengthWise, Service } from '../di-container/lib/FactoryProvider';
+import { IScope } from '../di-container/lib/ScopeConstants';
 
 type IContainer = Map<string, IServiceProvider<Service>>;
 

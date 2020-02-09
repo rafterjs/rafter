@@ -1,57 +1,44 @@
-import { join } from 'path';
+import { join, relative } from 'path';
+import { createStubInstance } from 'sinon';
+import { LoggingService } from '@rafter/utils';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import DiAutoloader from './DiAutoloader';
 import TestClass from '../test/fixtures/TestClass';
-import { TestConfig } from '../test/fixtures/TestConfig';
-import { ILogger } from '../../utils/lib/Logger';
-import TestFunction from '../test/fixtures/TestFunction';
+import { TestConfig } from '../test/fixtures/config';
+import TestFunction from '../test/fixtures/testFunction';
 
 const FIXTURES_DIR = join(__dirname, '../test', 'fixtures');
 
-describe('BoxDI autoloader', () => {
-  let mockLogger: ILogger;
+jest.mock('@rafter/utils');
+
+describe('DI Autoloader', () => {
+  const mockLogger = createStubInstance(LoggingService);
+
   let container: AwilixContainer;
 
   beforeEach(() => {
-    mockLogger = {
-      log: jest.fn(),
-      info: jest.fn(),
-      debug: jest.fn(),
-      error: jest.fn(),
-      warn: jest.fn(),
-    };
-
-    container = createContainer({ injectionMode: InjectionMode.CLASSIC });
+    container = createContainer({});
   });
 
   it('successfully load a simple object', () => {
-    const servicesConfig = {
-      config: {
-        path: join(FIXTURES_DIR, 'TestConfig'),
-        dependencies: [],
-      },
-    };
-    const diAutoloader = new DiAutoloader(servicesConfig, container, mockLogger);
-    diAutoloader.load();
+    const joinedPath = join(FIXTURES_DIR, 'config.ts');
+
+    const diAutoloader = new DiAutoloader(container, mockLogger);
+    diAutoloader.loadModules([joinedPath]);
 
     const config = diAutoloader.get<TestConfig>('config');
     expect(config.bar).toBe('test something');
 
-    const bar = diAutoloader.get<string>('config');
+    const bar = diAutoloader.get<string>('config.bar');
     expect(bar).toBe('test something');
   });
 
   it('successfully loads a simple function', () => {
-    const servicesConfig = {
-      testFunction: {
-        path: join(FIXTURES_DIR, 'TestFunction'),
-        dependencies: [],
-      },
-    };
+    const functionPath = join(FIXTURES_DIR, 'testFunction.ts');
 
-    const diAutoloader = new DiAutoloader(servicesConfig, container, mockLogger);
-    diAutoloader.load();
+    const diAutoloader = new DiAutoloader(container, mockLogger);
+    diAutoloader.loadModules([functionPath]);
 
     const testFunction = diAutoloader.get<typeof TestFunction>('testFunction');
 
@@ -75,8 +62,10 @@ describe('BoxDI autoloader', () => {
       },
     };
 
-    const diAutoloader = new DiAutoloader(servicesConfig, container, mockLogger);
-    diAutoloader.load();
+    const dependenciesPath = join(FIXTURES_DIR, '*.ts');
+
+    const diAutoloader = new DiAutoloader(container, mockLogger);
+    diAutoloader.loadModules([dependenciesPath]);
 
     const testClass = diAutoloader.get<TestClass>('testClass');
 
@@ -95,12 +84,13 @@ describe('BoxDI autoloader', () => {
       },
     };
 
-    const diAutoloader = new DiAutoloader(servicesConfig, container, mockLogger);
+    const diAutoloader = new DiAutoloader(container, mockLogger);
     diAutoloader.load();
-    expect(mockLogger.debug.mock.calls.length).toBe(1);
+    expect(mockLogger.debug.calledOnce).toBeTruthy();
   });
 
   it.skip('instantiates the autoloader with an existing boxdi', () => {
+    // TODO
   });
 
   it('fails to load a dependency that does not exist', () => {
@@ -111,7 +101,7 @@ describe('BoxDI autoloader', () => {
       },
     };
 
-    const diAutoloader = new DiAutoloader(servicesConfig, container, mockLogger);
+    const diAutoloader = new DiAutoloader(container, mockLogger);
     diAutoloader.load();
 
     expect(() => {

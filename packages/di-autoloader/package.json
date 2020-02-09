@@ -15,12 +15,11 @@
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && yarn build:server",
-    "build:server": "babel index.ts --out-dir ./dist && babel ./lib --out-dir ./dist/lib --ignore \\\"**/*.spec.js\\\"",
-    "clean": "rimraf ./dist",
-    "clean:modules": "rimraf ./node_modules",
+    "build": "yarn clean:lib && yarn build:server",
+    "build:server": "babel index.ts --out-dir ./dist && babel ./lib --out-dir ./dist/lib --ignore \"**/*.spec.js\"",
+    "clean:lib": "rimraf ./dist",
     "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
-    "lint": "eslint \\\"./lib/**/*\\\" \\\"./test/**/*\\\" index.ts",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./index.ts ./babel.config.js",
     "test": "jest --notify"
   },
   "repository": {
@@ -29,10 +28,13 @@
   },
   "license": "MIT",
   "dependencies": {
-    "awilix": "^4.2.3"
+    "awilix": "^4.2.3",
+    "@rafter/utils": "*",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*"
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
   },
   "engines": {
     "node": ">=9"
