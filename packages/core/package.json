@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "yarn clean:lib && yarn build:lib && yarn build:types",
-    "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
+    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
     "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
@@ -28,6 +28,7 @@
   "dependencies": {
     "@rafter/cors-rafter-plugin": "*",
     "@rafter/di-autoloader": "*",
+    "@rafter/utils": "*",
     "awilix": "^4.2.3",
     "express": "4.17.1",
     "recursive-readdir": "2.2.2"

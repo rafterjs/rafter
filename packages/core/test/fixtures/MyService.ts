@@ -1,4 +1,4 @@
-import { ILogger } from '../../lib/utils/logger/ILogger';
+import { ILogger } from '@rafter/utils';
 
 export default class MyService {
   private readonly logger: ILogger;

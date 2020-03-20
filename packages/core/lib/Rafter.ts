@@ -1,6 +1,6 @@
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import { GlobWithOptions } from 'awilix';
-import { ILogger } from './utils/logger/ILogger';
+import { ILogger } from '@rafter/utils';
 import { IServer } from './common/server/Server';
 import diAutoloaderFactory from './vendor/DiAutoloaderFactory';
 import containerFactory from './vendor/ContainerFactory';

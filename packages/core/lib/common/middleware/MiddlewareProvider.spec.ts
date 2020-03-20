@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { IDiAutoloader } from '@rafter/di-autoloader';
+import { ILogger } from '@rafter/utils';
 import MiddlewareProvider from './MiddlewareProvider';
-import { ILogger } from '../../utils/logger/ILogger';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 describe('MiddlewareProvider', () => {

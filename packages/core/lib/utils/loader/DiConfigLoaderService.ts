@@ -1,7 +1,7 @@
 import { dirname, join } from 'path';
+import { ILogger } from '@rafter/utils';
 import { IDiConfigLoaderStrategy } from './IDiConfigLoaderStrategy';
 import { IDiConfigLoaderService } from './IDiConfigLoaderService';
-import { ILogger } from '../logger/ILogger';
 import { IConfig } from './IConfig';
 import { IPluginsConfig } from '../../common/plugins/IPlugin';
 import DiConfigDto from './DiConfigDto';

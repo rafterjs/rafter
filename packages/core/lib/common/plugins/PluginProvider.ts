@@ -1,5 +1,5 @@
 import { IDiAutoloader } from '@rafter/di-autoloader';
-import { ILogger } from '../../utils/logger/ILogger';
+import { ILogger } from '@rafter/utils';
 import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
 export interface IPluginProvider {

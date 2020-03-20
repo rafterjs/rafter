@@ -13,12 +13,11 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "build": "yarn clean:lib && yarn build:lib && yarn build:config && yarn build:index && yarn build:types",
+    "build": "yarn clean:lib && yarn build:lib && yarn build:config && yarn build:types",
     "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:index": "babel lib/index.ts --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
+    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build && yarn start\"",
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",

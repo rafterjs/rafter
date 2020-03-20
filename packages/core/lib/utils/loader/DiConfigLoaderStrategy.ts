@@ -2,7 +2,7 @@ import * as path from 'path';
 import recursive from 'recursive-readdir';
 import * as fs from 'fs';
 import DiConfigDto from './DiConfigDto';
-import { ILogger } from '../logger/ILogger';
+import { ILogger } from '@rafter/utils';
 import { IDiConfigLoaderStrategy } from './IDiConfigLoaderStrategy';
 import { IConfig } from './IConfig';
 import { IServiceConfig } from '../../common/IService';

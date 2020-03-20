@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import * as http from 'http';
+import { ILogger } from '@rafter/utils';
 import { RequestHandler } from 'express-serve-static-core';
 import { IPreStartHookConfig } from '../pre-start-hooks/IPreStartHook';
 import { IRoutesProvider } from '../router/RoutesProvider';
@@ -7,9 +8,7 @@ import { IMiddlewareProvider } from '../middleware/MiddlewareProvider';
 import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider';
 import { IRouteConfig } from '../router/IRouteConfig';
 import { IMiddlewareConfig } from '../middleware/IMiddleware';
-import { ILogger } from '../../utils/logger/ILogger';
 import { IPluginProvider } from '../plugins/PluginProvider';
-import { IConfig } from '../../utils/loader/IConfig';
 
 export interface IServer {
   start(): Promise<void>;

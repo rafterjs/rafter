@@ -1,7 +1,7 @@
 import { AwilixContainer, listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
+import { ILogger } from '@rafter/utils';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
-import { ILogger } from '../../core/lib/utils/logger/ILogger';
 import { IDiAutoloader } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 
