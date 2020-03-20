@@ -1,38 +1,34 @@
 import { IDiAutoloader } from '@rafter/di-autoloader';
+import { GlobWithOptions } from 'awilix';
 import { ILogger } from './utils/logger/ILogger';
 import { IServer } from './common/server/Server';
 import diAutoloaderFactory from './vendor/DiAutoloaderFactory';
 import containerFactory from './vendor/ContainerFactory';
-// import { IServiceConfig } from './common/IService';
-// import { IRouteConfig } from './common/router/IRouteConfig';
-// import { IMiddlewareConfig } from './common/middleware/IMiddleware';
-// import { IPreStartHookConfig } from './common/pre-start-hooks/IPreStartHook';
-import { IDiConfigLoaderService } from './utils/loader/IDiConfigLoaderService';
 
 export interface RafterConfig {
-  diConfigLoaderService: IDiConfigLoaderService;
+  paths: Array<string | GlobWithOptions> | string;
   logger?: ILogger;
 }
 
 export default class Rafter {
-  private boxDiAutoLoader?: IDiAutoloader;
+  private autoloader?: IDiAutoloader;
 
   private server?: IServer;
 
-  private readonly diConfigLoaderService: IDiConfigLoaderService;
+  private readonly paths: Array<string | GlobWithOptions> | string;
 
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { diConfigLoaderService, logger = console } = rafterConfig;
+    const { paths, logger = console } = rafterConfig;
 
-    this.diConfigLoaderService = diConfigLoaderService;
+    this.paths = paths;
     this.logger = logger;
   }
 
-  private async loadDependencies(): Promise<void> {
-    const configDto = await this.diConfigLoaderService.getDiConfig();
-
+  private async load(): Promise<void> {
+    // const configDto = await this.diConfigLoaderService.getDiConfig();
+    //
     // this.logger.debug('rafter::loadDependencies', configDto);
     //
     // // add the config to the DI container
@@ -50,18 +46,18 @@ export default class Rafter {
     // // add the middleware to the DI container
     // Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
 
-    this.boxDiAutoLoader = diAutoloaderFactory(configDto.getServices(), containerFactory(), this.logger);
-
-    await this.boxDiAutoLoader.load();
+    this.autoloader = diAutoloaderFactory(containerFactory(), this.logger);
+    await this.autoloader.load(this.paths);
   }
 
   public async start(): Promise<void> {
-    await this.loadDependencies();
+    await this.load();
 
-    if (this.boxDiAutoLoader) {
-      this.server = this.boxDiAutoLoader.get<IServer>('server');
-
-      await this.server.start();
+    if (this.autoloader) {
+      console.log(this.autoloader.list(this.paths));
+      // this.server = this.autoloader.get<IServer>('server');
+      //
+      // await this.server.start();
     }
   }
 

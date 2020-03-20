@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getInstance, JsIrSdk, SessionInfo } from 'node-irsdk';
 
 export interface ISessionDao {

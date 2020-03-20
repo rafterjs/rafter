@@ -5,5 +5,4 @@
   },
   "include": ["./lib"],
   "exclude": ["./test", "./**/*.spec.ts"]
-
 }

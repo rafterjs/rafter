@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import MiddlewareProvider from './MiddlewareProvider';
 import { ILogger } from '../../utils/logger/ILogger';
@@ -32,6 +33,5 @@ describe('MiddlewareProvider', () => {
     expect(middleware[0]).toBe(mockMiddleware1);
   });
 
-  it.skip('should not fail on error', () => {
-  });
+  // it.skip('should not fail on error', () => {  });
 });

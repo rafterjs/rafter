@@ -4,3 +4,7 @@ import DiAutoloader from './lib/DiAutoloader';
 
 export default DiAutoloader;
 export { DiAutoloader, IDiAutoloader, IDiContainer };
+
+export const test = (): string => {
+  return 'Hi';
+};

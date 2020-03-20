@@ -2,21 +2,23 @@
  * A simple test class that requires config to be injected. Notice how this class has no fancy decorators or
  * frameworks, which allows it to be tested very cleanly and easily (ie. just pass in the mock config in your tests)!
  */
+import { TestConfig } from './config';
+
 class TestClass {
-  private readonly bar: object;
+  private readonly config: TestConfig;
 
   private readonly testFunction: Function;
 
   private readonly data: string;
 
-  constructor(bar: object, testFunction: Function) {
-    this.bar = bar;
+  constructor(config: TestConfig, testFunction: Function) {
+    this.config = config;
     this.testFunction = testFunction;
     this.data = `here's some data`;
   }
 
-  public getBar(): object {
-    return this.bar;
+  public getBar(): string {
+    return this.config.bar;
   }
 
   /**

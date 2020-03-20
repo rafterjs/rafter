@@ -15,8 +15,10 @@
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean:lib && yarn build:server",
-    "build:server": "babel index.ts --out-dir ./dist && babel ./lib --out-dir ./dist/lib --ignore \"**/*.spec.js\"",
+    "build": "yarn clean:lib && yarn build:server && yarn build:types",
+    "build:server": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:index": "babel index.ts --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "clean:lib": "rimraf ./dist",
     "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./index.ts ./babel.config.js",
