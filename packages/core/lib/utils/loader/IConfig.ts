@@ -36,7 +36,8 @@ export interface IConfig {
   addPluginsConfig(pluginsConfig: IPluginsConfig): IConfig;
 }
 
-export type IConfigTypes = IPreStartHookConfig
+export type IConfigTypes =
+  | IPreStartHookConfig
   | IServiceConfig
   | IMiddlewareConfig
   | IRouteConfig

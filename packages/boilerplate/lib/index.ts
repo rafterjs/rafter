@@ -1,14 +1,11 @@
 import rafter from '@rafter/core';
+import { join } from 'path';
 
-console.log('---------------- loading rafter');
 const run = async (): Promise<void> => {
   const rafterServer = rafter({
-    corePaths: 'sda',
-    applicationPaths: __dirname,
+    applicationPaths: join(__dirname, '/**/*!(.spec).js'),
     logger: console,
   });
-
-  console.log('---------------- starting rafter', rafterServer);
 
   return rafterServer.start().catch((error: Error): void => {
     console.error(`Failed to start rafter`, error);

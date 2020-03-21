@@ -1,4 +1,4 @@
-import { AwilixContainer, listModules } from 'awilix';
+import { listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafter/utils';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
@@ -6,7 +6,7 @@ import { IDiAutoloader } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 
 export default class DiAutoloader implements IDiAutoloader {
-  public readonly container: AwilixContainer;
+  public readonly container: IDiContainer;
 
   private readonly logger: ILogger;
 

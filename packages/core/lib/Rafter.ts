@@ -2,16 +2,16 @@ import { IDiAutoloader } from '@rafter/di-autoloader';
 import { GlobWithOptions } from 'awilix';
 import { ILogger } from '@rafter/utils';
 import { IServer } from './common/server/Server';
-import diAutoloaderFactory from './vendor/DiAutoloaderFactory';
-import containerFactory from './vendor/ContainerFactory';
+import IRafter from './IRafter';
 
 export interface RafterConfig {
+  diAutoloader: IDiAutoloader;
   paths: Array<string | GlobWithOptions> | string;
   logger?: ILogger;
 }
 
-export default class Rafter {
-  private autoloader?: IDiAutoloader;
+export default class Rafter implements IRafter {
+  private readonly diAutoloader: IDiAutoloader;
 
   private server?: IServer;
 
@@ -20,10 +20,11 @@ export default class Rafter {
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { paths, logger = console } = rafterConfig;
+    const { paths, diAutoloader, logger = console } = rafterConfig;
 
     this.paths = paths;
     this.logger = logger;
+    this.diAutoloader = diAutoloader;
   }
 
   private async load(): Promise<void> {
@@ -46,17 +47,18 @@ export default class Rafter {
     // // add the middleware to the DI container
     // Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
 
-    this.autoloader = diAutoloaderFactory(containerFactory(), this.logger);
-    await this.autoloader.load(this.paths);
+    await this.diAutoloader.load(this.paths);
   }
 
   public async start(): Promise<void> {
     await this.load();
 
-    if (this.autoloader) {
-      console.log(this.autoloader.list(this.paths));
-      // this.server = this.autoloader.get<IServer>('server');
-      //
+    if (this.diAutoloader) {
+      this.logger.debug(
+        this.diAutoloader.list(this.paths),
+      );
+      this.server = this.diAutoloader.get<IServer>('server');
+      this.logger.debug(this.server);
       // await this.server.start();
     }
   }

@@ -1,6 +1,9 @@
-import { IDiConfigLoaderStrategyOptions } from './utils/loader/IDiConfigLoaderStrategyOptions';
+import { ILogger } from '@rafter/utils';
+import { IDiAutoloader } from '@rafter/di-autoloader';
 
-export interface IRafterOptions extends IDiConfigLoaderStrategyOptions {
+export interface IRafterOptions {
+  diAutoloader: IDiAutoloader;
   corePaths?: string;
   applicationPaths?: string;
+  logger?: ILogger;
 }

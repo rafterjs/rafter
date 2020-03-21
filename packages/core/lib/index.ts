@@ -1,10 +1,31 @@
+import { join } from 'path';
+import Rafter, { RafterConfig } from './Rafter';
 import { IRafterOptions } from './IRafterOptions';
+import IRafter from './IRafter';
 
-export default ({ logger }: IRafterOptions): void => {
-  console.log('----------------------__dirname', __dirname);
+const GLOB_PATTERN = join(__dirname, '/**/*!(.spec).js');
 
-  // load all core paths
+export default (
+  {
+    diAutoloader,
+    logger,
+    corePaths = GLOB_PATTERN,
+    applicationPaths,
+  }: IRafterOptions,
+): IRafter => {
+  const paths = [];
+  if (corePaths) {
+    paths.push(corePaths);
+  }
 
-  // load application paths
+  if (applicationPaths) {
+    paths.push(applicationPaths);
+  }
 
+  const config: RafterConfig = {
+    diAutoloader,
+    paths,
+    logger,
+  };
+  return new Rafter(config);
 };
