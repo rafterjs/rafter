@@ -13,27 +13,31 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "start": "pm2 start ./dev.js --watch",
-    "stop": "pm2 stop ./dev.js",
-    "test": "jest --notify ./lib",
-    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build": "yarn clean:lib && yarn build:lib && yarn build:config && yarn build:types",
+    "build:config": "babel --include-dotfiles lib/config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "clean": "yarn clean:lib",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build && yarn start\"",
     "clean:lib": "rimraf ./dist",
-    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:index",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint ./config/.config.ts ./config/.routes.ts ./lib/** ./index.ts ./dev.js"
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",
+    "start": "node ./dist/lib/index.js",
+    "stop": "echo 'stop'",
+    "types": "tsc",
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@babel/register": "7.5.5",
-    "@rafter/core": "*"
+    "@rafter/core": "*",
+    "@rafter/di-autoloader": "*",
+    "@rafter/cors-rafter-plugin": "*"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*"
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
   },
   "description": "A simple boilerplate to start new projects",
-  "main": "./dist/index.js",
+  "main": "./dist/lib/index.js",
   "engines": {
     "node": ">=9"
   }

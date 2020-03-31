@@ -15,6 +15,12 @@ Rafter is a lightweight, slightly opinionated Javascript framework for rapid dev
 npm install --save rafter
 ```
 
+OR
+
+```javascript
+yarn add rafter
+```
+
 ## Getting started
 
 The following configuration files are autoloaded during the Rafter service starting:

@@ -1,5 +1,2 @@
-./lib
-./example
+./lib/**/*
 ./.bin
-./index.js
-./rafter.js

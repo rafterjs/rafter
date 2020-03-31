@@ -1,0 +1,41 @@
+{
+  "name": "@rafter/utils",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
+    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
+    "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean:lib": "rimraf ./dist",
+    "copy": "copyfiles ./package.json ./dist/package.json",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "test": "jest --notify ./lib",
+    "types": "tsc",
+    "update:latest": "yarn upgrade --latest"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
+  },
+  "description": "Utils for Rafter projects",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=9"
+  }
+}

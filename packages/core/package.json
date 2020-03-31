@@ -13,27 +13,34 @@
     "url": "https://github.com/crimsonronin/rafter.git"
   },
   "scripts": {
-    "test": "jest --notify ./lib",
-    "build:lib": "babel --include-dotfiles lib --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "clean": "yarn clean:lib",
+    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
+    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
+    "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
-    "build": "yarn clean && yarn build:lib",
     "copy": "copyfiles ./package.json ./dist/package.json",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
+    "test": "jest --notify ./lib",
     "types": "tsc",
-    "lint": "eslint ./lib/**",
-    "format": "prettier --write \"{lib,example}/**/*.{js,jsx,ts,tsx}\" --write \"./rafter.ts\""
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafter/di-container": "*",
+    "@rafter/cors-rafter-plugin": "*",
     "@rafter/di-autoloader": "*",
+    "@rafter/utils": "*",
+    "awilix": "^4.2.3",
     "express": "4.17.1",
     "recursive-readdir": "2.2.2"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*"
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "engines": {
     "node": ">=9"
   }

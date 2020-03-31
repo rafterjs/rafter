@@ -1,7 +1,7 @@
 import { IRouter } from 'express-serve-static-core';
+import { ILogger } from '@rafter/utils';
 import ConfigToRouteDtoTransformer from './ConfigToRouteDtoTransformer';
 import RouterProvider from './RouterProvider';
-import { ILogger } from '../../utils/ILogger';
 import RouteDto from './RouteDto';
 import { IRouteConfig } from './IRouteConfig';
 

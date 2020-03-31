@@ -1,13 +1,14 @@
 import { Express } from 'express';
 import * as http from 'http';
+import { ILogger } from '@rafter/utils';
 import { RequestHandler } from 'express-serve-static-core';
-import { IPreStartHookConfig } from '../pre-start-hooks/IPreStartHook';
+import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutesProvider } from '../router/RoutesProvider';
-import { IMiddlewareProvider } from '../middleware/MiddlewareProvider';
-import { IPreStartHooksProvider } from '../pre-start-hooks/PreStartHooksProvider';
-import { IRouteConfig } from '../router/IRouteConfig';
-import { IMiddlewareConfig } from '../middleware/IMiddleware';
-import { ILogger } from '../../utils/ILogger';
+import { IMiddlewareProvider, IMiddlewareConfig } from '../middleware';
+
+import { IRouteConfig } from '../router';
+
+import { IPluginProvider } from '../plugins';
 
 export interface IServer {
   start(): Promise<void>;
@@ -15,35 +16,24 @@ export interface IServer {
   stop(): Promise<void>;
 }
 
-/**
- * @param {object} express
- * @param {RoutesProvider} routerProvider
- * @param {MiddlewareProvider} middlewareProvider
- * @param {PreStartHooksProvider} preStartHookProvider
- * @param {string[]=} middlewareConfig
- * @param {object[]=} routesConfig
- * @param {Function[]=} preStartHooks
- * @param {number=} serverPort
- * @param {Logger} logger
- *
- * @return {Server}
- */
 export default class Server implements IServer {
   private serverInstance?: http.Server;
 
   private readonly express: Express;
 
-  private readonly routerProvider: IRoutesProvider;
+  private readonly routesProvider: IRoutesProvider;
 
   private readonly middlewareProvider: IMiddlewareProvider;
 
-  private readonly preStartHookProvider: IPreStartHooksProvider;
+  private readonly preStartHooksProvider: IPreStartHooksProvider;
 
   private readonly middlewareConfig: IMiddlewareConfig[] = [];
 
-  private readonly routesConfig: IRouteConfig[] = [];
+  private readonly routes: IRouteConfig[] = [];
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
+
+  private readonly pluginProvider: IPluginProvider;
 
   private readonly serverPort: number;
 
@@ -51,22 +41,26 @@ export default class Server implements IServer {
 
   constructor(
     express: Express,
-    routerProvider: IRoutesProvider,
+    routesProvider: IRoutesProvider,
     middlewareProvider: IMiddlewareProvider,
-    preStartHookProvider: IPreStartHooksProvider,
+    preStartHooksProvider: IPreStartHooksProvider,
+    pluginProvider: IPluginProvider,
     middlewareConfig: IMiddlewareConfig[] = [],
-    routesConfig: IRouteConfig[] = [],
+    routes: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
-    serverPort: number = 3000,
+    serverPort = 3000,
     logger: ILogger = console,
   ) {
     this.express = express;
-    this.routerProvider = routerProvider;
+
+    this.routesProvider = routesProvider;
     this.middlewareProvider = middlewareProvider;
-    this.preStartHookProvider = preStartHookProvider;
+    this.preStartHooksProvider = preStartHooksProvider;
+    this.pluginProvider = pluginProvider;
     this.middlewareConfig = middlewareConfig;
-    this.routesConfig = routesConfig;
+    this.routes = routes;
     this.preStartHooks = preStartHooks;
+
     this.serverPort = serverPort;
     this.logger = logger;
   }
@@ -79,7 +73,7 @@ export default class Server implements IServer {
   private async initPreStartHooks(): Promise<void> {
     if (this.preStartHooks.length > 0) {
       // get the hooks from config
-      const hooks = this.preStartHookProvider.createInstance(this.preStartHooks);
+      const hooks = this.preStartHooksProvider.createInstance(this.preStartHooks);
 
       // run the hooks
       Object.values(hooks).forEach(
@@ -99,9 +93,9 @@ export default class Server implements IServer {
    */
   private async initMiddleware(): Promise<void> {
     if (this.middlewareConfig.length > 0) {
-      this.express.use(this.middlewareProvider.createInstance(this.middlewareConfig) as (
-        | RequestHandler
-        | RequestHandler[]));
+      this.express.use(
+        this.middlewareProvider.createInstance(this.middlewareConfig) as RequestHandler | RequestHandler[],
+      );
     }
   }
 
@@ -109,8 +103,8 @@ export default class Server implements IServer {
    * @private
    */
   private async initRoutes(): Promise<void> {
-    if (this.routesConfig.length > 0) {
-      this.express.use(this.routerProvider.createInstance(this.routesConfig));
+    if (this.routes.length > 0) {
+      this.express.use(this.routesProvider.createInstance(this.routes));
     }
   }
 
@@ -119,6 +113,10 @@ export default class Server implements IServer {
    */
   public async start(): Promise<void> {
     if (!this.serverInstance) {
+      // get all plugins
+      this.logger.info(`ExpressServer::start loading plugins`);
+      // TODO get plugins
+
       // add all the middleware
       this.logger.info(`ExpressServer::start running pre-start hooks`);
       await this.initPreStartHooks();

@@ -1,20 +1,18 @@
 import { IController } from '@rafter/core/lib/common/router/IControllerAction';
 import { Request, Response } from 'express';
+import { BoilerplateConfig } from '../config/config';
 
 interface IApiController extends IController {
   index: (request: Request, response: Response) => void;
 }
 
-// @ts-ignore
-export default class ApiController implements IApiController {
-  private readonly version: string;
+export default class ApiController {
+  private readonly config: BoilerplateConfig;
 
-  constructor(version: string) {
-    this.version = version;
+  constructor(config: BoilerplateConfig) {
+    this.config = config;
   }
 
-  // TODO figure out why this is required here
-  // eslint-disable-next-line class-methods-use-this
   public index(request: Request, response: Response): void {
     response.json({
       data: {

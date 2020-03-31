@@ -3,3 +3,4 @@
 !/**/.services.ts
 !/**/.middleware.ts
 !/**/.pre-start-hooks.ts
+**/dist/**

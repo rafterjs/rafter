@@ -1,0 +1,23 @@
+{
+  "name": "@rafter/eslint-config",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "lint": "eslint ./index.js ./typescript.js"
+  },
+  "description": "eslint rules for rafter projects",
+  "main": "./index.js",
+  "engines": {
+    "node": ">=9"
+  }
+}

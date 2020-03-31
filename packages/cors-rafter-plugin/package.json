@@ -1,0 +1,38 @@
+{
+  "name": "@rafter/cors-rafter-plugin",
+  "version": "0.1.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crimsonronin/rafter.git"
+  },
+  "scripts": {
+    "build": "yarn clean:lib && yarn build:lib && yarn build:config && yarn build:types",
+    "build:lib": "babel cors.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean:lib": "rimraf ./dist",
+    "lint": "eslint \"./cors.ts\" \"./config/**/*\"",
+    "start": "echo \"TODO\""
+  },
+  "dependencies": {
+    "@rafter/utils": "*",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*"
+  },
+  "description": "A simple CORS plugin",
+  "main": "./dist/cors.js",
+  "engines": {
+    "node": ">=9"
+  }
+}

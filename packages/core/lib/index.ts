@@ -1,41 +1,26 @@
-import Rafter from './rafter';
-import ConfigAutoloaderService from './utils/ConfigAutoloaderService';
+import diAutoloaderFactory, { IDiAutoloader } from '@rafter/di-autoloader';
+import Rafter, { RafterConfig, CORE_LIB_DIRECTORIES, CORE_PATH } from './Rafter';
+import { IRafterOptions } from './IRafterOptions';
+import { IRafter } from './IRafter';
 
-/**
- * This is a simple factory for Rafter that sets up all the basic stuff.
- *
- * @param {string=} appDirectory
- * @param {string=} configFileName
- * @param {string=} servicesFileName
- * @param {string=} middlewareFileName
- * @param {string=} routesFileName
- * @param {string=} preStartHooksFileName
- * @param {object=} logger
- * @return {Rafter}
- */
-export default ({
-  appDirectory = `${__dirname}/../../`,
-  configFileName = `.config.js`,
-  servicesFileName = `.services.js`,
-  middlewareFileName = `.middleware.js`,
-  routesFileName = `.routes.js`,
-  preStartHooksFileName = `.pre-start-hooks.js`,
-  logger = console,
-}): Rafter => {
-  const configAutoloaderService = new ConfigAutoloaderService({
-    configFileName,
-    servicesFileName,
-    middlewareFileName,
-    routesFileName,
-    preStartHooksFileName,
-    logger,
-  });
+export * from './common/errors';
+export * from './common/helpers';
+export * from './common/mappers';
+export * from './common/middleware';
+export * from './common/plugins';
+export * from './common/pre-start-hooks';
+export * from './common/router';
+export * from './common/server';
+export { RafterConfig, IRafter, IRafterOptions, CORE_LIB_DIRECTORIES, CORE_PATH };
 
-  return new Rafter({
-    appDirectory,
-    configAutoloaderService,
+export default ({ corePath, paths, logger }: IRafterOptions): IRafter => {
+  const diAutoloader: IDiAutoloader = diAutoloaderFactory({ logger });
+
+  const config: RafterConfig = {
+    diAutoloader,
+    corePath,
+    paths,
     logger,
-  });
+  };
+  return new Rafter(config);
 };
-
-export { Rafter };

@@ -11,15 +11,18 @@
     "inversion of control",
     "solid"
   ],
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
-    "start": "",
+    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
+    "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean:lib": "rimraf ./dist",
+    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest --notify",
-    "build:server": "babel ./index.js --out-dir ./dist && babel ./lib --out-dir ./dist/lib",
-    "build": "yarn clean && yarn build:server",
-    "clean": "rimraf ./dist",
-    "lint": "eslint ./lib/** ./test/** ./index.js",
-    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\""
+    "types": "tsc"
   },
   "repository": {
     "type": "git",
@@ -27,10 +30,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@rafter/di-container": "*"
+    "@rafter/utils": "*",
+    "awilix": "^4.2.3",
+    "is-class": "^0.0.9",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*"
+    "@rafter/babel-preset-rafter": "*",
+    "@rafter/eslint-config": "*",
+    "@types/lodash": "^4.14.149"
   },
   "engines": {
     "node": ">=9"
