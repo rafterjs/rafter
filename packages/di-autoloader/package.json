@@ -30,13 +30,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "awilix": "^4.2.3",
     "@rafter/utils": "*",
+    "awilix": "^4.2.3",
+    "is-class": "^0.0.9",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*",
-    "@rafter/eslint-config": "*"
+    "@rafter/eslint-config": "*",
+    "@types/lodash": "^4.14.149"
   },
   "engines": {
     "node": ">=9"

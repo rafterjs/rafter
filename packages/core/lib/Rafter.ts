@@ -1,12 +1,18 @@
 import { IDiAutoloader } from '@rafter/di-autoloader';
 import { GlobWithOptions } from 'awilix';
-import { ILogger } from '@rafter/utils';
-import { IServer } from './common/server/Server';
-import IRafter from './IRafter';
+import { join } from 'path';
+import { consoleLoggerFactory, ILogger } from '@rafter/utils';
+import { IServer } from './common/server';
+import { IRafter } from './IRafter';
+
+export const CORE_LIB_DIRECTORIES = ['common', 'utils', 'vendor'];
+
+export const CORE_PATH = join(__dirname, `/@(${CORE_LIB_DIRECTORIES.join('|')})/`, '/**/!(*.spec|*.d).@(ts|js)');
 
 export interface RafterConfig {
   diAutoloader: IDiAutoloader;
-  paths: Array<string | GlobWithOptions> | string;
+  corePath?: GlobWithOptions | string;
+  paths?: Array<string | GlobWithOptions>;
   logger?: ILogger;
 }
 
@@ -15,51 +21,47 @@ export default class Rafter implements IRafter {
 
   private server?: IServer;
 
-  private readonly paths: Array<string | GlobWithOptions> | string;
+  private readonly corePath: GlobWithOptions | string;
+
+  private readonly paths: Array<string | GlobWithOptions>;
 
   private readonly logger: ILogger;
 
   constructor(rafterConfig: RafterConfig) {
-    const { paths, diAutoloader, logger = console } = rafterConfig;
+    const { corePath = CORE_PATH, paths = [], diAutoloader, logger = consoleLoggerFactory() } = rafterConfig;
 
+    this.corePath = corePath;
     this.paths = paths;
     this.logger = logger;
     this.diAutoloader = diAutoloader;
   }
 
-  private async load(): Promise<void> {
-    // const configDto = await this.diConfigLoaderService.getDiConfig();
-    //
-    // this.logger.debug('rafter::loadDependencies', configDto);
-    //
-    // // add the config to the DI container
-    // Box.register('config', (): object => configDto.getConfig());
-    //
-    // // add the services to the DI container
-    // Box.register('services', (): IServiceConfig => configDto.getServices());
-    //
-    // // add the routes to the DI container
-    // Box.register('routes', (): IRouteConfig[] => configDto.getRoutes());
-    //
-    // // add the middleware to the DI container
-    // Box.register('middleware', (): IMiddlewareConfig[] => configDto.getMiddleware());
-    //
-    // // add the middleware to the DI container
-    // Box.register('preStartHooks', (): IPreStartHookConfig[] => configDto.getPreStartHooks());
+  private async initDependencies(): Promise<void> {
+    this.diAutoloader.registerValue('diAutoloader', this.diAutoloader);
+    this.diAutoloader.registerValue('logger', this.logger);
 
-    await this.diAutoloader.load(this.paths);
+    const allPaths = [this.corePath, ...this.paths];
+    this.logger.debug(`Loading dependencies from: `, allPaths);
+
+    await this.diAutoloader.load(allPaths);
+    this.logger.debug(`Loaded the following dependencies: `, this.diAutoloader.list(allPaths));
+  }
+
+  private async initServer(): Promise<void> {
+    this.server = this.diAutoloader.get<IServer>('server');
+    if (this.server) {
+      await this.server.start();
+    } else {
+      throw new Error(`Rafter::initServer There is no server within the dependencies`);
+    }
   }
 
   public async start(): Promise<void> {
-    await this.load();
-
     if (this.diAutoloader) {
-      this.logger.debug(
-        this.diAutoloader.list(this.paths),
-      );
-      this.server = this.diAutoloader.get<IServer>('server');
-      this.logger.debug(this.server);
-      // await this.server.start();
+      await this.initDependencies();
+      await this.initServer();
+    } else {
+      throw new Error(`Rafter::start You must define a DiAutoloader`);
     }
   }
 
@@ -68,8 +70,6 @@ export default class Rafter implements IRafter {
    */
   public async stop(): Promise<void> {
     if (this.server) {
-      // TODO empty the service container
-      // boxDiAutoLoader.reset();
       return this.server.stop();
     }
 

@@ -1,9 +1,8 @@
 import { ILogger } from '@rafter/utils';
-import { IDiAutoloader } from '@rafter/di-autoloader';
+import { GlobWithOptions } from 'awilix';
 
 export interface IRafterOptions {
-  diAutoloader: IDiAutoloader;
-  corePaths?: string;
-  applicationPaths?: string;
+  corePath?: GlobWithOptions | string;
+  paths?: Array<string | GlobWithOptions>;
   logger?: ILogger;
 }

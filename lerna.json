@@ -1,11 +1,4 @@
 {
-  "command": {
-    "bootstrap": {
-      "ignore": [
-        "packages/iracing"
-      ]
-    }
-  },
   "packages": [
     "packages/*"
   ],

@@ -7,7 +7,6 @@ export interface IPluginProvider {
 }
 
 /**
- *
  * @param {IDiAutoloader} diContainer
  * @param {ILogger} logger
  * @return {PluginProvider}
@@ -18,8 +17,8 @@ export default class PluginProvider<T extends IPluginConfig> implements IPluginP
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diContainer;
+  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diAutoloader;
     this.logger = logger;
   }
 

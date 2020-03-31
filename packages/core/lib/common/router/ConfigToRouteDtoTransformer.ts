@@ -14,8 +14,8 @@ import { IController, IControllerAction } from './IControllerAction';
 export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteConfig[], RouteDto[]> {
   private readonly diAutoloader: IDiAutoloader;
 
-  constructor(diContainer: IDiAutoloader) {
-    this.diAutoloader = diContainer;
+  constructor(diAutoloader: IDiAutoloader) {
+    this.diAutoloader = diAutoloader;
   }
 
   /**

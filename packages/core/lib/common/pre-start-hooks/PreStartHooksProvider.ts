@@ -16,8 +16,8 @@ export default class PreStartHooksProvider implements IPreStartHooksProvider {
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diContainer;
+  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diAutoloader;
     this.logger = logger;
   }
 

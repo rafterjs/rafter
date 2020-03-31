@@ -1,29 +1,24 @@
-import { join } from 'path';
-import Rafter, { RafterConfig } from './Rafter';
+import diAutoloaderFactory, { IDiAutoloader } from '@rafter/di-autoloader';
+import Rafter, { RafterConfig, CORE_LIB_DIRECTORIES, CORE_PATH } from './Rafter';
 import { IRafterOptions } from './IRafterOptions';
-import IRafter from './IRafter';
+import { IRafter } from './IRafter';
 
-const GLOB_PATTERN = join(__dirname, '/**/*!(.spec).js');
+export * from './common/errors';
+export * from './common/helpers';
+export * from './common/mappers';
+export * from './common/middleware';
+export * from './common/plugins';
+export * from './common/pre-start-hooks';
+export * from './common/router';
+export * from './common/server';
+export { RafterConfig, IRafter, IRafterOptions, CORE_LIB_DIRECTORIES, CORE_PATH };
 
-export default (
-  {
-    diAutoloader,
-    logger,
-    corePaths = GLOB_PATTERN,
-    applicationPaths,
-  }: IRafterOptions,
-): IRafter => {
-  const paths = [];
-  if (corePaths) {
-    paths.push(corePaths);
-  }
-
-  if (applicationPaths) {
-    paths.push(applicationPaths);
-  }
+export default ({ corePath, paths, logger }: IRafterOptions): IRafter => {
+  const diAutoloader: IDiAutoloader = diAutoloaderFactory({ logger });
 
   const config: RafterConfig = {
     diAutoloader,
+    corePath,
     paths,
     logger,
   };

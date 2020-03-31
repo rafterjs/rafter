@@ -1,4 +1,3 @@
 import { AwilixContainer } from 'awilix';
 
-export interface IDiContainer extends AwilixContainer {
-}
+export type IDiContainer = AwilixContainer;

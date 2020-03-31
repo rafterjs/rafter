@@ -1,14 +1,14 @@
 import { join } from 'path';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { createStubInstance } from 'sinon';
 import { LoggingService } from '@rafter/utils';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
-import DiAutoloader from './DiAutoloader';
-import TestClass from '../test/fixtures/TestClass';
-import { TestConfig } from '../test/fixtures/config';
-import TestFunction from '../test/fixtures/testFunction';
+import { DiAutoloader } from './DiAutoloader';
+import TestClass from '../test/fixtures/full/lib/TestClass';
+import TestFunction from '../test/fixtures/full/lib/TestFunction';
 
-const FIXTURES_DIR = join(__dirname, '../test', 'fixtures');
+const FIXTURES_DIR = join(__dirname, '../test/fixtures/**');
 
 jest.mock('@rafter/utils');
 
@@ -24,19 +24,6 @@ describe('DI Autoloader', () => {
   });
 
   describe('load', () => {
-    it.skip('successfully load a simple object', () => {
-      const joinedPath = join(FIXTURES_DIR, 'config.ts');
-
-      const diAutoloader = new DiAutoloader(container, mockLogger);
-      diAutoloader.load([joinedPath]);
-
-      const config = diAutoloader.get<TestConfig>('config');
-      expect(config.bar).toBe('test something');
-
-      const bar = diAutoloader.get<string>('config.bar');
-      expect(bar).toBe('test something');
-    });
-
     it('successfully loads a simple function', () => {
       const functionPath = join(FIXTURES_DIR, 'testFunction.ts');
 
@@ -73,7 +60,7 @@ describe('DI Autoloader', () => {
       expect(modules).toHaveLength(3);
       expect(modules[0].name).toEqual('config');
       expect(modules[1].name).toEqual('TestClass');
-      expect(modules[2].name).toEqual('testFunction');
+      expect(modules[2].name).toEqual('TestFunction');
     });
 
     it('instantiates autoloader with a custom logger', () => {

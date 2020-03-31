@@ -1,6 +1,18 @@
+import { ILogger } from '@rafter/utils';
 import { IDiAutoloader } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
-import DiAutoloader from './DiAutoloader';
+import { IService } from './IService';
+import { IServiceConfig } from './IServiceConfig';
+import { DiAutoloader } from './DiAutoloader';
+import diContainerFactory from './diContainer';
 
-export default DiAutoloader;
-export { DiAutoloader, IDiAutoloader, IDiContainer };
+export interface IDiAutoloaderOptions {
+  logger?: ILogger;
+}
+
+export default ({ logger }: IDiAutoloaderOptions): IDiAutoloader => {
+  const container: IDiContainer = diContainerFactory();
+  return new DiAutoloader(container, logger);
+};
+
+export { DiAutoloader, IDiAutoloader, IDiContainer, IService, IServiceConfig };

@@ -1,15 +1,16 @@
 import { IController } from '@rafter/core/lib/common/router/IControllerAction';
 import { Request, Response } from 'express';
+import { BoilerplateConfig } from '../config/config';
 
 interface IApiController extends IController {
   index: (request: Request, response: Response) => void;
 }
 
 export default class ApiController {
-  private readonly version: string;
+  private readonly config: BoilerplateConfig;
 
-  constructor(version: string) {
-    this.version = version;
+  constructor(config: BoilerplateConfig) {
+    this.config = config;
   }
 
   public index(request: Request, response: Response): void {

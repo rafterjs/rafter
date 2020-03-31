@@ -7,7 +7,6 @@ export interface IMiddlewareProvider {
 }
 
 /**
- *
  * @param {IDiAutoloader} diContainer
  * @param {ILogger} logger
  * @return {MiddlewareProvider}
@@ -17,8 +16,8 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
 
   private readonly logger: ILogger;
 
-  constructor(diContainer: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diContainer;
+  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
+    this.diAutoloader = diAutoloader;
     this.logger = logger;
   }
 
