@@ -1,5 +1,5 @@
 import { IMiddlewareConfig } from '../../../../lib/common/middleware';
 
-const middleware = (): Array<IMiddlewareConfig> => ['requestLogger'];
+const middleware = (): IMiddlewareConfig[] => ['requestLogger'];
 
 export default middleware;

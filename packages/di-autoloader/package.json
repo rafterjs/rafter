@@ -31,7 +31,7 @@
   "license": "MIT",
   "dependencies": {
     "@rafter/utils": "*",
-    "awilix": "^4.2.3",
+    "awilix": "^4.2.5",
     "is-class": "^0.0.9",
     "lodash": "^4.17.15"
   },

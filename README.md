@@ -4,41 +4,81 @@ Rafter is a lightweight, slightly opinionated Javascript framework for rapid dev
 
 ### Rafter:
 
+- is built using [Typescript](https://www.typescriptlang.org/).
 - is built on top of [Expressjs](https://expressjs.com/).
 - eliminates the tedious wiring of routes, middleware and services.
-- allows decoupling of services by utilizing dependency injection via an autoloading service container.
-- is flexible and testable.
+- allows decoupling of services by utilizing dependency injection via the autoloading service container [Awilix](https://github.com/jeffijoe/awilix).
+- is flexible, reusable and testable.
 
 ## Install
 
-```javascript
+```
 npm install --save rafter
 ```
-
-```javascript
+OR
+```
 yarn add rafter
 ```
 
-## Getting started
+## Run
+```
+npm run bootstrap & npm run build & npm run start:boilerplate
+```
+OR
+```
+yarn bootstrap & yarn build & yarn start:boilerplate
+```
 
-The following configuration files are autoloaded during the Rafter service starting:
+This will build and run the boilerplate project. You can access it via [http://localhost:3000](http://localhost:3000).
 
-- `.config.ts`: a general application or module config.
-- `.services.ts`: adds services and their dependencies to a service container.
-- `.middleware.js`: registers services as middleware.
-- `.routes.ts`: links controller services to route definitions.
-- `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
+## Building your own Rafter application
 
-The Rafter autoloader will look for all of these files recursively throughout your project. This allows you to modularize your project rather than defining all your config in one place.
+### Dependency autoloading
 
-### Config
+Dependency autoloading is at the heart of _Rafter_, and the most opinionated portion of the framework. Rafter utilizes [Awilix](https://github.com/jeffijoe/awilix) under the hood to [automatically scan your application directory and register services](https://github.com/jeffijoe/awilix#containerloadmodules). So there's no need to maintain configuration or add annotations, as long as the function or constructor arguments are the same name, it will wire everything up automatically.
 
-The config file (`.config.ts`) is a place to define all your application style config.
+_Logger.ts_
+```typescript
+class Logger implements ILogger {
+  public log(...args: any[]): void {
+    console.log(args);
+  }
+}
+```
 
-```javascript
-export default {
+_MyService.ts_
+```typescript
+class MyService {
+  private logger: ILogger;
+
+  constructor(logger: ILogger) {
+    this.logger = logger;
+  }
+  
+  public run(): void {
+    this.logger.log('I have been autowired');
+  }
+}
+```
+
+The _Rafter_ autoloader will look recursively throughout your project for services, functions and config. This means you do not need to statically `import` all your dependencies, which maintains separation of concerns and improves reusability.
+
+## Rafter specific config files
+The following configuration files are autoloaded by _Rafter_.
+
+- `config.ts`: a general application or module config.
+- `middleware.js`: registers services as middleware and loads them into the routes stack.
+- `routes.ts`: links controller services to route definitions.
+- `pre-start-hooks.js`: loads defined services before Rafter has started the server.
+
+#### Config
+
+The config file (`config.ts`) is a place to define all your application style config.
+
+```typescript
+export default () => ({
   db: {
-    connectionUrl: 'mongodb://localhost:27000/rafter' || process.env.NODE_DB_CONNECTION,
+    connection: 'mongodb://localhost:27000/rafter' || process.env.NODE_DB_CONNECTION,
   },
   server: {
     port: 3000,
@@ -46,60 +86,25 @@ export default {
   example: {
     message: `Hello Mars`,
   },
-};
+});
 ```
 
 This config can be referenced within the injected dependencies.
 
-### Services
+#### Middleware
 
-The services file (`.services.ts`) is the heart of the Rafter, and the most opinionated portion of the framework.
+The middleware file (`middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
 
-It is a manifest of all your services and their dependencies. These will be autoloaded into the service container at run time, and invoked at request time. They are all Singletons, which means we only create 1 instance, and hold it in memory for the entire lifetime of the process.
-
-```javascript
-export default {
-  exampleController: {
-    path: `${__dirname}/example-controller`,
-    dependencies: [`config.example.message`],
-  },
-  logger: {
-    path: `${__dirname}/logger`,
-    dependencies: [],
-  },
-  dbDao: {
-    path: `${__dirname}/db-dao`,
-    dependencies: [`mongoose`, `logger`],
-  },
-  mongoose: {
-    path: `${__dirname}/mongoose-factory`,
-    dependencies: [],
-  },
-  connectDbService: {
-    path: `${__dirname}/connect-db-service`,
-    dependencies: [`dbDao`, `logger`],
-  },
-};
+```typescript
+export default (): IMiddlewareConfig[] => [`corsMiddleware`, `authenticationMiddleware`];
 ```
 
-The object key is the service name, which can be used as the dependency reference. This allows you to quickly and easily change or override dependencies.
+#### Routes
 
-### Middleware
+The routes file (`routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
 
-The middleware file (`.middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
-
-```javascript
-export default [`corsMiddleware`, `authenticationMiddleware`];
-```
-
-Note; the middleware must be registered in the `.services.ts` config.
-
-### Routes
-
-The routes file (`.routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
-
-```javascript
-export default [
+```typescript
+export default (): IRouteConfig[] => [
   {
     endpoint: `/`,
     controller: `exampleController`,
@@ -111,30 +116,32 @@ export default [
 
 This would call `exampleController.index(req, res)` when the route `GET /` is hit. Again, the controller `exampleController` has to be registered in the `.services.ts` config.
 
-### Pre start hooks
+#### Pre start hooks
 
 The routes file (`.pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
-```javascript
-export default [`connectDbService`];
+```typescript
+export default (): IPreStartHookConfig[] => [`connectDbService`];
 ```
 
-An example of the `connectDbService` would be:
+An example of the `connectDbService` pre start hook would be:
 
-```javascript
-export default (dbDao, logger) => {
-  return async () => {
+```typescript
+export default (dbDao: IDBDatabaseDao, logger: ILogger) => {
+  return async function connect(): Promise<IDbConnection> {
     logger.info(`Connecting to the database`);
     return dbDao.connect();
   };
 };
 ```
 
-### Rafter instantiation
+By adding `async` to the function, _Rafter_ will wait for it to be successfully returned before continuing to the next pre start hook, or will finish starting up if there are no more hooks.
 
-Along with the aforementioned configs, all that is required to run Rafter is the following:
+### Starting your Rafter application
 
-```javascript
+Along with the aforementioned configs, all that is required to run Rafter is the following in an `index.ts` file:
+
+```typescript
 import rafter from 'rafter';
 
 const run = async () => {
@@ -147,17 +154,16 @@ run();
 
 Once `start()` is called, Rafter will:
 
-1. Scan through all your directories looking for config files.
+1. Scan through all your directories looking for config files and services.
 2. Autoload all your services into the service container.
 3. Run all the `pre-start-hooks`.
-4. Apply all the middleware.
-5. Register all the routes.
+4. Apply all the `middleware`.
+5. Register all the `routes`.
 6. Start the server.
 
-To see an example project, visit the [skeleton rafter app](https://github.com/crimsonronin/rafter-skeleton-app) repository.
+To see an example project, visit the [skeleton rafter app](https://github.com/crimsonronin/rafter-skeleton-app) repository, or look at the included `boilerplate` application within [packages](https://github.com/crimsonronin/rafter/tree/master/packages/boilerplate).
 
 # Going deeper
-
 Rafter is slightly opinionated; which means we have outlined specific ways of doing some things. Not as much as say, Sails or Ruby on Rails, but just enough to provide a simple and fast foundation for your project.
 
 The foundations of the Rafter framework are:
@@ -174,7 +180,7 @@ eg.
 
 ### With RequireJs
 
-```javascript
+```typescript
 import mongoose from 'mongoose';
 
 const connect = async connectionUrl => {
@@ -190,18 +196,22 @@ export { connect };
 
 ### With DI
 
-```javascript
-export default class DbDao {
-  constructor(db) {
-    this._db = db;
+```typescript
+export class DbDao {
+  private db: IDatabaseDao;
+  private config: {connectionUrl: string};
+
+  constructor(db: IDatabaseDao, config: {connectionUrl: string}) {
+    this.db = db;
+    this.config = config;
   }
 
-  async connect(connectionUrl) {
-    return this._db.connect(connectionUrl);
+  public async connect(): Promise<IDatabaseConnection> {
+    return this.db.connect(this.config.connectionUrl);
   }
 
-  async find(query) {
-    return this._db.find(query);
+  public async find<T>(query: any): Promise<T> {
+    return this.db.find(query);
   }
 }
 ```

@@ -9,6 +9,7 @@ import { IMiddlewareProvider, IMiddlewareConfig } from '../middleware';
 import { IRouteConfig } from '../router';
 
 import { IPluginProvider } from '../plugins';
+import { IRafterConfig } from '../../config/IRafterConfig';
 
 export interface IServer {
   start(): Promise<void>;
@@ -35,7 +36,7 @@ export default class Server implements IServer {
 
   private readonly pluginProvider: IPluginProvider;
 
-  private readonly serverPort: number;
+  private readonly config: IRafterConfig;
 
   private readonly logger: ILogger;
 
@@ -48,7 +49,7 @@ export default class Server implements IServer {
     middlewareConfig: IMiddlewareConfig[] = [],
     routes: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
-    serverPort = 3000,
+    config: IRafterConfig = { server: { port: 3000 } },
     logger: ILogger = console,
   ) {
     this.express = express;
@@ -61,7 +62,7 @@ export default class Server implements IServer {
     this.routes = routes;
     this.preStartHooks = preStartHooks;
 
-    this.serverPort = serverPort;
+    this.config = config;
     this.logger = logger;
   }
 
@@ -129,20 +130,15 @@ export default class Server implements IServer {
       this.logger.info(`ExpressServer::start applying the router`);
       await this.initRoutes();
 
-      return new Promise((resolve, reject): void => {
-        this.serverInstance = this.express.listen(this.serverPort, (error: Error): void => {
-          if (error) {
-            this.logger.error(error);
-            reject(error);
-          }
-
-          this.logger.info(`ExpressServer::start Server running on port ${this.serverPort}`);
+      return new Promise((resolve): void => {
+        this.serverInstance = this.express.listen(this.config.server.port, (): void => {
+          this.logger.info(`ExpressServer::start Server running on port ${this.config.server.port}`);
           resolve();
         });
       });
     }
 
-    this.logger.warn(`ExpressServer::start Server is already running on port ${this.serverPort}`);
+    this.logger.warn(`ExpressServer::start Server is already running on port ${this.config}`);
     return Promise.reject();
   }
 

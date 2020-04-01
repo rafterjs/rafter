@@ -1,5 +1,5 @@
 import { IPreStartHookConfig } from '../../../../lib/common/pre-start-hooks';
 
-const hooks = (): Array<IPreStartHookConfig> => ['motd'];
+const hooks = (): IPreStartHookConfig[] => ['motd'];
 
 export default hooks;
