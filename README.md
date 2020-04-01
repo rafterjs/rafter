@@ -11,20 +11,11 @@ Rafter is a lightweight, slightly opinionated Javascript framework for rapid dev
 - is flexible, reusable and testable.
 
 ## Install
-
-```
-npm install --save rafter
-```
-OR
 ```
 yarn add rafter
 ```
 
 ## Run
-```
-npm run bootstrap & npm run build & npm run start:boilerplate
-```
-OR
 ```
 yarn bootstrap & yarn build & yarn start:boilerplate
 ```
