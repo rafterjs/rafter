@@ -45,5 +45,11 @@
   },
   "devDependencies": {
     "@rafter/eslint-config": "*"
+  },
+  "resolutions": {
+    "@babel/core": "7.6.2",
+    "axios": "0.19.0",
+    "kind-of": "6.0.3",
+    "acorn": "7.1.1"
   }
 }
