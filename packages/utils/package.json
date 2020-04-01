@@ -21,12 +21,10 @@
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",
-    "test": "jest --notify ./lib",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@rafter/babel-preset-rafter": "*",
     "@rafter/eslint-config": "*"

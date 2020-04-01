@@ -25,6 +25,17 @@ module.exports = {
     'max-len': ['error', { code: 120, tabWidth: 2 }],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-member-accessibility': [
       2,

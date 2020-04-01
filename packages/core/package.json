@@ -29,7 +29,7 @@
     "@rafter/cors-rafter-plugin": "*",
     "@rafter/di-autoloader": "*",
     "@rafter/utils": "*",
-    "awilix": "^4.2.3",
+    "awilix": "^4.2.5",
     "express": "4.17.1",
     "recursive-readdir": "2.2.2"
   },

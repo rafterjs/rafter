@@ -179,11 +179,11 @@ eg.
 ```javascript
 import mongoose from 'mongoose';
 
-const connect = async connectionUrl => {
+const connect = async (connectionUrl) => {
   await mongoose.connect(connectionUrl);
 };
 
-const find = async query => {
+const find = async (query) => {
   await mongoose.find(query);
 };
 
