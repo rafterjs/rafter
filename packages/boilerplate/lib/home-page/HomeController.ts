@@ -1,4 +1,4 @@
-import { IController, IControllerAction } from '@rafter/core/lib/common/router/IControllerAction';
+import { IController, IControllerAction } from 'rafter/lib/common/router/IControllerAction';
 import { Request, Response } from 'express';
 
 interface IHomeController extends IController {

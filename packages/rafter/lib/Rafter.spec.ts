@@ -1,11 +1,11 @@
 import { join } from 'path';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createStubInstance } from 'sinon';
-import { LoggingService } from '@rafter/utils';
-import diAutoloaderFactory, { IDiAutoloader } from '@rafter/di-autoloader';
+import { LoggingService } from '@rafterjs/utils';
+import diAutoloaderFactory, { IDiAutoloader } from '@rafterjs/di-autoloader';
 import Rafter from './Rafter';
 
-jest.mock('@rafter/utils');
+jest.mock('@rafterjs/utils');
 
 describe('Rafter', () => {
   const mockLogger = createStubInstance(LoggingService);

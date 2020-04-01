@@ -1,4 +1,4 @@
-import diAutoloaderFactory, { IDiAutoloader } from '@rafter/di-autoloader';
+import diAutoloaderFactory, { IDiAutoloader } from '@rafterjs/di-autoloader';
 import Rafter, { RafterConfig, CORE_LIB_DIRECTORIES, CORE_PATH } from './Rafter';
 import { IRafterOptions } from './IRafterOptions';
 import { IRafter } from './IRafter';

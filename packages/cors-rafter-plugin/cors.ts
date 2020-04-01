@@ -1,4 +1,4 @@
-import { ILogger } from '@rafter/utils';
+import { ILogger } from '@rafterjs/utils';
 import cors, { CorsOptions } from 'cors';
 import { NextFunction, Request, Response } from 'express-serve-static-core';
 

@@ -1,4 +1,4 @@
-import { IDiAutoloader } from '@rafter/di-autoloader';
+import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import RouteDto from './RouteDto';
 import { METHODS } from './RouteMethodConstants';
 import { ITransformer } from '../mappers/ITransformer';

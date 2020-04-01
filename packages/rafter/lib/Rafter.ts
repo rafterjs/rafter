@@ -1,7 +1,7 @@
-import { IDiAutoloader } from '@rafter/di-autoloader';
+import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import { GlobWithOptions } from 'awilix';
 import { join } from 'path';
-import { consoleLoggerFactory, ILogger } from '@rafter/utils';
+import { consoleLoggerFactory, ILogger } from '@rafterjs/utils';
 import { IServer } from './common/server';
 import { IRafter } from './IRafter';
 

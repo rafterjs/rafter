@@ -1,4 +1,4 @@
-import { IController } from '@rafter/core/lib/common/router/IControllerAction';
+import { IController } from 'rafter/lib/common/router/IControllerAction';
 import { Request, Response } from 'express';
 import { BoilerplateConfig } from '../config/config';
 

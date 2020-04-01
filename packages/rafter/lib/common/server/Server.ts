@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import * as http from 'http';
-import { ILogger } from '@rafter/utils';
+import { ILogger } from '@rafterjs/utils';
 import { RequestHandler } from 'express-serve-static-core';
 import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutesProvider } from '../router/RoutesProvider';

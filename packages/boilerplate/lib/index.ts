@@ -1,4 +1,4 @@
-import rafter from '@rafter/core';
+import rafter from 'rafter';
 import { join } from 'path';
 
 const run = async (): Promise<void> => {

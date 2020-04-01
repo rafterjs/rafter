@@ -1,5 +1,5 @@
 export default () => ({
-  '@rafter/cors-rafter-plugin': {
+  '@rafterjs/cors-rafter-plugin': {
     header: 'thingo',
   },
 });

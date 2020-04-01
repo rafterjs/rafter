@@ -1,4 +1,4 @@
-import { IRouteConfig } from '@rafter/core';
+import { IRouteConfig } from 'rafter';
 
 export default (): IRouteConfig[] => [
   {

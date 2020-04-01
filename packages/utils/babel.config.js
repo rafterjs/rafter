@@ -1,3 +1,3 @@
 module.exports = {
-  presets: [['@rafter/babel-preset-rafter', { typescript: true }]],
+  presets: [['@rafterjs/babel-preset-rafter', { typescript: true }]],
 };

@@ -1,6 +1,6 @@
 {
-  "name": "@rafter/boilerplate",
-  "version": "0.2.2",
+  "name": "@rafterjs/boilerplate",
+  "version": "0.2.4",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -31,18 +31,18 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafter/core": "^0.2.2",
-    "@rafter/cors-rafter-plugin": "^0.2.2",
-    "@rafter/di-autoloader": "^0.2.2"
+    "rafter": "^0.2.4",
+    "@rafterjs/cors-rafter-plugin": "^0.2.4",
+    "@rafterjs/di-autoloader": "^0.2.4"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "^0.2.2",
-    "@rafter/eslint-config": "^0.2.2"
+    "@rafterjs/babel-preset-rafter": "^0.2.4",
+    "@rafterjs/eslint-config": "^0.2.4"
   },
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/lib/index.js",
   "engines": {
     "node": ">=9"
   },
-  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
+  "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3"
 }

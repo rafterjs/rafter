@@ -1,4 +1,4 @@
-import { ILogger } from '@rafter/utils';
+import { ILogger } from '@rafterjs/utils';
 import { GlobWithOptions } from 'awilix';
 
 export interface IRafterOptions {

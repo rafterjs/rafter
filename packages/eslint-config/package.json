@@ -1,6 +1,6 @@
 {
-  "name": "@rafter/eslint-config",
-  "version": "0.2.2",
+  "name": "@rafterjs/eslint-config",
+  "version": "0.2.4",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -23,5 +23,5 @@
   "engines": {
     "node": ">=9"
   },
-  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
+  "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3"
 }

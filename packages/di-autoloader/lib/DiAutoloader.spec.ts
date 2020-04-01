@@ -1,7 +1,7 @@
 import { join } from 'path';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createStubInstance } from 'sinon';
-import { LoggingService } from '@rafter/utils';
+import { LoggingService } from '@rafterjs/utils';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import { DiAutoloader } from './DiAutoloader';
@@ -10,7 +10,7 @@ import TestFunction from '../test/fixtures/full/lib/TestFunction';
 
 const FIXTURES_DIR = join(__dirname, '../test/fixtures/**');
 
-jest.mock('@rafter/utils');
+jest.mock('@rafterjs/utils');
 
 describe('DI Autoloader', () => {
   const mockLogger = createStubInstance(LoggingService);
