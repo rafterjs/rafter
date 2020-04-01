@@ -1,16 +1,19 @@
 {
   "name": "@rafter/eslint-config",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "contributors": [
     {
       "name": "Josh Stuart",
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "MIT",
+  "license": "GNU GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/crimsonronin/rafter.git"
+    "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
     "lint": "eslint ./index.js ./typescript.js"
@@ -19,5 +22,6 @@
   "main": "./index.js",
   "engines": {
     "node": ">=9"
-  }
+  },
+  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
 }

@@ -152,7 +152,7 @@ Once `start()` is called, Rafter will:
 5. Register all the `routes`.
 6. Start the server.
 
-To see an example project, visit the [skeleton rafter app](https://github.com/crimsonronin/rafter-skeleton-app) repository, or look at the included `boilerplate` application within [packages](https://github.com/crimsonronin/rafter/tree/master/packages/boilerplate).
+To see an example project, visit the [skeleton rafter app](https://github.com/joshystuart/rafter-skeleton-app) repository, or look at the included `boilerplate` application within [packages](https://github.com/joshystuart/rafter/tree/master/packages/boilerplate).
 
 # Going deeper
 Rafter is slightly opinionated; which means we have outlined specific ways of doing some things. Not as much as say, Sails or Ruby on Rails, but just enough to provide a simple and fast foundation for your project.

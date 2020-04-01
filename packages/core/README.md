@@ -156,7 +156,7 @@ Once `start()` is called, Rafter will:
 5. Register all the routes.
 6. Start the server.
 
-To see an example project, visit the [skeleton rafter app](https://github.com/crimsonronin/rafter-skeleton-app) repository.
+To see an example project, visit the [skeleton rafter app](https://github.com/joshystuart/rafter-skeleton-app) repository.
 
 # Going deeper
 

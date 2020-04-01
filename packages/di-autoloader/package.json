@@ -1,6 +1,6 @@
 {
   "name": "@rafter/di-autoloader",
-  "version": "0.3.1",
+  "version": "0.2.2",
   "author": "Josh Stuart <joshstuartx@gmail.com>",
   "description": "An autoloading DI container",
   "keywords": [
@@ -26,21 +26,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/crimsonronin/box-di-autoloader.git"
+    "url": "https://github.com/joshystuart/rafter.git"
   },
-  "license": "MIT",
+  "license": "GNU GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@rafter/utils": "*",
+    "@rafter/utils": "^0.2.2",
     "awilix": "^4.2.5",
     "is-class": "^0.0.9",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*",
-    "@rafter/eslint-config": "*",
+    "@rafter/babel-preset-rafter": "^0.2.2",
+    "@rafter/eslint-config": "^0.2.2",
     "@types/lodash": "^4.14.149"
   },
   "engines": {
     "node": ">=9"
-  }
+  },
+  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
 }

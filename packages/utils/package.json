@@ -1,16 +1,19 @@
 {
   "name": "@rafter/utils",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "contributors": [
     {
       "name": "Josh Stuart",
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "MIT",
+  "license": "GNU GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/crimsonronin/rafter.git"
+    "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
     "build": "yarn clean:lib && yarn build:lib && yarn build:types",
@@ -24,10 +27,9 @@
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@rafter/babel-preset-rafter": "*",
-    "@rafter/eslint-config": "*"
+    "@rafter/babel-preset-rafter": "^0.2.2",
+    "@rafter/eslint-config": "^0.2.2"
   },
   "description": "Utils for Rafter projects",
   "main": "./dist/index.js",
@@ -35,5 +37,6 @@
   "typings": "./dist/index.d.ts",
   "engines": {
     "node": ">=9"
-  }
+  },
+  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
 }

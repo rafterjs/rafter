@@ -1,5 +1,3 @@
 ./lib
-./example
-./.bin
-./index.js
-./rafter.js
+./babel.config.js
+./.eslintrc.js

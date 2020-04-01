@@ -1,5 +1,3 @@
 ./lib
-./test
 ./babel.config.js
 ./.eslintrc.js
-./jest.config.js

@@ -1,6 +1,6 @@
 {
   "name": "@rafter/babel-preset-rafter",
-  "version": "0.0.1",
+  "version": "0.2.2",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -15,10 +15,13 @@
     "lint": "eslint ./index.js ./babel.config.js",
     "update:latest": "yarn upgrade --latest"
   },
-  "license": "MIT",
+  "license": "GNU GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/crimsonronin/rafter.git"
+    "url": "https://github.com/joshystuart/rafter.git"
   },
   "dependencies": {
     "@babel/cli": "7.8.4",
@@ -44,12 +47,13 @@
     "eslint-plugin-prettier": "3.1.2"
   },
   "devDependencies": {
-    "@rafter/eslint-config": "*"
+    "@rafter/eslint-config": "^0.2.2"
   },
   "resolutions": {
     "@babel/core": "7.6.2",
     "axios": "0.19.0",
     "kind-of": "6.0.3",
     "acorn": "7.1.1"
-  }
+  },
+  "gitHead": "38b9768e511d049cc5a0d113d760af5bac8e13ce"
 }
