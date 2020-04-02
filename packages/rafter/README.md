@@ -25,17 +25,16 @@ yarn add rafter
 
 The following configuration files are autoloaded during the Rafter service starting:
 
-- `.config.ts`: a general application or module config.
-- `.services.ts`: adds services and their dependencies to a service container.
-- `.middleware.js`: registers services as middleware.
-- `.routes.ts`: links controller services to route definitions.
-- `.pre-start-hooks.js`: loads defined services before Rafter has started the server.
+- `config.ts`: a general application or module config.
+- `middleware.js`: registers services as middleware.
+- `routes.ts`: links controller services to route definitions.
+- `pre-start-hooks.js`: loads defined services before Rafter has started the server.
 
 The Rafter autoloader will look for all of these files recursively throughout your project. This allows you to modularize your project rather than defining all your config in one place.
 
 ### Config
 
-The config file (`.config.ts`) is a place to define all your application style config.
+The config file (`config.ts`) is a place to define all your application style config.
 
 ```javascript
 export default {
@@ -51,57 +50,22 @@ export default {
 };
 ```
 
-This config can be referenced within the injected dependencies.
-
-### Services
-
-The services file (`.services.ts`) is the heart of the Rafter, and the most opinionated portion of the framework.
-
-It is a manifest of all your services and their dependencies. These will be autoloaded into the service container at run time, and invoked at request time. They are all Singletons, which means we only create 1 instance, and hold it in memory for the entire lifetime of the process.
-
-```javascript
-export default {
-  exampleController: {
-    path: `${__dirname}/example-controller`,
-    dependencies: [`config.example.message`],
-  },
-  logger: {
-    path: `${__dirname}/logger`,
-    dependencies: [],
-  },
-  dbDao: {
-    path: `${__dirname}/db-dao`,
-    dependencies: [`mongoose`, `logger`],
-  },
-  mongoose: {
-    path: `${__dirname}/mongoose-factory`,
-    dependencies: [],
-  },
-  connectDbService: {
-    path: `${__dirname}/connect-db-service`,
-    dependencies: [`dbDao`, `logger`],
-  },
-};
-```
-
-The object key is the service name, which can be used as the dependency reference. This allows you to quickly and easily change or override dependencies.
-
 ### Middleware
 
-The middleware file (`.middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
+The middleware file (`middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
 
 ```javascript
-export default [`corsMiddleware`, `authenticationMiddleware`];
+export default () => [`corsMiddleware`, `authenticationMiddleware`];
 ```
 
 Note; the middleware must be registered in the `.services.ts` config.
 
 ### Routes
 
-The routes file (`.routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
+The routes file (`routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
 
 ```javascript
-export default [
+export  default () => [
   {
     endpoint: `/`,
     controller: `exampleController`,
@@ -111,14 +75,14 @@ export default [
 ];
 ```
 
-This would call `exampleController.index(req, res)` when the route `GET /` is hit. Again, the controller `exampleController` has to be registered in the `.services.ts` config.
+This would call `exampleController.index(req, res)` when the route `GET /` is hit.
 
 ### Pre start hooks
 
-The routes file (`.pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
+The routes file (`pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
 ```javascript
-export default [`connectDbService`];
+export default () => [`connectDbService`];
 ```
 
 An example of the `connectDbService` would be:
