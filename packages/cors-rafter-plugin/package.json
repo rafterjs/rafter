@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/cors-rafter-plugin",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,12 +25,12 @@
     "start": "echo \"TODO\""
   },
   "dependencies": {
-    "@rafterjs/utils": "^0.2.4",
+    "@rafterjs/utils": "^0.2.6",
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.2.4",
-    "@rafterjs/eslint-config": "^0.2.4",
+    "@rafterjs/babel-preset-rafter": "^0.2.6",
+    "@rafterjs/eslint-config": "^0.2.6",
     "@types/cors": "^2.8.6"
   },
   "description": "A simple CORS plugin",
