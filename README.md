@@ -105,11 +105,11 @@ export default (): IRouteConfig[] => [
 ];
 ```
 
-This would call `exampleController.index(req, res)` when the route `GET /` is hit. Again, the controller `exampleController` has to be registered in the `.services.ts` config.
+This would call `exampleController.index(req, res)` when the route `GET /` is hit. `exampleController` will be the name of the autoloaded service.
 
 #### Pre start hooks
 
-The routes file (`.pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
+The routes file (`pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
 ```typescript
 export default (): IPreStartHookConfig[] => [`connectDbService`];
@@ -136,7 +136,13 @@ Along with the aforementioned configs, all that is required to run Rafter is the
 import rafter from 'rafter';
 
 const run = async () => {
-  const rafterServer = rafter();
+  // define the paths you want to autoload
+  const paths = [join(__dirname, '/**/!(*.spec).@(ts|js)')];
+  
+  // instantiate rafter
+  const rafterServer = rafter({ paths });
+  
+  // start rafter server
   await rafterServer.start();
 };
 
