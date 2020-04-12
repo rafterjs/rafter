@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/di-autoloader",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "author": "Josh Stuart <joshstuartx@gmail.com>",
   "description": "An autoloading DI container",
   "keywords": [
@@ -33,13 +33,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@rafterjs/utils": "^0.2.6",
+    "@rafterjs/utils": "^0.2.7",
     "awilix": "^4.2.5",
     "is-class": "^0.0.9",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.2.6",
+    "@rafterjs/babel-preset-rafter": "^0.2.7",
     "@rafterjs/eslint-config": "^0.2.6",
     "@types/lodash": "^4.14.149"
   },
