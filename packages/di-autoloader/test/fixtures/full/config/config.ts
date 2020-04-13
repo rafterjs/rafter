@@ -1,9 +1,13 @@
-export type TestConfig = {
+export type TestConfig2 = {
   bar: string;
+  foo: string;
 };
 
-const config = (): TestConfig => ({
-  bar: 'test something',
-});
+const mergedConfig = (): TestConfig2 => {
+  return {
+    bar: 'bar not overridden',
+    foo: 'foo not overridden',
+  };
+};
 
-export default config;
+export default mergedConfig;

@@ -1,7 +1,7 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import RouteDto from './RouteDto';
 import { METHODS } from './RouteMethodConstants';
-import { ITransformer } from '../mappers/ITransformer';
+import { ITransformer } from '../mappers';
 import { IRouteConfig } from './IRouteConfig';
 import { IController, IControllerAction } from './IControllerAction';
 
