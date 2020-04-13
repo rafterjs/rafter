@@ -4,11 +4,14 @@ import { createStubInstance } from 'sinon';
 import { LoggingService } from '@rafterjs/utils';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
-import { DiAutoloader } from './DiAutoloader';
+import { DiAutoloader, PATH_GLOB_SUFFIX } from './DiAutoloader';
 import TestClass from '../test/fixtures/full/lib/TestClass';
+import config1, { TestConfig2 } from '../test/fixtures/full/config/config';
+import config2, { TestConfig1 } from '../test/fixtures/full/lib/config';
 import TestFunction from '../test/fixtures/full/lib/TestFunction';
 
-const FIXTURES_DIR = join(__dirname, '../test/fixtures/**');
+const FIXTURES_DIR = join(__dirname, '../test/fixtures');
+const FIXTURES_GLOB = join(FIXTURES_DIR, '**');
 
 jest.mock('@rafterjs/utils');
 
@@ -24,11 +27,20 @@ describe('DI Autoloader', () => {
   });
 
   describe('load', () => {
-    it('successfully loads a simple function', () => {
-      const functionPath = join(FIXTURES_DIR, 'testFunction.ts');
-
+    it('successfully register configs', async () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
-      diAutoloader.load([functionPath]);
+      await diAutoloader.registerConfig(config1);
+      await diAutoloader.registerConfig(config2);
+
+      const testConfig = diAutoloader.get<TestConfig1 & TestConfig2>('config');
+      expect(testConfig.foo).toBe('foo not overridden');
+      expect(testConfig.bar).toBe('bar overridden');
+    });
+
+    it('successfully loads a simple function', async () => {
+      const functionPath = join(FIXTURES_GLOB, 'TestFunction.ts');
+      const diAutoloader = new DiAutoloader(container, mockLogger);
+      await diAutoloader.load([functionPath]);
 
       const testFunction = diAutoloader.get<typeof TestFunction>('testFunction');
 
@@ -36,42 +48,43 @@ describe('DI Autoloader', () => {
       expect(testFunction()).toBe('This is a function');
     });
 
-    it('successfully loads a class that has dependencies', () => {
-      const dependenciesPath = join(FIXTURES_DIR, '*.ts');
+    it('successfully loads a class that has dependencies', async () => {
+      const dependenciesPath = join(FIXTURES_GLOB, PATH_GLOB_SUFFIX);
 
       const diAutoloader = new DiAutoloader(container, mockLogger);
-      diAutoloader.load([dependenciesPath]);
+      await diAutoloader.load([dependenciesPath]);
 
       const testClass = diAutoloader.get<TestClass>('testClass');
 
       expect(testClass).toBeInstanceOf(TestClass);
       expect(testClass.getData()).toBe(`here's some data`);
-      expect(testClass.getBar()).toBe('test something');
+      expect(testClass.getBar()).toBe('bar overridden');
       expect(testClass.getFunction()).toBeInstanceOf(Function);
       expect(testClass.getFunction()()).toBe('This is a function');
     });
 
     it('list all modules that are present in the passed path glob', () => {
-      const dependenciesPath = join(FIXTURES_DIR, '*.ts');
+      const dependenciesPath = join(FIXTURES_GLOB, PATH_GLOB_SUFFIX);
 
       const diAutoloader = new DiAutoloader(container, mockLogger);
       const modules = diAutoloader.list(dependenciesPath);
 
-      expect(modules).toHaveLength(3);
+      expect(modules).toHaveLength(4);
       expect(modules[0].name).toEqual('config');
-      expect(modules[1].name).toEqual('TestClass');
-      expect(modules[2].name).toEqual('TestFunction');
+      expect(modules[1].name).toEqual('config');
+      expect(modules[2].name).toEqual('TestClass');
+      expect(modules[3].name).toEqual('TestFunction');
     });
 
-    it('instantiates autoloader with a custom logger', () => {
+    it('instantiates autoloader with a custom logger', async () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
-      diAutoloader.load([join(FIXTURES_DIR, 'config.ts')]);
+      await diAutoloader.load([join(FIXTURES_GLOB, 'config.ts')]);
       expect(mockLogger.debug.called).toBeTruthy();
     });
 
-    it('fails to load a dependency that does not exist', () => {
+    it('fails to load a dependency that does not exist', async () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
-      diAutoloader.load([join(FIXTURES_DIR, 'config.ts')]);
+      await diAutoloader.load([join(FIXTURES_GLOB, 'config.ts')]);
 
       expect(() => {
         diAutoloader.get('missingDependency');
