@@ -7,7 +7,7 @@ import { IRafter } from './IRafter';
 
 export const CORE_LIB_DIRECTORIES = ['common', 'utils', 'vendor'];
 
-export const CORE_PATH = join(__dirname, `/@(${CORE_LIB_DIRECTORIES.join('|')})/`, '/**/!(*.spec|*.d).@(ts|js)');
+export const CORE_PATH = join(__dirname, `/@(${CORE_LIB_DIRECTORIES.join('|')})/`, '/**/!(*.spec|*.d|index).@(ts|js)');
 
 export interface RafterConfig {
   diAutoloader: IDiAutoloader;
@@ -74,5 +74,12 @@ export default class Rafter implements IRafter {
     }
 
     throw new Error('Rafter::stop the server has not been started');
+  }
+
+  /**
+   * @return {Promise}
+   */
+  public async get<T>(serviceName: string): Promise<T> {
+    return this.diAutoloader.get<T>(serviceName);
   }
 }

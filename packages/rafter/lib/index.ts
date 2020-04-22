@@ -11,6 +11,7 @@ export * from './common/plugins';
 export * from './common/pre-start-hooks';
 export * from './common/router';
 export * from './common/server';
+export * from './vendor/express';
 export { RafterConfig, IRafter, IRafterOptions, CORE_LIB_DIRECTORIES, CORE_PATH };
 
 export default ({ corePath, paths, logger }: IRafterOptions): IRafter => {
