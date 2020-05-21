@@ -4,11 +4,11 @@ import { ILogger } from '@rafterjs/utils';
 import { RequestHandler } from 'express-serve-static-core';
 import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutesProvider } from '../router/RoutesProvider';
-import { IMiddlewareProvider, IMiddlewareConfig } from '../middleware';
+import { IMiddlewareConfig, IMiddlewareProvider } from '../middleware';
 
 import { IRouteConfig } from '../router';
 
-import { IPluginProvider } from '../plugins';
+import { IPluginProvider, IPluginsConfig } from '../plugins';
 import { IRafterConfig } from '../../config/IRafterConfig';
 
 export interface IServer {
@@ -28,13 +28,15 @@ export default class Server implements IServer {
 
   private readonly preStartHooksProvider: IPreStartHooksProvider;
 
-  private readonly middlewareConfig: IMiddlewareConfig[] = [];
+  private readonly pluginProvider: IPluginProvider;
+
+  private readonly middleware: IMiddlewareConfig[] = [];
 
   private readonly routes: IRouteConfig[] = [];
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
 
-  private readonly pluginProvider: IPluginProvider;
+  private readonly plugins: IPluginsConfig;
 
   private readonly config: IRafterConfig;
 
@@ -46,9 +48,10 @@ export default class Server implements IServer {
     middlewareProvider: IMiddlewareProvider,
     preStartHooksProvider: IPreStartHooksProvider,
     pluginProvider: IPluginProvider,
-    middlewareConfig: IMiddlewareConfig[] = [],
+    middleware: IMiddlewareConfig[] = [],
     routes: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
+    plugins: IPluginsConfig,
     config: IRafterConfig = { server: { port: 3000 } },
     logger: ILogger = console,
   ) {
@@ -58,9 +61,10 @@ export default class Server implements IServer {
     this.middlewareProvider = middlewareProvider;
     this.preStartHooksProvider = preStartHooksProvider;
     this.pluginProvider = pluginProvider;
-    this.middlewareConfig = middlewareConfig;
+    this.middleware = middleware;
     this.routes = routes;
     this.preStartHooks = preStartHooks;
+    this.plugins = plugins;
 
     this.config = config;
     this.logger = logger;
@@ -93,10 +97,12 @@ export default class Server implements IServer {
    * @private
    */
   private async initMiddleware(): Promise<void> {
-    if (this.middlewareConfig.length > 0) {
-      this.express.use(
-        this.middlewareProvider.createInstance(this.middlewareConfig) as RequestHandler | RequestHandler[],
-      );
+    // TODO re-merge any middleware
+    if (this.middleware.length > 0) {
+      const middlewareFunctions: RequestHandler[] = this.middlewareProvider.createInstance(this.middleware);
+      if (middlewareFunctions.length > 0) {
+        this.express.use(middlewareFunctions);
+      }
     }
   }
 
@@ -115,8 +121,7 @@ export default class Server implements IServer {
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
-      this.logger.info(`ExpressServer::start loading plugins`);
-      // TODO get plugins
+      this.logger.info(`ExpressServer::start plugins have already been loaded`);
 
       // add all the middleware
       this.logger.info(`ExpressServer::start running pre-start hooks`);

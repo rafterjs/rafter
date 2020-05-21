@@ -16,8 +16,8 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
-    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
+    "build": "yarn build:lib && yarn build:types",
+    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@rafterjs/cors-rafter-plugin": "^0.3.1",
+    "@rafterjs/mongodb-plugin": "^0.3.1",
     "@rafterjs/di-autoloader": "^0.3.1",
     "@rafterjs/utils": "^0.3.1",
     "awilix": "^4.2.5",

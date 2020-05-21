@@ -25,6 +25,9 @@ module.exports = {
     'max-len': ['error', { code: 120, tabWidth: 2 }],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',

@@ -1,5 +1,5 @@
 {
-  "name": "@rafterjs/cors-rafter-plugin",
+  "name": "@rafterjs/mongodb-plugin",
   "version": "0.3.1",
   "contributors": [
     {
@@ -17,26 +17,27 @@
   },
   "scripts": {
     "build": "yarn build:lib && yarn build:config && yarn build:types",
-    "build:lib": "babel cors.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:config": "babel --include-dotfiles config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:config": "babel config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
-    "lint": "eslint \"./cors.ts\" \"./config/**/*\"",
-    "start:dev": "nodemon -e ts --watch \"./cors.ts\" --watch \"./config/**/*.ts\" --exec \"yarn build\""
+    "lint": "eslint \"./lib/**/*\"",
+    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {
     "@rafterjs/utils": "^0.3.1",
-    "cors": "^2.8.5"
+    "mongodb": "3.5.7"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.3.1",
     "@rafterjs/eslint-config": "^0.3.1",
-    "@types/cors": "^2.8.6"
+    "@types/node": "^14.0.1",
+    "@types/mongodb": "^3.5.17"
   },
-  "description": "A simple CORS plugin",
-  "main": "./dist/cors.js",
-  "module": "./dist/cors.js",
-  "typings": "./dist/cors.d.ts",
+  "description": "A simple mongodb plugin",
+  "main": "./dist/lib/mongoDb.js",
+  "module": "./dist/lib/mongoDb.js",
+  "typings": "./dist/lib/mongoDb.d.ts",
   "engines": {
     "node": ">=9"
   },

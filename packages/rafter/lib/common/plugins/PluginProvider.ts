@@ -1,9 +1,10 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import { ILogger } from '@rafterjs/utils';
+import { dirname, join } from 'path';
 import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
 export interface IPluginProvider {
-  createInstance(pluginConfig: IPluginsConfig): IPlugin | IPlugin[];
+  createInstance(pluginConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]>;
 }
 
 /**
@@ -26,13 +27,27 @@ export default class PluginProvider<T extends IPluginConfig> implements IPluginP
    * @param {IPluginConfig} pluginsConfig
    * @return {Function|Function[]}
    */
-  public createInstance(pluginsConfig: IPluginsConfig): IPlugin | IPlugin[] {
+  public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];
 
-    Object.entries(pluginsConfig).forEach(([config, pluginName]): void => {
-      this.logger.debug('-------------pluginName-', pluginName);
-      this.logger.debug('-------------config-', config);
-    });
+    const pluginConfigNames = Object.keys(pluginsConfig) || [];
+    if (pluginConfigNames.length > 0) {
+      // this.logger.debug(`    There are ${pluginConfigNames.length} plugins defined`, pluginConfigNames);
+      // for (const name of pluginConfigNames) {
+      //   try {
+      //     const pluginMainPath = require.resolve(name);
+      //     const pluginDirPath = dirname(pluginMainPath);
+      //     this.logger.debug(`    The plugin ${name} is located in ${pluginDirPath}`);
+      //     this.logger.info(`    Adding plugin: ${name}`);
+      //
+      //     await this.diAutoloader.load(
+      //       [join(pluginDirPath, '/**/!(*.spec|*.d|index).@(ts|js)')]
+      //     );
+      //   } catch (error) {
+      //     this.logger.error(`The plugin ${name} could not be initialized`, error);
+      //   }
+      // }
+    }
 
     return plugins;
   }
