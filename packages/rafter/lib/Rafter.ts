@@ -11,7 +11,7 @@ export const IGNORE_GLOB_SUFFIX = '!(*.spec|*.test|index|*.d)';
 export const GLOB_SUFFIX = `${IGNORE_GLOB_SUFFIX}${EXTENSION_GLOB_SUFFIX}`;
 export const CORE_LIB_DIRECTORIES = ['common', 'utils', 'vendor'];
 export const PLUGIN_FILENAME = 'plugins';
-export const CONFIG_FILENAME = 'plugins';
+export const CONFIG_FILENAME = 'config';
 
 export enum DEFAULT_MERGABLE_FILENAMES {
   CONFIG = 'config',
@@ -90,19 +90,11 @@ export default class Rafter implements IRafter {
       if (this.diAutoloader) {
         await this.initDependencies();
         await this.initServer();
-
-        this.logger.debug('-------------------CONFIG------------------');
-        this.logger.debug(await this.diAutoloader.get(CONFIG_FILENAME));
-        this.logger.debug('-------------------------------------------');
-
-        this.logger.debug('-----------------PLUGIN---------------------');
-        this.logger.debug(await this.diAutoloader.get(PLUGIN_FILENAME));
-        this.logger.debug('--------------------------------------------');
       } else {
         throw new Error(`Rafter::start You must define a DiAutoloader`);
       }
     } catch (error) {
-      console.log(`Rafter::start`, error);
+      this.logger.error(`Rafter::start`, error);
       throw error;
     }
   }
