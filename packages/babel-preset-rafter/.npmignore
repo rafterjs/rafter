@@ -1,3 +1,3 @@
-./index.js
-./babel.config.js
-./.eslintrc.js
+index.js
+babel.config.js
+.eslintrc.js

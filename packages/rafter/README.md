@@ -65,7 +65,7 @@ Note; the middleware must be registered in the `.services.ts` config.
 The routes file (`routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
 
 ```javascript
-export  default () => [
+export default () => [
   {
     endpoint: `/`,
     controller: `exampleController`,
