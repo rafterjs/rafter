@@ -1,1 +1,3 @@
-export default () => ['cors'];
+import { IMiddlewareConfig } from 'rafter';
+
+export default (): IMiddlewareConfig[] => ['cors'];

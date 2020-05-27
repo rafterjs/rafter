@@ -1,1 +1,1 @@
-export default () => ['cors'];
+export default (): string[] => ['cors'];
