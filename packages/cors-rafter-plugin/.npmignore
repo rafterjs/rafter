@@ -1,6 +1,6 @@
-./config
-./.eslintrc.js
-./cors.ts
-./cors.spec.ts
-./babel.config.js
-./jest.config.js
+config/**/*
+.eslintrc.js
+babel.config.js
+jest.config.js
+cors.ts
+cors.spec.ts

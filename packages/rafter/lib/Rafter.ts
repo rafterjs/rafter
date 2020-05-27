@@ -117,27 +117,29 @@ export default class Rafter implements IRafter {
     return this.diAutoloader.get<T>(serviceName);
   }
 
-  private getPathsWithSuffix(paths: IPaths): IPaths {
+  private getPathsWithSuffix(paths: IPaths = []): IPaths {
     return paths.map((path) => join(path as string, GLOB_SUFFIX));
   }
 
-  private async getPluginPaths(paths: IPaths): Promise<IPaths> {
+  private async getPluginPaths(paths: IPaths = []): Promise<IPaths> {
     const pluginPaths: Set<IPath> = new Set<IPath>();
 
-    await this.loadPluginFiles(paths);
-    this.logger.debug(`   Getting plugin configs`);
-    const plugins = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
+    if (paths.length > 0) {
+      await this.loadPluginFiles(paths);
+      this.logger.debug(`   Getting plugin configs`);
+      const plugins = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
 
-    if (plugins.length > 0) {
-      this.logger.debug(`   Found plugin configs`, plugins);
-      for (const name of plugins) {
-        try {
-          const pluginMainPath = require.resolve(name);
-          const pluginDirPath = dirname(pluginMainPath);
-          this.logger.debug(`    The plugin ${name} is located in ${pluginDirPath}`);
-          pluginPaths.add(pluginDirPath);
-        } catch (error) {
-          this.logger.error(`The plugin ${name} could not be initialized`, error);
+      if (plugins.length > 0) {
+        this.logger.debug(`   Found plugin configs`, plugins);
+        for (const name of plugins) {
+          try {
+            const pluginMainPath = require.resolve(name);
+            const pluginDirPath = dirname(pluginMainPath);
+            this.logger.debug(`    The plugin ${name} is located in ${pluginDirPath}`);
+            pluginPaths.add(pluginDirPath);
+          } catch (error) {
+            this.logger.error(`The plugin ${name} could not be initialized`, error);
+          }
         }
       }
     }
@@ -146,10 +148,11 @@ export default class Rafter implements IRafter {
     return [...pluginPaths];
   }
 
-  private async loadPluginFiles(paths: IPaths): Promise<void> {
+  private async loadPluginFiles(paths: IPaths = []): Promise<void> {
     const dependencies = this.diAutoloader.list(paths);
     const pluginPaths = dependencies.filter(({ name }) => name === PLUGIN_FILENAME).map(({ path }) => path);
-
-    return this.diAutoloader.loadMergableFiles(pluginPaths, [PLUGIN_FILENAME]);
+    if (pluginPaths.length > 0) {
+      await this.diAutoloader.loadMergableFiles(pluginPaths, [PLUGIN_FILENAME]);
+    }
   }
 }
