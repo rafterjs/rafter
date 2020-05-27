@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/cors-rafter-plugin",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,11 +25,11 @@
     "start:dev": "nodemon -e ts --watch \"./cors.ts\" --watch \"./config/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {
-    "@rafterjs/utils": "^0.4.0",
+    "@rafterjs/utils": "^0.4.1",
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.4.0",
+    "@rafterjs/babel-preset-rafter": "^0.4.1",
     "@rafterjs/eslint-config": "^0.4.0",
     "@types/cors": "^2.8.6"
   },

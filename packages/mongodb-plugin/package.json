@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/mongodb-plugin",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,11 +25,11 @@
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {
-    "@rafterjs/utils": "^0.4.0",
+    "@rafterjs/utils": "^0.4.1",
     "mongodb": "3.5.7"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.4.0",
+    "@rafterjs/babel-preset-rafter": "^0.4.1",
     "@rafterjs/eslint-config": "^0.4.0",
     "@types/mongodb": "^3.5.17",
     "@types/node": "^14.0.1"

@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/boilerplate",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -33,13 +33,13 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-rafter-plugin": "^0.4.0",
-    "@rafterjs/di-autoloader": "^0.4.0",
-    "@rafterjs/mongodb-plugin": "^0.4.0",
-    "rafter": "^0.4.0"
+    "@rafterjs/cors-rafter-plugin": "^0.4.1",
+    "@rafterjs/di-autoloader": "^0.4.1",
+    "@rafterjs/mongodb-plugin": "^0.4.1",
+    "rafter": "^0.4.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.4.0",
+    "@rafterjs/babel-preset-rafter": "^0.4.1",
     "@rafterjs/eslint-config": "^0.4.0",
     "@rafterjs/mongodb-plugin": "*"
   },

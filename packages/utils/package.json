@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/utils",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -28,7 +28,7 @@
     "update:latest": "yarn upgrade --latest"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.4.0",
+    "@rafterjs/babel-preset-rafter": "^0.4.1",
     "@rafterjs/eslint-config": "^0.4.0"
   },
   "description": "Utils for Rafter projects",
