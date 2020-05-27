@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/babel-preset-rafter",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -48,7 +48,7 @@
     "eslint-plugin-prettier": "3.1.2"
   },
   "devDependencies": {
-    "@rafterjs/eslint-config": "^0.3.1"
+    "@rafterjs/eslint-config": "^0.4.0"
   },
   "resolutions": {
     "@babel/core": "7.6.2",

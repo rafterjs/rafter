@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/boilerplate",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -33,14 +33,14 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-rafter-plugin": "*",
-    "@rafterjs/di-autoloader": "*",
-    "@rafterjs/mongodb-plugin": "*",
-    "rafter": "*"
+    "@rafterjs/cors-rafter-plugin": "^0.4.0",
+    "@rafterjs/di-autoloader": "^0.4.0",
+    "@rafterjs/mongodb-plugin": "^0.4.0",
+    "rafter": "^0.4.0"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.3.1",
-    "@rafterjs/eslint-config": "^0.3.1",
+    "@rafterjs/babel-preset-rafter": "^0.4.0",
+    "@rafterjs/eslint-config": "^0.4.0",
     "@rafterjs/mongodb-plugin": "*"
   },
   "description": "A simple boilerplate to start new projects",
