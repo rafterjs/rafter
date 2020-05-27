@@ -11,6 +11,7 @@ export const IGNORE_GLOB_SUFFIX = '!(*.spec|*.test|index|*.d)';
 export const GLOB_SUFFIX = `${IGNORE_GLOB_SUFFIX}${EXTENSION_GLOB_SUFFIX}`;
 export const CORE_LIB_DIRECTORIES = ['common', 'utils', 'vendor'];
 export const PLUGIN_FILENAME = 'plugins';
+export const CONFIG_FILENAME = 'plugins';
 
 export enum DEFAULT_MERGABLE_FILENAMES {
   CONFIG = 'config',
@@ -66,7 +67,6 @@ export default class Rafter implements IRafter {
 
     const appPaths = [this.corePath, ...this.paths];
     const allPathsWithSuffix = this.getPathsWithSuffix(appPaths);
-    // TODO inject plugin config
     const pluginPaths = await this.getPluginPaths(allPathsWithSuffix);
     const pluginPathsWithSuffix = this.getPathsWithSuffix(pluginPaths);
     const allPaths = [...pluginPathsWithSuffix, ...allPathsWithSuffix];
@@ -90,6 +90,14 @@ export default class Rafter implements IRafter {
       if (this.diAutoloader) {
         await this.initDependencies();
         await this.initServer();
+
+        this.logger.debug('-------------------CONFIG------------------');
+        this.logger.debug(await this.diAutoloader.get(CONFIG_FILENAME));
+        this.logger.debug('-------------------------------------------');
+
+        this.logger.debug('-----------------PLUGIN---------------------');
+        this.logger.debug(await this.diAutoloader.get(PLUGIN_FILENAME));
+        this.logger.debug('--------------------------------------------');
       } else {
         throw new Error(`Rafter::start You must define a DiAutoloader`);
       }
@@ -124,20 +132,17 @@ export default class Rafter implements IRafter {
   private async getPluginPaths(paths: IPaths): Promise<IPaths> {
     const pluginPaths: Set<IPath> = new Set<IPath>();
 
-    await this.loadPluginConfigs(paths);
+    await this.loadPluginFiles(paths);
     this.logger.debug(`   Getting plugin configs`);
-    const pluginConfigNames = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
+    const plugins = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
 
-    this.logger.debug(`   Found plugin configs`, pluginConfigNames);
-    const pluginNames = Object.keys(pluginConfigNames);
-    if (pluginNames.length > 0) {
-      this.logger.debug(`    There are ${pluginNames.length} plugins defined`, pluginNames);
-      for (const name of pluginNames) {
+    if (plugins.length > 0) {
+      this.logger.debug(`   Found plugin configs`, plugins);
+      for (const name of plugins) {
         try {
           const pluginMainPath = require.resolve(name);
           const pluginDirPath = dirname(pluginMainPath);
           this.logger.debug(`    The plugin ${name} is located in ${pluginDirPath}`);
-
           pluginPaths.add(pluginDirPath);
         } catch (error) {
           this.logger.error(`The plugin ${name} could not be initialized`, error);
@@ -149,7 +154,7 @@ export default class Rafter implements IRafter {
     return [...pluginPaths];
   }
 
-  private async loadPluginConfigs(paths: IPaths): Promise<void> {
+  private async loadPluginFiles(paths: IPaths): Promise<void> {
     const dependencies = this.diAutoloader.list(paths);
     const pluginPaths = dependencies.filter(({ name }) => name === PLUGIN_FILENAME).map(({ path }) => path);
 

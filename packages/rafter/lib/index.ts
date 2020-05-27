@@ -18,7 +18,15 @@ export * from './common/pre-start-hooks';
 export * from './common/router';
 export * from './common/server';
 export * from './vendor/express';
-export { RafterConfig, IRafter, IRafterOptions, CORE_LIB_DIRECTORIES, CORE_PATH };
+export {
+  RafterConfig,
+  IRafter,
+  IRafterOptions,
+  DEFAULT_MERGABLE_FILENAMES,
+  DEFAULT_MERGABLE_FILENAME_VALUES,
+  CORE_LIB_DIRECTORIES,
+  CORE_PATH,
+};
 
 export default ({
   corePath,

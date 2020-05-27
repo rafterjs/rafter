@@ -8,6 +8,7 @@ export type IMergableFileNames = string[];
 export type IPath = string | GlobWithOptions;
 export type IPaths = Array<IPath>;
 export type ILoadOptions = LoadModulesOptions;
+export type IConfig = object;
 
 export interface IDiAutoloader {
   load(paths: IPaths, mergableFilenames: IMergableFileNames, options?: ILoadOptions): Promise<void>;
@@ -19,6 +20,10 @@ export interface IDiAutoloader {
     mergableFilenames: IMergableFileNames,
     options: LoadModulesOptions,
   ): Promise<void>;
+
+  updateMergedFile<T extends IConfig>(name: string, service: T): void;
+
+  registerMergableFiles(specialFiles: IMergableFiles): void;
 
   get<T>(name: string): T;
 

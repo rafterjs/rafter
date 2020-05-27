@@ -29,8 +29,6 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-rafter-plugin": "^0.3.1",
-    "@rafterjs/mongodb-plugin": "^0.3.1",
     "@rafterjs/di-autoloader": "^0.3.1",
     "@rafterjs/utils": "^0.3.1",
     "awilix": "^4.2.5",
