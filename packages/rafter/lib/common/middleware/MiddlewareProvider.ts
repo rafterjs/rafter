@@ -3,7 +3,7 @@ import { ILogger } from '@rafterjs/utils';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 export interface IMiddlewareProvider {
-  createInstance(middlewareConfig: string[]): IMiddleware | IMiddleware[];
+  createInstance(middlewareConfig: string[]): IMiddleware[];
 }
 
 /**
@@ -22,17 +22,17 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
   }
 
   /**
-   * @param {string[]} middlewareConfig
+   * @param {string[]} middleware
    * @return {Function|Function[]}
    */
-  public createInstance(middlewareConfig: IMiddlewareConfig[]): IMiddleware | IMiddleware[] {
-    const middlewareCollection: IMiddleware | IMiddleware[] = [];
+  public createInstance(middleware: IMiddlewareConfig[]): IMiddleware[] {
+    const middlewareCollection: IMiddleware[] = [];
 
-    Object.values(middlewareConfig).forEach((middlewareServiceName): void => {
+    Object.values(middleware).forEach((middlewareServiceName): void => {
       try {
         this.logger.info(`    Adding middleware: ${middlewareServiceName}`);
-        const middleware = this.diAutoloader.get<IMiddleware>(middlewareServiceName);
-        middlewareCollection.push(middleware);
+        const middlewareFunction = this.diAutoloader.get<IMiddleware>(middlewareServiceName);
+        middlewareCollection.push(middlewareFunction);
       } catch (error) {
         this.logger.error(`    Could not add middleware: ${middlewareServiceName}`, error);
       }

@@ -2,21 +2,15 @@ import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModul
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafterjs/utils';
 import { isClass } from 'is-class';
-import { camelCase, get, merge } from 'lodash';
+import { camelCase } from 'lodash';
+import merge from 'ts-deepmerge';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
-import { IDiAutoloader } from './IDiAutoloader';
+import { IConfig, IDiAutoloader, ILoadOptions, IMergableFileNames, IMergableFiles, IPaths } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
 
-export type IConfig = {};
-
-export const PATH_GLOB_SUFFIX = '!(*.spec).@(ts|js)';
-export const CONFIG_FILENAME = 'config';
-
 export class DiAutoloader implements IDiAutoloader {
-  private config?: IConfig;
-
-  private configProxy: {};
+  private mergableFiles: IMergableFiles = new Map();
 
   public readonly container: IDiContainer;
 
@@ -25,33 +19,18 @@ export class DiAutoloader implements IDiAutoloader {
   constructor(container: IDiContainer, logger: ILogger = console) {
     this.container = container;
     this.logger = logger;
-
-    // use a proxy for the config dependency so that it can be updated when more configs are added
-    const handler = {
-      get: (obj: object, prop: any) => {
-        return get(this.config, prop);
-      },
-    };
-    this.configProxy = new Proxy({}, handler);
   }
 
   public async load(
-    paths: Array<string | GlobWithOptions> | string,
-    options: LoadModulesOptions = { formatName: this.formatName },
+    paths: IPaths = [],
+    mergableFilenames: IMergableFileNames = [],
+    options: ILoadOptions = { formatName: this.formatName },
   ): Promise<void> {
-    if (paths && paths.length > 0) {
-      const modulePaths = paths instanceof Array ? paths : [paths];
-      const dependencies = this.list(paths, options);
+    this.logger.debug(`   Registering mergable files`);
+    await this.loadMergableFiles(paths, mergableFilenames);
 
-      // split configs and other dependencies
-      this.logger.debug(`Registering configs`);
-      await this.loadConfigs(dependencies);
-
-      this.logger.debug(`Registering modules from ${modulePaths.join(' ')}`);
-      await this.loadModules(dependencies, options);
-    } else {
-      throw new Error(`No paths were specified to load from`);
-    }
+    this.logger.debug(`   Registering non-mergable files`);
+    await this.loadNonMergableFiles(paths, mergableFilenames, options);
   }
 
   public list(paths: string | Array<string | GlobWithOptions>, options?: ListModulesOptions): ModuleDescriptor[] {
@@ -63,24 +42,25 @@ export class DiAutoloader implements IDiAutoloader {
     return this.container.resolve<T>(name);
   }
 
-  public registerConfig(config: IConfig): void {
-    if (this.container.has(CONFIG_FILENAME)) {
-      this.updateConfig(config);
-    } else {
-      this.config = config;
-      if (config instanceof Function) {
-        this.config = config();
-      }
+  public registerMergableFiles(specialFiles: IMergableFiles): void {
+    this.logger.debug(`   Loading mergable files from ${specialFiles.size}`);
+    for (const [name, value] of specialFiles.entries()) {
+      this.logger.debug(`   Merging ${name}`, this.container.cache);
+      if (this.container.has(name)) {
+        this.updateMergedFile(name, value);
+      } else {
+        if (value instanceof Function) {
+          this.mergableFiles.set(name, value());
+        } else {
+          this.mergableFiles.set(name, value);
+        }
 
-      this.registerValue(CONFIG_FILENAME, this.configProxy);
+        this.registerValue(name, value);
+      }
     }
   }
 
   public register<T>(name: string, service: IService<T>): void {
-    if (name === CONFIG_FILENAME) {
-      throw new Error(`Please use registerConfig(config); when registering a service with the name config`);
-    }
-
     if (service instanceof Function) {
       this.registerFunction(name, service as FunctionReturning<T>);
     } else if (isClass(service)) {
@@ -109,53 +89,84 @@ export class DiAutoloader implements IDiAutoloader {
     return camelCase(name);
   }
 
-  private updateConfig<T extends IConfig>(service: T): void {
-    let config: T = service;
+  public updateMergedFile<T extends IConfig>(name: string, service: T): void {
+    let specialFile: T = service;
     if (service instanceof Function) {
-      config = service();
+      specialFile = service();
     }
 
-    this.logger.debug(`Adding to config`, config);
-    this.config = this.mergeConfigs(this.config || {}, config);
+    this.logger.debug(`Adding to special file ${name}`, specialFile);
+    this.mergableFiles.set(name, this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile));
   }
 
-  private mergeConfigs(config1: IConfig, config2: IConfig): IConfig {
-    return merge(config1, config2);
+  private mergeFiles(specialFile1?: {}, specialFile2?: {}): {} {
+    if (specialFile1 && specialFile2) {
+      return merge(specialFile2, specialFile1);
+    }
+    if (!specialFile1 && specialFile2) {
+      return specialFile2;
+    }
+    if (specialFile1 && !specialFile2) {
+      return specialFile1;
+    }
+    throw new Error('You must pass at least one special file with contents');
   }
 
-  private async mergeConfigsFromPaths(paths: ModuleDescriptor[]): Promise<IConfig> {
-    let mergedConfig = {};
+  private async mergeFilesFromDependencies(paths: ModuleDescriptor[]): Promise<IMergableFiles> {
+    const mergedSpecialFiles: IMergableFiles = new Map();
+
     if (paths && paths.length > 0) {
-      this.logger.debug(`Merging configs`);
+      this.logger.debug(`Merging files`);
 
-      // eslint-disable-next-line no-restricted-syntax
-      for (const { path } of paths) {
-        // eslint-disable-next-line no-await-in-loop
-        let config = await import(path);
-        if (config.default) {
-          config = config.default;
+      for (const { path, name } of paths) {
+        let specialFile = await import(path);
+        if (specialFile.default) {
+          specialFile = specialFile.default;
         }
 
-        if (config instanceof Function) {
-          config = config();
+        if (specialFile instanceof Function) {
+          specialFile = specialFile();
         }
 
-        mergedConfig = this.mergeConfigs(mergedConfig, config);
+        this.logger.debug(`Merging file ${name}`);
+        mergedSpecialFiles.set(name, this.mergeFiles(mergedSpecialFiles.get(name), specialFile));
       }
-      this.logger.debug(`Completed merging configs`, this.config || {});
+
+      this.logger.debug(`Completed merging files`, mergedSpecialFiles.entries());
     }
 
-    return mergedConfig;
+    return mergedSpecialFiles;
   }
 
-  private async loadModules(dependencies: ModuleDescriptor[], options: LoadModulesOptions): Promise<void> {
-    const noConfigs = dependencies.filter(({ name }) => name !== CONFIG_FILENAME).map(({ path }) => path);
-    this.container.loadModules(noConfigs, options);
+  public async loadNonMergableFiles(
+    paths: IPaths,
+    mergableFileNames: IMergableFileNames,
+    options: LoadModulesOptions,
+  ): Promise<void> {
+    const dependencies = this.getNonMergablePaths(this.list(paths), mergableFileNames);
+    const plainPaths = dependencies.map(({ path }) => path);
+    this.logger.debug(`   Loading non-mergable files from:`, plainPaths);
+    this.container.loadModules(plainPaths, options);
   }
 
-  private async loadConfigs(dependencies: ModuleDescriptor[]): Promise<void> {
-    const configs = dependencies.filter(({ name }) => name === CONFIG_FILENAME);
-    const mergedConfigs = await this.mergeConfigsFromPaths(configs);
-    this.registerConfig(mergedConfigs);
+  public async loadMergableFiles(paths: IPaths, mergableFileNames: IMergableFileNames): Promise<void> {
+    const dependencies = this.getMergablePaths(this.list(paths), mergableFileNames);
+    const files = await this.mergeFilesFromDependencies(dependencies);
+
+    this.registerMergableFiles(files);
+  }
+
+  private getMergablePaths(
+    dependencies: ModuleDescriptor[],
+    mergableFileNames: IMergableFileNames = [],
+  ): ModuleDescriptor[] {
+    return dependencies.filter(({ name }) => mergableFileNames.includes(name));
+  }
+
+  private getNonMergablePaths(
+    dependencies: ModuleDescriptor[],
+    mergableFileNames: IMergableFileNames = [],
+  ): ModuleDescriptor[] {
+    return dependencies.filter(({ name }) => !mergableFileNames.includes(name));
   }
 }

@@ -3,7 +3,7 @@ import { join } from 'path';
 
 const run = async (): Promise<void> => {
   const rafterServer = rafter({
-    paths: [join(__dirname, '/**/!(*.spec).@(ts|js)')],
+    paths: [join(__dirname, `/**/`)],
     logger: console,
   });
 

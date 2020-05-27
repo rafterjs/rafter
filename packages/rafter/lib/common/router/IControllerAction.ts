@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 export interface IController {
-  [action: string]: IControllerAction;
+  index(request: Request, response: Response): void;
 }
 
 export type IControllerAction = (request: Request, response: Response) => void;

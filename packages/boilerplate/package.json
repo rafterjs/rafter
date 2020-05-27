@@ -16,31 +16,37 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn clean:lib && yarn build:lib && yarn build:config && yarn build:types",
+    "build": "yarn build:lib && yarn build:config && yarn build:types",
     "build:config": "babel --include-dotfiles lib/config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build && yarn start\"",
+    "build:rafter": "cd ../ && yarn build:rafter",
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",
     "start": "node ./dist/lib/index.js",
+    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn start\"",
     "stop": "echo 'stop'",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-rafter-plugin": "^0.3.1",
-    "@rafterjs/di-autoloader": "^0.3.1",
-    "rafter": "^0.3.1"
+    "@rafterjs/cors-rafter-plugin": "*",
+    "@rafterjs/di-autoloader": "*",
+    "@rafterjs/mongodb-plugin": "*",
+    "rafter": "*"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.3.1",
-    "@rafterjs/eslint-config": "^0.3.1"
+    "@rafterjs/eslint-config": "^0.3.1",
+    "@rafterjs/mongodb-plugin": "*"
   },
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/lib/index.js",
+  "module": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
   "engines": {
     "node": ">=9"
   },

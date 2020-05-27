@@ -3,7 +3,7 @@ import { ILogger } from '@rafterjs/utils';
 import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
 export interface IPluginProvider {
-  createInstance(pluginConfig: IPluginsConfig): IPlugin | IPlugin[];
+  createInstance(pluginConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]>;
 }
 
 /**
@@ -26,13 +26,13 @@ export default class PluginProvider<T extends IPluginConfig> implements IPluginP
    * @param {IPluginConfig} pluginsConfig
    * @return {Function|Function[]}
    */
-  public createInstance(pluginsConfig: IPluginsConfig): IPlugin | IPlugin[] {
+  public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];
 
-    Object.entries(pluginsConfig).forEach(([config, pluginName]): void => {
-      this.logger.debug('-------------pluginName-', pluginName);
-      this.logger.debug('-------------config-', config);
-    });
+    const pluginConfigNames = Object.keys(pluginsConfig) || [];
+    if (pluginConfigNames.length > 0) {
+      // TODO move the plugin logic from Rafter to here.
+    }
 
     return plugins;
   }

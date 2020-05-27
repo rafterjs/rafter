@@ -27,10 +27,13 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
    */
   private getControllerAction(controllerName: string, action: string): IControllerAction {
     const controller = this.diAutoloader.get<IController>(controllerName);
-    if (!controller[action]) {
+    const methods = Object.keys(controller);
+
+    if (methods.includes(action)) {
       throw new Error(`Could not register the controller ${controllerName} with the action ${action}`);
     }
 
+    // @ts-ignore
     return controller[action].bind(controller);
   }
 

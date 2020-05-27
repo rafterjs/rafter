@@ -1,12 +1,8 @@
-import { IController, IControllerAction } from 'rafter/lib/common/router/IControllerAction';
+import { IController } from 'rafter/lib/common/router/IControllerAction';
 import { Request, Response } from 'express';
 import { BoilerplateConfig } from '../config/config';
 
-interface IOtherController extends IController {
-  index: IControllerAction;
-}
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
+type IOtherController = IController;
 export default class OtherController implements IOtherController {
   private readonly config: BoilerplateConfig;
 

@@ -1,5 +1,3 @@
-export default () => ({
-  '@rafterjs/cors-rafter-plugin': {
-    header: 'thingo',
-  },
-});
+import { IPluginConfig } from 'rafter';
+
+export default (): IPluginConfig => ['@rafterjs/cors-rafter-plugin', '@rafterjs/mongodb-plugin'];

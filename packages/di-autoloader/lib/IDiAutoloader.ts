@@ -1,14 +1,33 @@
-import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
+import { GlobWithOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { Constructor, FunctionReturning } from 'awilix';
 import { IService } from './IService';
 
+export type IMergableFiles = Map<string, {}>;
+export type IMergableFileNames = string[];
+export type IPath = string | GlobWithOptions;
+export type IPaths = Array<IPath>;
+export type ILoadOptions = LoadModulesOptions;
+export type IConfig = object;
+
 export interface IDiAutoloader {
-  load(paths: Array<string | GlobWithOptions> | string, options?: LoadModulesOptions): void;
+  load(paths: IPaths, mergableFilenames: IMergableFileNames, options?: ILoadOptions): Promise<void>;
+
+  loadMergableFiles(paths: IPaths, mergableFilenames: IMergableFileNames): Promise<void>;
+
+  loadNonMergableFiles(
+    paths: IPaths,
+    mergableFilenames: IMergableFileNames,
+    options: LoadModulesOptions,
+  ): Promise<void>;
+
+  updateMergedFile<T extends IConfig>(name: string, service: T): void;
+
+  registerMergableFiles(specialFiles: IMergableFiles): void;
 
   get<T>(name: string): T;
 
-  list(paths: string | Array<string | GlobWithOptions>, options?: ListModulesOptions): ModuleDescriptor[];
+  list(paths: IPaths): ModuleDescriptor[];
 
   register<T>(name: string, service: IService<T>): void;
 

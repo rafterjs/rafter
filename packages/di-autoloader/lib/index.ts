@@ -1,5 +1,5 @@
 import { ILogger } from '@rafterjs/utils';
-import { IDiAutoloader } from './IDiAutoloader';
+import { IDiAutoloader, IMergableFileNames, IMergableFiles, IPaths, IPath } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
 import { IServiceConfig } from './IServiceConfig';
@@ -15,4 +15,14 @@ export default ({ logger }: IDiAutoloaderOptions): IDiAutoloader => {
   return new DiAutoloader(container, logger);
 };
 
-export { DiAutoloader, IDiAutoloader, IDiContainer, IService, IServiceConfig };
+export {
+  DiAutoloader,
+  IDiAutoloader,
+  IDiContainer,
+  IService,
+  IServiceConfig,
+  IPaths,
+  IPath,
+  IMergableFiles,
+  IMergableFileNames,
+};
