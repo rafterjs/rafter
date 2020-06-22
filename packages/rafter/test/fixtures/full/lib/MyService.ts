@@ -1,4 +1,4 @@
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 
 export default class MyService {
   private readonly logger: ILogger;

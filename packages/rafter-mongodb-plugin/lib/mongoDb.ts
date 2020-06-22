@@ -7,6 +7,8 @@ export type IMongoDbConfig = {
   };
 };
 
-export default function mongoDbFactory(config: IMongoDbConfig): MongoClient {
+export type IMongoDb = MongoClient;
+
+export default function mongoDbFactory(config: IMongoDbConfig): IMongoDb {
   return new MongoClient(config.mongodb.connectionString);
 }

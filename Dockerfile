@@ -5,7 +5,7 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json yarn.lock .eslintignore .eslintrc.js .prettierrc.js lerna.json /app/
+COPY package.json yarn.lock .eslintignore .eslintrc.js .prettierrc.js lerna.json ./
 RUN yarn install
 
 COPY packages/ app/packages/

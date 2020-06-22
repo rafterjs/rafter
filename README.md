@@ -130,7 +130,7 @@ By adding `async` to the function, _Rafter_ will wait for it to be successfully 
 
 ### Starting your Rafter application
 
-Along with the aforementioned configs, all that is required to run Rafter is the following in an `index.ts` file:
+Along with the aforementioned configs, all that is required to run Rafter is the following in an `test.ts` file:
 
 ```typescript
 import rafter from 'rafter';
@@ -151,12 +151,13 @@ run();
 
 Once `start()` is called, Rafter will:
 
-1. Scan through all your directories looking for config files and services.
-2. Autoload all your services into the service container.
-3. Run all the `pre-start-hooks`.
-4. Apply all the `middleware`.
-5. Register all the `routes`.
-6. Start the server.
+1. Scan through all your directories looking for config files, plugins and services.
+2. Autoload all `plugins`.
+3. Autoload all other services, injecting their dependencies.
+4. Run all the `pre-start-hooks`.
+5. Apply all the `middleware`.
+6. Register all the `routes`.
+7. Start the server.
 
 To see an example project, visit the [skeleton rafter app](https://github.com/joshystuart/rafter-skeleton-app) repository, or look at the included `boilerplate` application within [packages](https://github.com/joshystuart/rafter/tree/master/packages/boilerplate).
 
@@ -171,7 +172,7 @@ The foundations of the Rafter framework are:
 
 ## Dependency injection
 
-With the advent of `RequireJs`, dependency injection (DI) had largely been thrown by the way side in favor of requiring / importing all your dependencies in Node. This meant that your dependencies were hard coded in each file, resulting in code that was not easily unit testable, nor replicable without rewrites.
+With the advent of `RequireJs`, dependency injection (DI) had largely been thrown by the wayside in favor of requiring / importing all your dependencies. This meant that your dependencies were hard coded in each file, resulting in code that was not easily unit tested, nor replicable without rewrites.
 
 eg.
 
@@ -188,7 +189,7 @@ const find = async query => {
   await mongoose.find(query);
 };
 
-export { connect };
+export { connect, find };
 ```
 
 ### With DI

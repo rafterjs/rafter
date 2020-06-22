@@ -17,8 +17,8 @@ Rafter TODO
 - [x] Convert the babel package to js. This is because babel is missing types which is causing errors.
 - [x] share the same logger instance from rafter into DI
 - [ ] Create tests for existing services in CORE
-- [ ] Fix config merging
+- [x] Fix config merging
 - [ ] Disambiguate DI `config` from plugin or app `config`
-- [ ] Add plugin logging back into the Rafter start up 
-- [x] Create a PR for the major TS refactor and get it in asap
-- [ ] Remove the `awilix` dependency in `boilerplate`
+- [x] Add plugin logging back into the Rafter start up 
+- [x] Create a PR for the major TS refactor
+- [x] Remove the `awilix` dependency in `boilerplate`

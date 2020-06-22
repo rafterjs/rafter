@@ -1,6 +1,6 @@
 import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
 import merge from 'ts-deepmerge';
@@ -72,12 +72,12 @@ export class DiAutoloader implements IDiAutoloader {
 
   public registerClass<T>(name: string, service: Constructor<T>): void {
     this.logger.debug(`Registering ${name} as a class`);
-    this.container.register(name, asClass(service));
+    this.container.register(name, asClass(service).singleton());
   }
 
   public registerFunction<T>(name: string, service: FunctionReturning<T>): void {
     this.logger.debug(`Registering ${name} as a function`);
-    this.container.register(name, asFunction(service));
+    this.container.register(name, asFunction(service).singleton());
   }
 
   public registerValue<T>(name: string, service: T): void {
@@ -152,7 +152,12 @@ export class DiAutoloader implements IDiAutoloader {
   public async loadMergableFiles(paths: IPaths, mergableFileNames: IMergableFileNames): Promise<void> {
     const dependencies = this.getMergablePaths(this.list(paths), mergableFileNames);
     const files = await this.mergeFilesFromDependencies(dependencies);
-
+    console.log('\n\n-------------dependencies---------------');
+    console.log(dependencies);
+    console.log('\n\n-------------dependencies---------------');
+    console.log('\n\n-------------files---------------');
+    console.log(files);
+    console.log('\n\n-------------files---------------');
     this.registerMergableFiles(files);
   }
 
