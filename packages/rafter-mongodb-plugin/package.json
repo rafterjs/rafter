@@ -21,7 +21,8 @@
     "build:config": "babel config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
-    "lint": "eslint \"./lib/**/*\"",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {

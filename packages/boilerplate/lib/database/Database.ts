@@ -2,7 +2,7 @@ import { IMongoDb } from '@rafterjs/mongodb-plugin';
 import { ILogger } from '@rafterjs/logger-plugin';
 
 export interface IDatabase {
-  test(): void;
+  connect(connectionStr: string): void;
 }
 
 export default class Database implements IDatabase {
@@ -15,7 +15,7 @@ export default class Database implements IDatabase {
     this.logger = logger;
   }
 
-  public async test(): Promise<void> {
-    this.logger.info(`--------------------- IN DB`);
+  public async connect(connectionStr: string): Promise<void> {
+    this.logger.info(`Connecting to database: `, connectionStr);
   }
 }

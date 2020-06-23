@@ -1,7 +1,9 @@
 import { IDatabase } from './Database';
+import { BoilerplateConfig } from '../config/config';
 
-export default async function connectToDatabase(database: IDatabase) {
+export default function connectToDatabase(database: IDatabase, config: BoilerplateConfig) {
   return async (): Promise<void> => {
-    await database.test();
+    const { db } = config;
+    await database.connect(db.connectionStr);
   };
 }

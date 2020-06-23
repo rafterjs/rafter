@@ -6,6 +6,9 @@ export type BoilerplateConfig = {
   api: {
     version: string;
   };
+  db: {
+    connectionStr: string;
+  };
 };
 
 export default (): BoilerplateConfig => ({
@@ -15,5 +18,8 @@ export default (): BoilerplateConfig => ({
   message: 'Hello my fellow developer. This text was set in config, then auto-loaded into a controller!',
   api: {
     version: '1.0.0',
+  },
+  db: {
+    connectionStr: 'test',
   },
 });

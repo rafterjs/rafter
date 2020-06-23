@@ -1,6 +1,6 @@
 import { IDiAutoloader, IMergableFileNames, IPath, IPaths } from '@rafterjs/di-autoloader';
 import { GlobWithOptions } from 'awilix';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import consoleLoggerFactory, { ILogger } from '@rafterjs/logger-plugin';
 import { IServer } from './common/server';
 import { IRafter } from './IRafter';
@@ -129,6 +129,7 @@ export default class Rafter implements IRafter {
     return paths.map((path) => join(path as string, GLOB_SUFFIX));
   }
 
+  // TODO move this to another service
   private async getPluginPaths(paths: IPaths = []): Promise<IPaths> {
     const pluginPaths: Set<IPath> = new Set<IPath>();
 
@@ -141,8 +142,6 @@ export default class Rafter implements IRafter {
         this.logger.debug(`   Found plugin configs`, plugins);
         for (const plugin of plugins) {
           try {
-            // const pluginMainPath = require.resolve(plugin.path);
-            // const pluginDirPath = dirname(pluginMainPath);
             this.logger.debug(`    The plugin ${plugin.name} is located in ${plugin.path}`);
             pluginPaths.add(plugin.path);
           } catch (error) {
@@ -156,6 +155,7 @@ export default class Rafter implements IRafter {
     return [...pluginPaths];
   }
 
+  // TODO swap this out
   private async loadPlugins(paths: IPaths = []): Promise<void> {
     if (paths.length > 0) {
       await this.loadPluginConfigFiles(paths);

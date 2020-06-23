@@ -1,7 +1,7 @@
 import { join } from 'path';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createStubInstance } from 'sinon';
-import { LoggingService } from '@rafterjs/logger-plugin';
+import { ILogger, MockLogger } from '@rafterjs/logger-plugin';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import { DiAutoloader } from './DiAutoloader';
@@ -17,7 +17,7 @@ const PATH_GLOB_SUFFIX = '';
 jest.mock('@rafterjs/logger-plugin');
 
 describe('DI Autoloader', () => {
-  const mockLogger = createStubInstance(LoggingService);
+  const mockLogger = createStubInstance<ILogger>(MockLogger);
 
   let container: AwilixContainer;
 

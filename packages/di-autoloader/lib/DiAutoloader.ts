@@ -152,12 +152,6 @@ export class DiAutoloader implements IDiAutoloader {
   public async loadMergableFiles(paths: IPaths, mergableFileNames: IMergableFileNames): Promise<void> {
     const dependencies = this.getMergablePaths(this.list(paths), mergableFileNames);
     const files = await this.mergeFilesFromDependencies(dependencies);
-    console.log('\n\n-------------dependencies---------------');
-    console.log(dependencies);
-    console.log('\n\n-------------dependencies---------------');
-    console.log('\n\n-------------files---------------');
-    console.log(files);
-    console.log('\n\n-------------files---------------');
     this.registerMergableFiles(files);
   }
 

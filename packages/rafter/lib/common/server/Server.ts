@@ -82,11 +82,10 @@ export default class Server implements IServer {
 
       // run the hooks
       for (const hook of hooks) {
-        if (hook instanceof Function) {
+        try {
           await hook();
-        } else {
-          // @ts-ignore
-          console.log('\n\n\n--------------------------this.preStartHooks', hook());
+        } catch (e) {
+          this.logger.error(`The hook is not a function`, hook, e);
         }
       }
     }

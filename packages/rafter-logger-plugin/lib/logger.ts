@@ -23,6 +23,28 @@ export interface ILogger {
   warn(...args: LoggingArguments): void;
 }
 
+export class MockLogger implements ILogger {
+  public log(level: LogLevel, ...args: LoggingArguments): void {
+    // empty on purpose
+  }
+
+  public debug(...args: LoggingArguments): void {
+    // empty on purpose
+  }
+
+  public info(...args: LoggingArguments): void {
+    // empty on purpose
+  }
+
+  public error(...args: LoggingArguments): void {
+    // empty on purpose
+  }
+
+  public warn(...args: LoggingArguments): void {
+    // empty on purpose
+  }
+}
+
 export type LogLevelOptions = keyof typeof LogLevel;
 
 export type ILoggerConfig = {
