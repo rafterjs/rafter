@@ -1,8 +1,9 @@
-import { createLogger, format as winstonFormat, transports as winstonTransports } from 'winston';
+import winston, { createLogger, format as winstonFormat, transports as winstonTransports } from 'winston';
 import TransportStream from 'winston-transport';
 import { Format } from 'logform';
 
-export type LoggingArguments = (string | number | Function | object | boolean)[];
+/* eslint @typescript-eslint/no-unused-vars: 0 */
+export type LoggingArguments = unknown[];
 
 export enum LogLevel {
   DEBUG = 'debug',
@@ -55,7 +56,7 @@ export type ILoggerConfig = {
   };
 };
 
-export default function loggerFactory(config?: ILoggerConfig): ILogger {
+export default function loggerFactory(config?: ILoggerConfig): winston.Logger {
   const { level = LogLevel.DEBUG, format = winstonFormat.simple(), transports = [new winstonTransports.Console()] } =
     config?.logger || {};
 

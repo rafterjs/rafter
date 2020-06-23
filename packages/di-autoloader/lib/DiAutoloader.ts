@@ -5,7 +5,14 @@ import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
 import merge from 'ts-deepmerge';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
-import { IConfig, IDiAutoloader, ILoadOptions, IMergableFileNames, IMergableFiles, IPaths } from './IDiAutoloader';
+import {
+  IDiAutoloader,
+  ILoadOptions,
+  IMergableFile,
+  IMergableFileNames,
+  IMergableFiles,
+  IPaths,
+} from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
 
@@ -89,7 +96,7 @@ export class DiAutoloader implements IDiAutoloader {
     return camelCase(name);
   }
 
-  public updateMergedFile<T extends IConfig>(name: string, service: T): void {
+  public updateMergedFile<T extends IMergableFile>(name: string, service: T): void {
     let specialFile: T = service;
     if (service instanceof Function) {
       specialFile = service();
@@ -99,7 +106,7 @@ export class DiAutoloader implements IDiAutoloader {
     this.mergableFiles.set(name, this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile));
   }
 
-  private mergeFiles(specialFile1?: {}, specialFile2?: {}): {} {
+  private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
     if (specialFile1 && specialFile2) {
       return merge(specialFile2, specialFile1);
     }

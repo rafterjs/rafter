@@ -28,9 +28,9 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "winston": "3.2.1",
-    "winston-transport": "4.3.0",
-    "logform": "2.1.2"
+    "logform": "2.2.0",
+    "winston": "3.3.2",
+    "winston-transport": "4.4.0"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.4.1",

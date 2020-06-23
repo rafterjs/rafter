@@ -1,6 +1,4 @@
-interface IConfig {
-  [key: string]: object;
-}
+type IConfig = Record<string, unknown>;
 
 export default (): IConfig => ({
   cors: {

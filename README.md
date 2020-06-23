@@ -58,9 +58,10 @@ The _Rafter_ autoloader will look recursively throughout your project for servic
 The following configuration files are autoloaded by _Rafter_.
 
 - `config.ts`: a general application or module config.
-- `middleware.js`: registers services as middleware and loads them into the routes stack.
+- `middleware.ts`: registers services as middleware and loads them into the routes stack.
 - `routes.ts`: links controller services to route definitions.
-- `pre-start-hooks.js`: loads defined services before Rafter has started the server.
+- `preStartHooks.ts`: loads defined services before Rafter has started the server.
+- `plugins.ts`: a config file outlining which plugins to load.
 
 #### Config
 
