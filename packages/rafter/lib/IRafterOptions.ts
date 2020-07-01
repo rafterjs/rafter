@@ -1,4 +1,4 @@
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { GlobWithOptions } from 'awilix';
 import { IMergableFileNames, IPaths } from '@rafterjs/di-autoloader';
 

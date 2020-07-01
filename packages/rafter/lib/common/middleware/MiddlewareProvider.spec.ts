@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import MiddlewareProvider from './MiddlewareProvider';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 

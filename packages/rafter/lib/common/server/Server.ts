@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import * as http from 'http';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { RequestHandler } from 'express-serve-static-core';
 import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutesProvider } from '../router/RoutesProvider';
@@ -81,11 +81,13 @@ export default class Server implements IServer {
       const hooks = this.preStartHooksProvider.createInstance(this.preStartHooks);
 
       // run the hooks
-      Object.values(hooks).forEach(
-        async (hook): Promise<void> => {
+      for (const hook of hooks) {
+        try {
           await hook();
-        },
-      );
+        } catch (e) {
+          this.logger.error(`The hook is not a function`, hook, e);
+        }
+      }
     }
 
     return Promise.resolve();
@@ -121,7 +123,7 @@ export default class Server implements IServer {
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
-      this.logger.info(`ExpressServer::start plugins have already been loaded`);
+      // this.logger.info(`ExpressServer::start plugins have already been loaded`);
 
       // add all the middleware
       this.logger.info(`ExpressServer::start running pre-start hooks`);

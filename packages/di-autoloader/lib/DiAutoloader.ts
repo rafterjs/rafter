@@ -1,11 +1,18 @@
 import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
 import merge from 'ts-deepmerge';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
-import { IConfig, IDiAutoloader, ILoadOptions, IMergableFileNames, IMergableFiles, IPaths } from './IDiAutoloader';
+import {
+  IDiAutoloader,
+  ILoadOptions,
+  IMergableFile,
+  IMergableFileNames,
+  IMergableFiles,
+  IPaths,
+} from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
 
@@ -72,12 +79,12 @@ export class DiAutoloader implements IDiAutoloader {
 
   public registerClass<T>(name: string, service: Constructor<T>): void {
     this.logger.debug(`Registering ${name} as a class`);
-    this.container.register(name, asClass(service));
+    this.container.register(name, asClass(service).singleton());
   }
 
   public registerFunction<T>(name: string, service: FunctionReturning<T>): void {
     this.logger.debug(`Registering ${name} as a function`);
-    this.container.register(name, asFunction(service));
+    this.container.register(name, asFunction(service).singleton());
   }
 
   public registerValue<T>(name: string, service: T): void {
@@ -89,7 +96,7 @@ export class DiAutoloader implements IDiAutoloader {
     return camelCase(name);
   }
 
-  public updateMergedFile<T extends IConfig>(name: string, service: T): void {
+  public updateMergedFile<T extends IMergableFile>(name: string, service: T): void {
     let specialFile: T = service;
     if (service instanceof Function) {
       specialFile = service();
@@ -99,7 +106,7 @@ export class DiAutoloader implements IDiAutoloader {
     this.mergableFiles.set(name, this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile));
   }
 
-  private mergeFiles(specialFile1?: {}, specialFile2?: {}): {} {
+  private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
     if (specialFile1 && specialFile2) {
       return merge(specialFile2, specialFile1);
     }
@@ -152,7 +159,6 @@ export class DiAutoloader implements IDiAutoloader {
   public async loadMergableFiles(paths: IPaths, mergableFileNames: IMergableFileNames): Promise<void> {
     const dependencies = this.getMergablePaths(this.list(paths), mergableFileNames);
     const files = await this.mergeFilesFromDependencies(dependencies);
-
     this.registerMergableFiles(files);
   }
 

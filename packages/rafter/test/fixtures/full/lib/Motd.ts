@@ -1,4 +1,4 @@
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IPreStartHook } from '../../../../lib/common/pre-start-hooks';
 
 export default function (logger: ILogger): IPreStartHook {

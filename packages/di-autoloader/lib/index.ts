@@ -1,4 +1,4 @@
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IDiAutoloader, IMergableFileNames, IMergableFiles, IPaths, IPath } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';

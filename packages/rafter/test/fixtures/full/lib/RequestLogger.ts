@@ -1,4 +1,4 @@
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IMiddleware, INextFunction, IRequest, IResponse } from '../../../../lib/common/middleware';
 
 export default function (logger: ILogger): IMiddleware {

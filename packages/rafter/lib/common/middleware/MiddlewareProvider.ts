@@ -1,5 +1,5 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
 export interface IMiddlewareProvider {

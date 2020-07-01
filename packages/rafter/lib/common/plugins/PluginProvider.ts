@@ -1,5 +1,5 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
 
 export interface IPluginProvider {
@@ -29,9 +29,28 @@ export default class PluginProvider<T extends IPluginConfig> implements IPluginP
   public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];
 
-    const pluginConfigNames = Object.keys(pluginsConfig) || [];
-    if (pluginConfigNames.length > 0) {
-      // TODO move the plugin logic from Rafter to here.
+    if (pluginsConfig.length > 0) {
+      this.logger.debug(`   Found plugin configs`, plugins);
+
+      for (const pluginConfig of pluginsConfig) {
+        try {
+          const { name, path } = pluginConfig;
+          let plugin;
+          if (module.parent && module.parent.parent) {
+            this.logger.debug(`Importing plugin ${name} via module.parent`);
+            plugin = module.parent.parent.require(path);
+          } else {
+            this.logger.debug(`Importing plugin ${name} via require.resolve`);
+            plugin = require.resolve(pluginConfig.path);
+          }
+
+          if (plugin && plugin.default) {
+            this.diAutoloader.register(name, plugin.default);
+          }
+        } catch (error) {
+          this.logger.error(`The plugin ${pluginConfig.name} could not be initialized`, error);
+        }
+      }
     }
 
     return plugins;

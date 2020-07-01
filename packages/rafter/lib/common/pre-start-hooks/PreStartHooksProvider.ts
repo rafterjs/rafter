@@ -1,5 +1,5 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/utils';
+import { ILogger } from '@rafterjs/logger-plugin';
 import { IPreStartHook, IPreStartHookConfig } from './IPreStartHook';
 
 export interface IPreStartHooksProvider {
@@ -28,17 +28,15 @@ export default class PreStartHooksProvider implements IPreStartHooksProvider {
   public createInstance(preStartHooksConfig: IPreStartHookConfig[]): IPreStartHook[] {
     const hooksCollection: IPreStartHook[] = [];
 
-    Object.values(preStartHooksConfig).forEach(
-      async (preStartHookServiceName): Promise<void> => {
-        try {
-          this.logger.info(`    Adding pre-start hook: ${preStartHookServiceName}`);
-          const hook = this.diAutoloader.get<IPreStartHook>(preStartHookServiceName);
-          hooksCollection.push(hook);
-        } catch (error) {
-          this.logger.error(`    Could not add pre-start hook: ${preStartHookServiceName}`, error);
-        }
-      },
-    );
+    for (const preStartHookServiceName of preStartHooksConfig) {
+      try {
+        this.logger.info(`    Adding pre-start hook: ${preStartHookServiceName}`);
+        const hook = this.diAutoloader.get<IPreStartHook>(preStartHookServiceName);
+        hooksCollection.push(hook);
+      } catch (error) {
+        this.logger.error(`    Could not add pre-start hook: ${preStartHookServiceName}`, error);
+      }
+    }
 
     return hooksCollection;
   }

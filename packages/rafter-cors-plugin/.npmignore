@@ -1,6 +1,5 @@
-config/**/*
 .eslintrc.js
 babel.config.js
 jest.config.js
-cors.ts
-cors.spec.ts
+tsconfig.json
+

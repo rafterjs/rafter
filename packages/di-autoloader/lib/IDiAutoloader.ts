@@ -3,12 +3,13 @@ import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { Constructor, FunctionReturning } from 'awilix';
 import { IService } from './IService';
 
-export type IMergableFiles = Map<string, {}>;
+export type IMergableFile = Record<string, unknown>;
+export type IMergableFiles = Map<string, IMergableFile>;
 export type IMergableFileNames = string[];
 export type IPath = string | GlobWithOptions;
 export type IPaths = Array<IPath>;
 export type ILoadOptions = LoadModulesOptions;
-export type IConfig = object;
+export type IConfig = IMergableFile;
 
 export interface IDiAutoloader {
   load(paths: IPaths, mergableFilenames: IMergableFileNames, options?: ILoadOptions): Promise<void>;
@@ -21,7 +22,7 @@ export interface IDiAutoloader {
     options: LoadModulesOptions,
   ): Promise<void>;
 
-  updateMergedFile<T extends IConfig>(name: string, service: T): void;
+  updateMergedFile<T extends IMergableFile>(name: string, service: T): void;
 
   registerMergableFiles(specialFiles: IMergableFiles): void;
 

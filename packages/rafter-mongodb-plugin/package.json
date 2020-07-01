@@ -16,23 +16,23 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn build:lib && yarn build:config && yarn build:types",
+    "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:types",
     "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:config": "babel config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
-    "lint": "eslint \"./lib/**/*\"",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {
-    "@rafterjs/utils": "^0.4.1",
-    "mongodb": "3.5.7"
+    "@rafterjs/logger-plugin": "^0.4.1",
+    "mongodb": "3.5.9"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.4.1",
     "@rafterjs/eslint-config": "^0.4.0",
-    "@types/mongodb": "^3.5.17",
-    "@types/node": "^14.0.1"
+    "@types/mongodb": "^3.5.17"
   },
   "description": "A simple mongodb plugin",
   "main": "./dist/lib/mongoDb.js",

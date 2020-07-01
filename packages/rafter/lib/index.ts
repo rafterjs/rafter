@@ -1,4 +1,5 @@
 import diAutoloaderFactory, { IDiAutoloader } from '@rafterjs/di-autoloader';
+import consoleLoggerFactory from '@rafterjs/logger-plugin';
 import Rafter, {
   CORE_LIB_DIRECTORIES,
   CORE_PATH,
@@ -8,6 +9,7 @@ import Rafter, {
 } from './Rafter';
 import { IRafterOptions } from './IRafterOptions';
 import { IRafter } from './IRafter';
+import PluginProvider from './common/plugins/PluginProvider';
 
 export * from './common/errors';
 export * from './common/helpers';
@@ -32,15 +34,18 @@ export default ({
   corePath,
   paths,
   mergableFileNames = DEFAULT_MERGABLE_FILENAME_VALUES,
-  logger,
+  logger = consoleLoggerFactory(),
 }: IRafterOptions): IRafter => {
   const diAutoloader: IDiAutoloader = diAutoloaderFactory({ logger });
+
+  const pluginProvider = new PluginProvider(diAutoloader, logger);
 
   const config: RafterConfig = {
     diAutoloader,
     corePath,
     paths,
     mergableFileNames,
+    pluginProvider,
     logger,
   };
 
