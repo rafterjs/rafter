@@ -6,13 +6,13 @@ import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import { DiAutoloader } from './DiAutoloader';
 import TestClass from '../test/fixtures/full/lib/TestClass';
-import config2, { TestConfig2 } from '../test/fixtures/full/config/config';
-import config1, { TestConfig1 } from '../test/fixtures/full/lib/config';
+import { config2, TestConfig2 } from '../test/fixtures/full/config/config';
+import { config1, TestConfig1 } from '../test/fixtures/full/lib/config';
 import TestFunction from '../test/fixtures/full/lib/TestFunction';
 
 const FIXTURES_DIR = join(__dirname, '../test/fixtures');
 const FIXTURES_GLOB = join(FIXTURES_DIR, '**');
-const PATH_GLOB_SUFFIX = '';
+const PATH_GLOB_SUFFIX = '/*.*';
 
 jest.mock('@rafterjs/logger-plugin');
 
@@ -33,7 +33,7 @@ describe('DI Autoloader', () => {
       const configMap1 = new Map();
       configMap1.set('config', config1);
       const configMap2 = new Map();
-      configMap2.set('config', config2);
+      configMap2.set('config', config2());
       await diAutoloader.registerMergableFiles(configMap1);
       await diAutoloader.registerMergableFiles(configMap2);
 

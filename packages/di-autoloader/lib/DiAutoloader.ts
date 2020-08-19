@@ -46,13 +46,15 @@ export class DiAutoloader implements IDiAutoloader {
 
   public get<T>(name: string): T {
     this.logger.debug(`Resolving ${name}`);
-    return this.container.resolve<T>(name);
+    const value = this.container.resolve<T>(name);
+    this.logger.debug(`Found value for ${name}`, value);
+    return value;
   }
 
   public registerMergableFiles(specialFiles: IMergableFiles): void {
-    this.logger.debug(`   Loading mergable files from ${specialFiles.size}`);
+    this.logger.debug(`   Loading ${specialFiles.size} mergable files`);
     for (const [name, value] of specialFiles.entries()) {
-      this.logger.debug(`   Merging ${name}`, this.container.cache);
+      this.logger.debug(`   Merging ${name}`);
       if (this.container.has(name)) {
         this.updateMergedFile(name, value);
       } else {
@@ -62,7 +64,7 @@ export class DiAutoloader implements IDiAutoloader {
           this.mergableFiles.set(name, value);
         }
 
-        this.registerValue(name, value);
+        this.registerFunction(name, () => this.mergableFiles.get(name));
       }
     }
   }
@@ -103,18 +105,20 @@ export class DiAutoloader implements IDiAutoloader {
     }
 
     this.logger.debug(`Adding to special file ${name}`, specialFile);
-    this.mergableFiles.set(name, this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile));
+    const mergedFile = this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile);
+    this.logger.debug(`Merged files ${name}`, mergedFile);
+    this.mergableFiles.set(name, mergedFile);
   }
 
-  private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
-    if (specialFile1 && specialFile2) {
-      return merge(specialFile2, specialFile1);
+  private mergeFiles(source?: IMergableFile, target?: IMergableFile): IMergableFile {
+    if (target && source) {
+      return merge(target, source);
     }
-    if (!specialFile1 && specialFile2) {
-      return specialFile2;
+    if (!target && source) {
+      return source;
     }
-    if (specialFile1 && !specialFile2) {
-      return specialFile1;
+    if (target && !source) {
+      return target;
     }
     throw new Error('You must pass at least one special file with contents');
   }
