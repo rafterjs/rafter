@@ -18,6 +18,7 @@ export enum DEFAULT_MERGABLE_FILENAMES {
   MIDDLEWARE = 'middleware',
   ROUTES = 'routes',
   PRE_START_HOOKS = 'preStartHooks',
+  PLUGINS = 'plugins',
 }
 
 export const DEFAULT_MERGABLE_FILENAME_VALUES = Object.values(DEFAULT_MERGABLE_FILENAMES);
@@ -76,21 +77,15 @@ export default class Rafter implements IRafter {
     const pluginPathsWithSuffix = this.getPathsWithSuffix(pluginPaths);
 
     // TODO clean up the plugins. It's too tightly coupled atm.
-    // await this.loadPlugins(allPathsWithSuffix);
+    await this.loadPlugins(pluginPathsWithSuffix);
     const allPaths = [...pluginPathsWithSuffix, ...allPathsWithSuffix];
-
     this.logger.info(`Loading dependencies from: `, allPaths);
-
     await this.diAutoloader.load(allPaths, this.mergableFileNames);
   }
 
   private async initServer(): Promise<void> {
     this.server = this.diAutoloader.get<IServer>('server');
-    if (this.server) {
-      await this.server.start();
-    } else {
-      throw new Error(`Rafter::initServer There is no server within the dependencies`);
-    }
+    await this.server.start();
   }
 
   public async start(): Promise<void> {
@@ -107,9 +102,6 @@ export default class Rafter implements IRafter {
     }
   }
 
-  /**
-   * @return {Promise}
-   */
   public async stop(): Promise<void> {
     if (this.server) {
       return this.server.stop();
@@ -118,9 +110,6 @@ export default class Rafter implements IRafter {
     throw new Error('Rafter::stop the server has not been started');
   }
 
-  /**
-   * @return {Promise}
-   */
   public async get<T>(serviceName: string): Promise<T> {
     return this.diAutoloader.get<T>(serviceName);
   }
@@ -152,17 +141,16 @@ export default class Rafter implements IRafter {
     }
 
     this.logger.debug(`    The plugin paths are:`, pluginPaths);
-    return [...pluginPaths];
+    return Array.from(pluginPaths);
   }
 
-  // TODO swap this out
   private async loadPlugins(paths: IPaths = []): Promise<void> {
     if (paths.length > 0) {
       await this.loadPluginConfigFiles(paths);
 
       this.logger.debug(`   Getting plugin configs`);
       const plugins = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
-      this.pluginProvider.createInstance(plugins);
+      await this.pluginProvider.createInstance(plugins);
     }
   }
 

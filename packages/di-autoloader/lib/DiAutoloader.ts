@@ -1,4 +1,4 @@
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
+import { asClass, asFunction, asValue, Constructor, FunctionReturning, Lifetime, listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { isClass } from 'is-class';
@@ -31,7 +31,7 @@ export class DiAutoloader implements IDiAutoloader {
   public async load(
     paths: IPaths = [],
     mergableFilenames: IMergableFileNames = [],
-    options: ILoadOptions = { formatName: this.formatName },
+    options: ILoadOptions = { formatName: this.formatName, resolverOptions: { lifetime: Lifetime.SINGLETON } },
   ): Promise<void> {
     this.logger.debug(`   Registering mergable files`);
     await this.loadMergableFiles(paths, mergableFilenames);
@@ -81,12 +81,12 @@ export class DiAutoloader implements IDiAutoloader {
 
   public registerClass<T>(name: string, service: Constructor<T>): void {
     this.logger.debug(`Registering ${name} as a class`);
-    this.container.register(name, asClass(service).singleton());
+    this.container.register(name, asClass(service));
   }
 
   public registerFunction<T>(name: string, service: FunctionReturning<T>): void {
     this.logger.debug(`Registering ${name} as a function`);
-    this.container.register(name, asFunction(service).singleton());
+    this.container.register(name, asFunction(service));
   }
 
   public registerValue<T>(name: string, service: T): void {

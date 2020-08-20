@@ -53,7 +53,7 @@ describe('DI Autoloader', () => {
       expect(testFunction()).toBe('This is a function');
     });
 
-    it('successfully loads a class that has dependencies', async () => {
+    it('successfully loads a class that has dependencies from a path', async () => {
       const dependenciesPath = join(FIXTURES_GLOB, PATH_GLOB_SUFFIX);
 
       const diAutoloader = new DiAutoloader(container, mockLogger);
@@ -72,6 +72,8 @@ describe('DI Autoloader', () => {
       const dependenciesPath = join(FIXTURES_GLOB, PATH_GLOB_SUFFIX);
 
       const diAutoloader = new DiAutoloader(container, mockLogger);
+      diAutoloader.registerValue('diAutoloader', diAutoloader);
+
       const modules = diAutoloader.list(dependenciesPath);
 
       expect(modules).toHaveLength(4);

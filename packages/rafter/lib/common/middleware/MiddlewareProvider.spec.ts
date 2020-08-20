@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import { ILogger } from '@rafterjs/logger-plugin';
 import MiddlewareProvider from './MiddlewareProvider';
@@ -32,6 +31,4 @@ describe('MiddlewareProvider', () => {
     expect(middleware).toHaveLength(2);
     expect(middleware[0]).toBe(mockMiddleware1);
   });
-
-  // it.skip('should not fail on error', () => {  });
 });

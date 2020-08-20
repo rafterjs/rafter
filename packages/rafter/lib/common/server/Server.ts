@@ -2,6 +2,7 @@ import { Express } from 'express';
 import * as http from 'http';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { RequestHandler } from 'express-serve-static-core';
+import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutesProvider } from '../router/RoutesProvider';
 import { IMiddlewareConfig, IMiddlewareProvider } from '../middleware';
@@ -22,13 +23,16 @@ export default class Server implements IServer {
 
   private readonly express: Express;
 
-  private readonly routesProvider: IRoutesProvider;
+  // private readonly routesProvider: IRoutesProvider;
 
-  private readonly middlewareProvider: IMiddlewareProvider;
-
-  private readonly preStartHooksProvider: IPreStartHooksProvider;
-
-  private readonly pluginProvider: IPluginProvider;
+  // private readonly middlewareProvider: IMiddlewareProvider;
+  //
+  // private readonly preStartHooksProvider: IPreStartHooksProvider;
+  //
+  // private readonly pluginProvider: IPluginProvider;
+  //
+  // private readonly plugins: IPluginsConfig;
+  private readonly diAutoloader: IDiAutoloader;
 
   private readonly middleware: IMiddlewareConfig[] = [];
 
@@ -36,35 +40,34 @@ export default class Server implements IServer {
 
   private readonly preStartHooks: IPreStartHookConfig[] = [];
 
-  private readonly plugins: IPluginsConfig;
-
   private readonly config: IRafterConfig;
 
   private readonly logger: ILogger;
 
   constructor(
     express: Express,
-    routesProvider: IRoutesProvider,
-    middlewareProvider: IMiddlewareProvider,
-    preStartHooksProvider: IPreStartHooksProvider,
-    pluginProvider: IPluginProvider,
-    middleware: IMiddlewareConfig[] = [],
-    routes: IRouteConfig[] = [],
-    preStartHooks: IPreStartHookConfig[] = [],
-    plugins: IPluginsConfig,
+    diAutoloader: IDiAutoloader,
+    // routesProvider: IRoutesProvider,
+    // middlewareProvider: IMiddlewareProvider,
+    // preStartHooksProvider: IPreStartHooksProvider,
+    // pluginProvider: IPluginProvider,
+    // middleware: IMiddlewareConfig[] = [],
+    // routes: IRouteConfig[] = [],
+    // preStartHooks: IPreStartHookConfig[] = [],
+    // plugins: IPluginsConfig,
     config: IRafterConfig = { server: { port: 3000 } },
     logger: ILogger = console,
   ) {
     this.express = express;
-
-    this.routesProvider = routesProvider;
-    this.middlewareProvider = middlewareProvider;
-    this.preStartHooksProvider = preStartHooksProvider;
-    this.pluginProvider = pluginProvider;
-    this.middleware = middleware;
-    this.routes = routes;
-    this.preStartHooks = preStartHooks;
-    this.plugins = plugins;
+    this.diAutoloader = diAutoloader;
+    // this.routesProvider = routesProvider;
+    // this.middlewareProvider = middlewareProvider;
+    // this.preStartHooksProvider = preStartHooksProvider;
+    // this.pluginProvider = pluginProvider;
+    // this.middleware = middleware;
+    // this.routes = routes;
+    // this.preStartHooks = preStartHooks;
+    // this.plugins = plugins;
 
     this.config = config;
     this.logger = logger;
@@ -72,8 +75,6 @@ export default class Server implements IServer {
 
   /**
    * Runs all the pre start hooks that have been registered
-   *
-   * @private
    */
   private async initPreStartHooks(): Promise<void> {
     if (this.preStartHooks.length > 0) {
@@ -95,8 +96,6 @@ export default class Server implements IServer {
 
   /**
    * Initializes all the middleware from the provided config.
-   *
-   * @private
    */
   private async initMiddleware(): Promise<void> {
     // TODO re-merge any middleware
@@ -108,18 +107,12 @@ export default class Server implements IServer {
     }
   }
 
-  /**
-   * @private
-   */
   private async initRoutes(): Promise<void> {
     if (this.routes.length > 0) {
       this.express.use(this.routesProvider.createInstance(this.routes));
     }
   }
 
-  /**
-   * @return {Promise.<void>}
-   */
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
@@ -149,9 +142,6 @@ export default class Server implements IServer {
     return Promise.reject();
   }
 
-  /**
-   * @return {Promise.<void>}
-   */
   public async stop(): Promise<void> {
     if (this.serverInstance) {
       this.serverInstance.close();

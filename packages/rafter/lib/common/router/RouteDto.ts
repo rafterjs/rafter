@@ -1,9 +1,3 @@
-/**
- * @param {string} method
- * @param {string} endpoint
- * @param {IControllerAction} controller
- * @return {RouteDto}
- */
 import { IControllerAction } from './IControllerAction';
 import { MethodActions } from './RouteMethodConstants';
 
@@ -20,23 +14,14 @@ export default class RouteDto {
     this.controller = controller;
   }
 
-  /**
-   * @return {string}
-   */
   public getEndpoint(): string {
     return this.endpoint;
   }
 
-  /**
-   * @return {IControllerAction}
-   */
   public getController(): IControllerAction {
     return this.controller;
   }
 
-  /**
-   * @return {string}
-   */
   public getMethod(): MethodActions {
     return this.method;
   }
