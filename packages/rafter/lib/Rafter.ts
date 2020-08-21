@@ -77,15 +77,21 @@ export default class Rafter implements IRafter {
     const pluginPathsWithSuffix = this.getPathsWithSuffix(pluginPaths);
 
     // TODO clean up the plugins. It's too tightly coupled atm.
-    await this.loadPlugins(pluginPathsWithSuffix);
+    // await this.loadPlugins(allPathsWithSuffix);
     const allPaths = [...pluginPathsWithSuffix, ...allPathsWithSuffix];
+
     this.logger.info(`Loading dependencies from: `, allPaths);
+
     await this.diAutoloader.load(allPaths, this.mergableFileNames);
   }
 
   private async initServer(): Promise<void> {
     this.server = this.diAutoloader.get<IServer>('server');
-    await this.server.start();
+    if (this.server) {
+      await this.server.start();
+    } else {
+      throw new Error(`Rafter::initServer There is no server within the dependencies`);
+    }
   }
 
   public async start(): Promise<void> {

@@ -6,20 +6,22 @@ export type BoilerplateConfig = {
   api: {
     version: string;
   };
-  db: {
-    connectionStr: string;
+  mongodb: {
+    connectionString: string;
+    databaseName: string;
   };
 };
 
 export default (): BoilerplateConfig => ({
   server: {
-    port: 3000,
+    port: 4000,
   },
   message: 'Hello my fellow developer. This text was set in config, then auto-loaded into a controller!',
   api: {
     version: '1.0.0',
   },
-  db: {
-    connectionStr: 'test',
+  mongodb: {
+    connectionString: 'mongodb://root:example@localhost:27017',
+    databaseName: 'rafter',
   },
 });

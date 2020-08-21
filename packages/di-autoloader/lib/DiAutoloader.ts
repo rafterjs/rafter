@@ -1,4 +1,4 @@
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, Lifetime, listModules } from 'awilix';
+import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { isClass } from 'is-class';
@@ -31,7 +31,7 @@ export class DiAutoloader implements IDiAutoloader {
   public async load(
     paths: IPaths = [],
     mergableFilenames: IMergableFileNames = [],
-    options: ILoadOptions = { formatName: this.formatName, resolverOptions: { lifetime: Lifetime.SINGLETON } },
+    options: ILoadOptions = { formatName: this.formatName },
   ): Promise<void> {
     this.logger.debug(`   Registering mergable files`);
     await this.loadMergableFiles(paths, mergableFilenames);
@@ -46,9 +46,7 @@ export class DiAutoloader implements IDiAutoloader {
 
   public get<T>(name: string): T {
     this.logger.debug(`Resolving ${name}`);
-    const value = this.container.resolve<T>(name);
-    this.logger.debug(`Found value for ${name}`, value);
-    return value;
+    return this.container.resolve<T>(name);
   }
 
   public registerMergableFiles(specialFiles: IMergableFiles): void {
@@ -65,6 +63,7 @@ export class DiAutoloader implements IDiAutoloader {
         }
 
         this.registerFunction(name, () => this.mergableFiles.get(name));
+        // this.registerValue(name, value);
       }
     }
   }
@@ -81,12 +80,12 @@ export class DiAutoloader implements IDiAutoloader {
 
   public registerClass<T>(name: string, service: Constructor<T>): void {
     this.logger.debug(`Registering ${name} as a class`);
-    this.container.register(name, asClass(service));
+    this.container.register(name, asClass(service).singleton());
   }
 
   public registerFunction<T>(name: string, service: FunctionReturning<T>): void {
     this.logger.debug(`Registering ${name} as a function`);
-    this.container.register(name, asFunction(service));
+    this.container.register(name, asFunction(service).singleton());
   }
 
   public registerValue<T>(name: string, service: T): void {
@@ -105,20 +104,18 @@ export class DiAutoloader implements IDiAutoloader {
     }
 
     this.logger.debug(`Adding to special file ${name}`, specialFile);
-    const mergedFile = this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile);
-    this.logger.debug(`Merged files ${name}`, mergedFile);
-    this.mergableFiles.set(name, mergedFile);
+    this.mergableFiles.set(name, this.mergeFiles(this.mergableFiles.get(name) || {}, specialFile));
   }
 
-  private mergeFiles(source?: IMergableFile, target?: IMergableFile): IMergableFile {
-    if (target && source) {
-      return merge(target, source);
+  private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
+    if (specialFile1 && specialFile2) {
+      return merge(specialFile2, specialFile1);
     }
-    if (!target && source) {
-      return source;
+    if (!specialFile1 && specialFile2) {
+      return specialFile2;
     }
-    if (target && !source) {
-      return target;
+    if (specialFile1 && !specialFile2) {
+      return specialFile1;
     }
     throw new Error('You must pass at least one special file with contents');
   }

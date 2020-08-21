@@ -1,3 +1,3 @@
 import { IPreStartHookConfig } from 'rafter';
 
-export default (): IPreStartHookConfig[] => ['connectToDatabase'];
+export default (): IPreStartHookConfig[] => ['connectMongoDb'];
