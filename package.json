@@ -38,8 +38,7 @@
     "rafter:dev": "cd packages/rafter && yarn start:dev",
     "test": "lerna run test",
     "test:di-autoloader": "cd packages/di-autoloader && yarn test",
-    "test:core": "cd packages/rafter && yarn test",
-    "test:boilerplate": "cd packages/boilerplate && yarn test",
+    "test:rafter": "cd packages/rafter && yarn test",
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest"
   },
