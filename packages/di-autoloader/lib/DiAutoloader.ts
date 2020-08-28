@@ -100,6 +100,7 @@ export class DiAutoloader implements IDiAutoloader {
   public updateMergedFile<T extends IMergableFile>(name: string, service: T): void {
     let specialFile: T = service;
     if (service instanceof Function) {
+      // @ts-ignore
       specialFile = service();
     }
 
