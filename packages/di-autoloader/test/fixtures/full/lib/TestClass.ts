@@ -3,15 +3,16 @@
  * frameworks, which allows it to be tested very cleanly and easily (ie. just pass in the mock config in your tests)!
  */
 import { TestConfig2 } from '../config/config';
+import TestFunction from './TestFunction';
 
 class TestClass {
   private readonly config: TestConfig2;
 
-  private readonly testFunction: Function;
+  private readonly testFunction: typeof TestFunction;
 
   private readonly data: string;
 
-  constructor(config: TestConfig2, testFunction: Function) {
+  constructor(config: TestConfig2, testFunction: typeof TestFunction) {
     this.config = config;
     this.testFunction = testFunction;
     this.data = `here's some data`;
@@ -24,7 +25,7 @@ class TestClass {
   /**
    * @return {Function}
    */
-  public getFunction(): Function {
+  public getFunction(): typeof TestFunction {
     return this.testFunction;
   }
 

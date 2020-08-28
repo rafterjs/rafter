@@ -109,7 +109,16 @@ export class DiAutoloader implements IDiAutoloader {
 
   private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
     if (specialFile1 && specialFile2) {
-      return merge(specialFile2, specialFile1);
+      let mergedFile: IMergableFile;
+      this.logger.debug(`Deep merging two files:`, specialFile2, specialFile1);
+      if (specialFile1 instanceof Array && specialFile2 instanceof Array) {
+        mergedFile = specialFile1.concat(specialFile2);
+      } else {
+        mergedFile = merge(specialFile2, specialFile1);
+      }
+      this.logger.debug(`Deep merged file:`, mergedFile);
+
+      return mergedFile;
     }
     if (!specialFile1 && specialFile2) {
       return specialFile2;

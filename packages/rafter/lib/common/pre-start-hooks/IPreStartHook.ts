@@ -1,2 +1,2 @@
-export type IPreStartHook = Function;
+export type IPreStartHook = () => Promise<void>;
 export type IPreStartHookConfig = string;

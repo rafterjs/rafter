@@ -3,7 +3,7 @@ import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { Constructor, FunctionReturning } from 'awilix';
 import { IService } from './IService';
 
-export type IMergableFile = Record<string, unknown>;
+export type IMergableFile = Record<string, unknown> | Array<unknown>;
 export type IMergableFiles = Map<string, IMergableFile>;
 export type IMergableFileNames = string[];
 export type IPath = string | GlobWithOptions;
