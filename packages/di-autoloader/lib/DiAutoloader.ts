@@ -53,17 +53,17 @@ export class DiAutoloader implements IDiAutoloader {
     this.logger.debug(`   Loading ${specialFiles.size} mergable files`);
     for (const [name, value] of specialFiles.entries()) {
       this.logger.debug(`   Merging ${name}`);
-      if (this.container.has(name)) {
-        this.updateMergedFile(name, value);
-      } else {
-        if (value instanceof Function) {
-          this.mergableFiles.set(name, value());
-        } else {
-          this.mergableFiles.set(name, value);
-        }
+      let normalizedValue = value;
 
+      if (normalizedValue instanceof Function) {
+        normalizedValue = normalizedValue();
+      }
+
+      if (this.container.has(name)) {
+        this.updateMergedFile(name, normalizedValue);
+      } else {
+        this.mergableFiles.set(name, normalizedValue);
         this.registerFunction(name, () => this.mergableFiles.get(name));
-        // this.registerValue(name, value);
       }
     }
   }

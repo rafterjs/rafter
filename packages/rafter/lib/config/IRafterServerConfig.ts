@@ -1,4 +1,4 @@
-export type IRafterConfig = {
+export type IRafterServerConfig = {
   server: {
     port?: number;
   };

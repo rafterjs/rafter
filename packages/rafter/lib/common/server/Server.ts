@@ -9,7 +9,7 @@ import { IMiddlewareConfig, IMiddlewareProvider } from '../middleware';
 import { IRouteConfig } from '../router';
 
 import { IPluginProvider, IPluginsConfig } from '../plugins';
-import { IRafterConfig } from '../../config/IRafterConfig';
+import { IRafterServerConfig } from '../../config/IRafterServerConfig';
 
 export interface IServer {
   start(): Promise<void>;
@@ -38,7 +38,7 @@ export default class Server implements IServer {
 
   private readonly plugins: IPluginsConfig;
 
-  private readonly config: IRafterConfig;
+  private readonly config: IRafterServerConfig;
 
   private readonly logger: ILogger;
 
@@ -52,7 +52,7 @@ export default class Server implements IServer {
     routes: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
     plugins: IPluginsConfig,
-    config: IRafterConfig = { server: { port: 3000 } },
+    config: IRafterServerConfig = { server: { port: 3000 } },
     logger: ILogger = console,
   ) {
     this.express = express;
