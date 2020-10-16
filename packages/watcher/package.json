@@ -1,0 +1,48 @@
+{
+  "name": "@rafterjs/watcher",
+  "version": "0.4.2-alpha.0",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "GNU GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshystuart/rafter.git"
+  },
+  "scripts": {
+    "start": "node dist/lib/watcher.js",
+    "build": "yarn clean && yarn build:lib && yarn build:types",
+    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
+    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn start\""
+  },
+  "dependencies": {
+    "@rafterjs/logger-plugin": "^0.4.2-alpha.0",
+    "@lerna/list": "3.21.0",
+    "@lerna/project": "3.21.0",
+    "@lerna/package": "3.16.0",
+    "chokidar": "^3.4.3"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.4.2-alpha.0",
+    "@rafterjs/eslint-config": "^0.4.2-alpha.0",
+    "@types/chokidar": "^2.1.3"
+  },
+  "description": "A simple mongodb plugin",
+  "main": "./dist/lib/mongoDb.js",
+  "module": "./dist/lib/mongoDb.js",
+  "typings": "./dist/lib/mongoDb.d.ts",
+  "engines": {
+    "node": ">=9"
+  },
+  "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3"
+}
