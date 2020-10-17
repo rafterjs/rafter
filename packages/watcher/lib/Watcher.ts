@@ -3,21 +3,19 @@ import { join, relative, isAbsolute } from 'path';
 import { promisify } from 'util';
 import { exec as cbExec } from 'child_process';
 import chokidar from 'chokidar';
+import { PACKAGE_TOKEN } from './WatcherConstants';
 
 const exec = promisify(cbExec);
 
-export type WatcherConfig = Record<
-  string,
-  {
-    onRestart: string;
-    onUpdate: string;
-    options: {
-      extension?: string;
-      ignore?: string[];
-      delay?: number;
-    };
-  }
->;
+export type WatcherConfig = {
+  onRestart: string;
+  onUpdate: string;
+  options: {
+    extension?: string;
+    ignore?: (string | number)[];
+    delay?: number;
+  };
+};
 
 export type Package = {
   name: string;
@@ -96,20 +94,21 @@ export class Watcher {
 
   private watch(): void {
     const pathLookup: Map<string, Package> = new Map<string, Package>();
+    const { extension = 'ts', ignore = [], delay = 500 } = this.config.options;
 
     const watchedPaths: string[] = this.packages.map((packageData: Package): string => {
       pathLookup.set(packageData.path, packageData);
-      return join(packageData.path, '**/*.ts');
+      return join(packageData.path, `**/*.${extension}`);
     });
 
     this.logger.info('Watching the following paths: ', watchedPaths);
 
     const watcher = chokidar.watch(watchedPaths, {
-      ignored: '**/dist/**',
+      ignored: ignore,
       followSymlinks: false,
       usePolling: true,
-      interval: 500,
-      binaryInterval: 500,
+      interval: delay,
+      binaryInterval: delay,
     });
 
     watcher.on('change', this.onChange.bind(this));
@@ -118,17 +117,34 @@ export class Watcher {
   private async onChange(path: string): Promise<void> {
     this.logger.info(`"${path}" has changed`);
     const packageData = this.getUpdatedPackage(path);
+    try {
+      if (!packageData.isUpdating) {
+        packageData.isUpdating = true;
+        const { onUpdate, onRestart } = this.config;
 
-    if (!packageData.isUpdating) {
-      packageData.isUpdating = true;
-      this.logger.info(`${packageData.name} will now update... please wait`);
+        this.logger.info(`${packageData.name} will now update... please wait`);
 
-      const output = await this.exec(`lerna run build --scope ${packageData.name}`);
-      this.logger.info(output);
-      this.logger.info(`${packageData.name} successfully completed updating`);
+        const onUpdateOutput = await this.exec(this.getInterpolatedCommand(onUpdate, packageData.name));
+        this.logger.info(onUpdateOutput);
+        this.logger.info(`${packageData.name} successfully completed updating`);
+        packageData.isUpdating = false;
+
+        // restarting
+        this.logger.info(`${packageData.name} will now restart... please wait`);
+
+        const onRestartOutput = await this.exec(this.getInterpolatedCommand(onRestart, packageData.name));
+        this.logger.info(onRestartOutput);
+        this.logger.info(`${packageData.name} successfully restart`);
+      } else {
+        this.logger.info(`${packageData.name} is already in the process of updating`);
+      }
+    } catch (error) {
+      this.logger.error(`Something failed during onChange`, error);
       packageData.isUpdating = false;
-    } else {
-      this.logger.info(`${packageData.name} is already in the process of updating`);
     }
+  }
+
+  private getInterpolatedCommand(command: string, packageName: string) {
+    return command.replace(PACKAGE_TOKEN, packageName);
   }
 }

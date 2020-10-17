@@ -33,6 +33,7 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
       throw new Error(`Could not register the controller ${controllerName} with the action ${action}`);
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return controller[action].bind(controller);
   }

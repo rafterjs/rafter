@@ -1,4 +1,4 @@
-export type IPluginConfig = object;
+export type IPluginConfig = Record<string, unknown>;
 
 export type IPlugin = {
   plugin: string;

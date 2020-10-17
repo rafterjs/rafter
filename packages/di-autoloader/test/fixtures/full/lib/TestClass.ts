@@ -7,11 +7,11 @@ import { TestConfig2 } from '../config/config';
 class TestClass {
   private readonly config: TestConfig2;
 
-  private readonly testFunction: Function;
+  private readonly testFunction: () => string;
 
   private readonly data: string;
 
-  constructor(config: TestConfig2, testFunction: Function) {
+  constructor(config: TestConfig2, testFunction: () => string) {
     this.config = config;
     this.testFunction = testFunction;
     this.data = `here's some data`;
@@ -24,7 +24,7 @@ class TestClass {
   /**
    * @return {Function}
    */
-  public getFunction(): Function {
+  public getFunction(): () => string {
     return this.testFunction;
   }
 
