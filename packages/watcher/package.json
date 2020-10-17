@@ -16,8 +16,9 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "start": "node dist/lib/watcher.js",
-    "build": "yarn clean && yarn build:lib && yarn build:types",
+    "start": "node dist/index.js",
+    "build": "yarn clean && yarn build:index && yarn build:lib && yarn build:types",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
