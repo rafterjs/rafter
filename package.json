@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "yarn install && lerna bootstrap --npm-client=yarn -- --force",
-    "dev": "lerna run --parallel start:dev",
+    "dev": "node packages/watcher/dist/index.js --restart \"yarn start\"",
     "clean": "lerna clean -y",
     "clean:lib": "lerna run clean:lib",
     "build": "lerna run build",
@@ -32,7 +32,7 @@
     "lint:eslint-config": "cd packages/eslint-config && yarn lint",
     "lint:utils": "cd packages/utils && yarn lint",
     "lint:mongo": "cd packages/rafter-mongodb-plugin && yarn lint -- --fix",
-    "start": "lerna run start",
+    "start": "cd packages/rafter && yarn start",
     "boilerplate:start": "cd packages/boilerplate && yarn start",
     "boilerplate:dev": "cd packages/boilerplate && yarn start:dev",
     "rafter:dev": "cd packages/rafter && yarn start:dev",
