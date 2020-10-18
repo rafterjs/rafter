@@ -126,11 +126,9 @@ export class Watcher {
       this.watching.close();
     }
 
-    const pathLookup: Map<string, Package> = new Map<string, Package>();
     const { extension = 'ts', ignore = [], delay = 500 } = this.config.options;
 
     const watchedPaths: string[] = this.packages.map((packageData: Package): string => {
-      pathLookup.set(packageData.path, packageData);
       return join(packageData.path, `**/*.${extension}`);
     });
 
