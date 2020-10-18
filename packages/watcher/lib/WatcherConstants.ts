@@ -2,7 +2,7 @@ export const PACKAGE_TOKEN = '%package%';
 
 export const DEFAULT_COMMANDS = {
   BUILD: `lerna run build --scope ${PACKAGE_TOKEN}`,
-  START: `lerna run start --scope ${PACKAGE_TOKEN}`,
+  START: `yarn start`,
 };
 
 export const DEFAULT_EXTENSION = '{js,ts}';
