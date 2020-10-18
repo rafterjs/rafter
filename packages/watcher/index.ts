@@ -1,27 +1,69 @@
 #!/usr/bin/env node
 import loggerFactory, { LogLevel } from '@rafterjs/logger-plugin';
+import { Argv } from 'yargs';
 import yargs from 'yargs/yargs';
 import { Watcher, WatcherConfig } from './lib/Watcher';
 import { DEFAULT_COMMANDS, DEFAULT_DELAY, DEFAULT_EXTENSION, DEFAULT_IGNORE } from './lib/WatcherConstants';
 
-const { argv } = yargs(process.argv.slice(2)).options({
-  restart: { type: 'string', alias: 'r' },
-  update: { type: 'string', alias: 'u' },
-  ext: { type: 'string', alias: 'e' },
-  ignore: { type: 'array', alias: 'i' },
-  delay: { type: 'number', alias: 'd' },
-});
+const { argv } = yargs(process.argv.slice(2))
+  .usage('Usage $0 [options] <command>')
+  .command(
+    '* <command>',
+    'Executes a command every time a file changes in one of the Lerna packages. Once that has completed, the' +
+      ' <command> will be executed',
+    (thisYargs: Argv) => {
+      thisYargs
+        .positional('command', {
+          describe: `The command to run after the <change> command has run eg. "${DEFAULT_COMMANDS.START}"`,
+          type: 'string',
+          demandOption: true,
+        })
+        .option('change', {
+          alias: 'c',
+          type: 'string',
+          demandOption: false,
+          default: DEFAULT_COMMANDS.BUILD,
+          describe: `The command that runs when a file has been updated. By default it is: "${DEFAULT_COMMANDS.BUILD}`,
+        })
+        .option('extension', {
+          alias: ['e', 'ext'],
+          type: 'string',
+          demandOption: false,
+          default: DEFAULT_EXTENSION,
+          describe: `Which extensions to watch for changes on. The default is ${DEFAULT_EXTENSION}`,
+        })
+        .option('ignore', {
+          alias: ['i'],
+          type: 'array',
+          demandOption: false,
+          default: DEFAULT_IGNORE,
+          describe: `Which files and directories (GLOB) to ignore from being watched. The default is ${DEFAULT_IGNORE}`,
+        })
+        .option('delay', {
+          alias: ['d'],
+          type: 'number',
+          demandOption: false,
+          default: DEFAULT_DELAY,
+          describe:
+            `The delay between polling for changes. This can prevent double triggering if you have things like ` +
+            `IDE file watchers etc. The default is ${DEFAULT_DELAY}`,
+        });
+    },
+  )
+  .help('h')
+  .alias('h', 'help');
 
 const config: WatcherConfig = {
-  onRestart: argv.restart || DEFAULT_COMMANDS.START,
-  onUpdate: argv.update || DEFAULT_COMMANDS.BUILD,
+  command: argv.command as string,
+  onChange: argv.change as string,
   options: {
-    extension: argv.ext || DEFAULT_EXTENSION,
-    ignore: argv.ignore || DEFAULT_IGNORE,
-    delay: argv.delay || DEFAULT_DELAY,
+    extension: argv.extension as string,
+    ignore: argv.ignore as (string | number)[],
+    delay: argv.delay as number,
   },
 };
-const logger = loggerFactory({ logger: { level: LogLevel.DEBUG } });
+
+const logger = loggerFactory({ logger: { level: (process.env.LOG_LEVEL as LogLevel) || LogLevel.INFO } });
 
 logger.info(`Starting Rafter Watcher with the config`, config);
 const watcher = new Watcher(config, logger);

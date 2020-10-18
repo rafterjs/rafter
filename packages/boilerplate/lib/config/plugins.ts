@@ -3,7 +3,7 @@ import { join } from 'path';
 
 const modulesPath = join(__dirname, '../../../node_modules/@rafterjs');
 
-export default (): IPluginConfig => [
+export default (): IPluginConfig[] => [
   {
     plugin: '@rafterjs/logger-plugin',
     path: join(modulesPath, 'logger-plugin/dist/**'),

@@ -1,15 +1,14 @@
 import { ILogger } from '@rafterjs/logger-plugin';
-import { join, relative, isAbsolute } from 'path';
-import { promisify } from 'util';
-import { exec as cbExec } from 'child_process';
-import chokidar from 'chokidar';
+import { ChildProcess } from 'child_process';
+import chokidar, { FSWatcher } from 'chokidar';
+import { isAbsolute, join, relative } from 'path';
+import treeKill from 'tree-kill';
+import { execute, executeChild } from './Executor';
 import { PACKAGE_TOKEN } from './WatcherConstants';
 
-const exec = promisify(cbExec);
-
 export type WatcherConfig = {
-  onRestart: string;
-  onUpdate: string;
+  command: string;
+  onChange: string;
   options: {
     extension?: string;
     ignore?: (string | number)[];
@@ -38,6 +37,12 @@ export class Watcher {
 
   private readonly packages: Package[] = [];
 
+  private watching?: FSWatcher;
+
+  private process?: ChildProcess;
+
+  private isExecuting = false;
+
   private readonly lookupPaths: Map<string, Package> = new Map<string, Package>();
 
   constructor(config: WatcherConfig, logger: ILogger) {
@@ -46,22 +51,45 @@ export class Watcher {
   }
 
   public async start(): Promise<void> {
+    // load up all the lerna packages into the class state
     await this.initPackages();
+
+    // execute the provided command
+    await this.executeCommand();
+
+    // watch all the lerna packages for changes
     this.watch();
   }
 
-  private async exec(command: string): Promise<string> {
-    const { stdout, stderr } = await exec(command);
-    if (stdout) {
-      return stdout;
+  private async executeCommand(): Promise<void> {
+    const { command } = this.config;
+    if (!this.isExecuting) {
+      if (this.process) {
+        this.logger.info(`❌ Killing the existing process.`);
+        treeKill(this.process.pid);
+        this.logger.info(`✔ Killed the existing process.`);
+      }
+
+      this.isExecuting = true;
+      this.logger.info(`⏳ Executing "${command}". Please wait...`);
+
+      this.process = executeChild(command);
+      if (this.process.stdout) {
+        this.process.stdout.on('data', (data) => {
+          this.logger.debug(data);
+        });
+      }
+
+      this.isExecuting = false;
+
+      this.logger.info(`✔ Successfully executed "${command}":`);
+    } else {
+      this.logger.warn(`⏳ The command "${command}' is already executing. Please wait...`);
     }
-    const errorMessage = `Failed to execute ${command}`;
-    this.logger.error(errorMessage, stderr);
-    throw new Error(errorMessage);
   }
 
   private async initPackages(): Promise<void> {
-    const packagesConfig: PackageConfig[] = JSON.parse(await this.exec('lerna list --json'));
+    const packagesConfig: PackageConfig[] = JSON.parse(execute('lerna list --json'));
 
     for (const packageConfig of packagesConfig) {
       const packageData: Package = {
@@ -93,6 +121,11 @@ export class Watcher {
   }
 
   private watch(): void {
+    if (this.watching) {
+      // if we are already watching, ensure that it is closed to prevent duplicate events
+      this.watching.close();
+    }
+
     const pathLookup: Map<string, Package> = new Map<string, Package>();
     const { extension = 'ts', ignore = [], delay = 500 } = this.config.options;
 
@@ -101,9 +134,9 @@ export class Watcher {
       return join(packageData.path, `**/*.${extension}`);
     });
 
-    this.logger.info('Watching the following paths: ', watchedPaths);
+    this.logger.info('👀 Watching the following paths: ', watchedPaths);
 
-    const watcher = chokidar.watch(watchedPaths, {
+    this.watching = chokidar.watch(watchedPaths, {
       ignored: ignore,
       followSymlinks: false,
       usePolling: true,
@@ -111,40 +144,38 @@ export class Watcher {
       binaryInterval: delay,
     });
 
-    watcher.on('change', this.onChange.bind(this));
+    this.watching.on('change', this.handleOnChange.bind(this));
   }
 
-  private async onChange(path: string): Promise<void> {
-    this.logger.info(`"${path}" has changed`);
+  private async handleOnChange(path: string): Promise<void> {
+    this.logger.info(`⏳ "${path}" has changed`);
     const packageData = this.getUpdatedPackage(path);
+
     try {
       if (!packageData.isUpdating) {
         packageData.isUpdating = true;
-        const { onUpdate, onRestart } = this.config;
+        const { onChange } = this.config;
 
-        this.logger.info(`${packageData.name} will now update... please wait`);
+        const onChangeCommand = this.getInterpolatedCommand(onChange, packageData.name);
+        this.logger.info(`⏳ ${packageData.name} will now run "${onChangeCommand}"... please wait`);
 
-        const onUpdateOutput = await this.exec(this.getInterpolatedCommand(onUpdate, packageData.name));
-        this.logger.info(onUpdateOutput);
-        this.logger.info(`${packageData.name} successfully completed updating`);
+        const onUpdateOutput = execute(onChangeCommand);
+        this.logger.debug(onUpdateOutput);
+
+        this.logger.info(`✔ Successfully completed updating ${packageData.name}`);
         packageData.isUpdating = false;
 
-        // restarting
-        this.logger.info(`${packageData.name} will now restart... please wait`);
-
-        const onRestartOutput = await this.exec(this.getInterpolatedCommand(onRestart, packageData.name));
-        this.logger.info(onRestartOutput);
-        this.logger.info(`${packageData.name} successfully restart`);
+        await this.executeCommand();
       } else {
-        this.logger.info(`${packageData.name} is already in the process of updating`);
+        this.logger.info(`👀 ${packageData.name} is already in the process of updating`);
       }
     } catch (error) {
-      this.logger.error(`Something failed during onChange`, error);
+      this.logger.error(`❌ Something failed during onChange`, error);
       packageData.isUpdating = false;
     }
   }
 
-  private getInterpolatedCommand(command: string, packageName: string) {
+  private getInterpolatedCommand(command: string, packageName: string): string {
     return command.replace(PACKAGE_TOKEN, packageName);
   }
 }
