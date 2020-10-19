@@ -89,7 +89,7 @@ export class Watcher {
   }
 
   private async initPackages(): Promise<void> {
-    const packagesConfig: PackageConfig[] = JSON.parse(execute('lerna list --json'));
+    const packagesConfig: PackageConfig[] = JSON.parse(execute('lerna list --json --all'));
 
     for (const packageConfig of packagesConfig) {
       const packageData: Package = {
