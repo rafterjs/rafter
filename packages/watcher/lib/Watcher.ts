@@ -4,7 +4,7 @@ import chokidar, { FSWatcher } from 'chokidar';
 import { isAbsolute, join, relative } from 'path';
 import treeKill from 'tree-kill';
 import { execute, executeChild } from './Executor';
-import { PACKAGE_TOKEN } from './WatcherConstants';
+import { DEFAULT_COMMANDS, PACKAGE_TOKEN } from './WatcherConstants';
 
 export type WatcherConfig = {
   command: string;
@@ -89,7 +89,7 @@ export class Watcher {
   }
 
   private async initPackages(): Promise<void> {
-    const packagesConfig: PackageConfig[] = JSON.parse(execute('lerna list --json --all'));
+    const packagesConfig: PackageConfig[] = JSON.parse(execute(DEFAULT_COMMANDS.PACKAGES));
 
     for (const packageConfig of packagesConfig) {
       const packageData: Package = {
