@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/boilerplate",
-  "version": "0.4.2-alpha.0",
+  "version": "0.4.2-alpha.3",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -33,15 +33,15 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-plugin": "^0.4.2-alpha.0",
-    "@rafterjs/di-autoloader": "^0.4.2-alpha.0",
-    "@rafterjs/logger-plugin": "^0.4.2-alpha.0",
-    "@rafterjs/mongodb-plugin": "^0.4.2-alpha.0",
-    "rafter": "^0.4.2-alpha.0"
+    "@rafterjs/cors-plugin": "^0.4.2-alpha.3",
+    "@rafterjs/di-autoloader": "^0.4.2-alpha.3",
+    "@rafterjs/logger-plugin": "^0.4.2-alpha.3",
+    "@rafterjs/mongodb-plugin": "^0.4.2-alpha.3",
+    "rafter": "^0.4.2-alpha.3"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.4.2-alpha.0",
-    "@rafterjs/eslint-config": "^0.4.2-alpha.0"
+    "@rafterjs/babel-preset-rafter": "^0.4.2-alpha.3",
+    "@rafterjs/eslint-config": "^0.4.2-alpha.3"
   },
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/lib/index.js",
@@ -50,7 +50,7 @@
   "engines": {
     "node": ">=9"
   },
-  "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3",
+  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807",
   "resolutions": {
     "minimist": "1.2.5"
   }

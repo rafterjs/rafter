@@ -6,11 +6,6 @@ export interface IPreStartHooksProvider {
   createInstance(preStartHooksConfig: string[]): IPreStartHook[];
 }
 
-/**
- * @param {IDiAutoloader} diContainer
- * @param {ILogger} logger
- * @return {PreStartHooksProvider}
- */
 export default class PreStartHooksProvider implements IPreStartHooksProvider {
   private readonly diAutoloader: IDiAutoloader;
 
@@ -21,10 +16,6 @@ export default class PreStartHooksProvider implements IPreStartHooksProvider {
     this.logger = logger;
   }
 
-  /**
-   * @param {string[]} preStartHooksConfig
-   * @return {Function[]}
-   */
   public createInstance(preStartHooksConfig: IPreStartHookConfig[]): IPreStartHook[] {
     const hooksCollection: IPreStartHook[] = [];
 

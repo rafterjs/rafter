@@ -9,7 +9,7 @@ import { IMiddlewareConfig, IMiddlewareProvider } from '../middleware';
 import { IRouteConfig } from '../router';
 
 import { IPluginProvider, IPluginsConfig } from '../plugins';
-import { IRafterConfig } from '../../config/IRafterConfig';
+import { IRafterServerConfig } from '../../config/IRafterServerConfig';
 
 export interface IServer {
   start(): Promise<void>;
@@ -38,7 +38,7 @@ export default class Server implements IServer {
 
   private readonly plugins: IPluginsConfig;
 
-  private readonly config: IRafterConfig;
+  private readonly config: IRafterServerConfig;
 
   private readonly logger: ILogger;
 
@@ -52,7 +52,7 @@ export default class Server implements IServer {
     routes: IRouteConfig[] = [],
     preStartHooks: IPreStartHookConfig[] = [],
     plugins: IPluginsConfig,
-    config: IRafterConfig = { server: { port: 3000 } },
+    config: IRafterServerConfig = { server: { port: 3000 } },
     logger: ILogger = console,
   ) {
     this.express = express;
@@ -72,8 +72,6 @@ export default class Server implements IServer {
 
   /**
    * Runs all the pre start hooks that have been registered
-   *
-   * @private
    */
   private async initPreStartHooks(): Promise<void> {
     if (this.preStartHooks.length > 0) {
@@ -95,8 +93,6 @@ export default class Server implements IServer {
 
   /**
    * Initializes all the middleware from the provided config.
-   *
-   * @private
    */
   private async initMiddleware(): Promise<void> {
     // TODO re-merge any middleware
@@ -108,18 +104,12 @@ export default class Server implements IServer {
     }
   }
 
-  /**
-   * @private
-   */
   private async initRoutes(): Promise<void> {
     if (this.routes.length > 0) {
       this.express.use(this.routesProvider.createInstance(this.routes));
     }
   }
 
-  /**
-   * @return {Promise.<void>}
-   */
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
@@ -149,9 +139,6 @@ export default class Server implements IServer {
     return Promise.reject();
   }
 
-  /**
-   * @return {Promise.<void>}
-   */
   public async stop(): Promise<void> {
     if (this.serverInstance) {
       this.serverInstance.close();

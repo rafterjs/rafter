@@ -50,19 +50,20 @@ export class DiAutoloader implements IDiAutoloader {
   }
 
   public registerMergableFiles(specialFiles: IMergableFiles): void {
-    this.logger.debug(`   Loading mergable files from ${specialFiles.size}`);
+    this.logger.debug(`   Loading ${specialFiles.size} mergable files`);
     for (const [name, value] of specialFiles.entries()) {
-      this.logger.debug(`   Merging ${name}`, this.container.cache);
-      if (this.container.has(name)) {
-        this.updateMergedFile(name, value);
-      } else {
-        if (value instanceof Function) {
-          this.mergableFiles.set(name, value());
-        } else {
-          this.mergableFiles.set(name, value);
-        }
+      this.logger.debug(`   Merging ${name}`);
+      let normalizedValue = value;
 
-        this.registerValue(name, value);
+      if (normalizedValue instanceof Function) {
+        normalizedValue = normalizedValue();
+      }
+
+      if (this.container.has(name)) {
+        this.updateMergedFile(name, normalizedValue);
+      } else {
+        this.mergableFiles.set(name, normalizedValue);
+        this.registerFunction(name, () => this.mergableFiles.get(name));
       }
     }
   }
@@ -99,6 +100,7 @@ export class DiAutoloader implements IDiAutoloader {
   public updateMergedFile<T extends IMergableFile>(name: string, service: T): void {
     let specialFile: T = service;
     if (service instanceof Function) {
+      // @ts-ignore
       specialFile = service();
     }
 
@@ -108,7 +110,16 @@ export class DiAutoloader implements IDiAutoloader {
 
   private mergeFiles(specialFile1?: IMergableFile, specialFile2?: IMergableFile): IMergableFile {
     if (specialFile1 && specialFile2) {
-      return merge(specialFile2, specialFile1);
+      let mergedFile: IMergableFile;
+      this.logger.debug(`Deep merging two files:`, specialFile2, specialFile1);
+      if (specialFile1 instanceof Array && specialFile2 instanceof Array) {
+        mergedFile = specialFile1.concat(specialFile2);
+      } else {
+        mergedFile = merge(specialFile2, specialFile1);
+      }
+      this.logger.debug(`Deep merged file:`, mergedFile);
+
+      return mergedFile;
     }
     if (!specialFile1 && specialFile2) {
       return specialFile2;

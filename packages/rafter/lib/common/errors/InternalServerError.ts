@@ -1,5 +1,5 @@
 import { HttpError } from './HttpError';
-import { STATUS } from '../helpers/ResponseConstants';
+import { STATUS } from '../helpers';
 
 /**
  * Throws an error when the user does not have access.

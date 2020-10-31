@@ -26,6 +26,15 @@ export default class RoutesProvider implements IRoutesProvider {
     this.logger = logger;
   }
 
+  public createInstance(routesConfig: IRouteConfig[]): IRouter {
+    const routes = this.configToRouteDtoTransformer.convert(routesConfig);
+    const router = this.routerProvider.createInstance();
+
+    this.applyRoutes(router, routes);
+
+    return router;
+  }
+
   private applyRoutes(router: IRouter, routes: RouteDto[]): void {
     Object.values(routes).forEach(
       async (route): Promise<void> => {
@@ -41,14 +50,5 @@ export default class RoutesProvider implements IRoutesProvider {
         }
       },
     );
-  }
-
-  public createInstance(routesConfig: IRouteConfig[]): IRouter {
-    const routes = this.configToRouteDtoTransformer.convert(routesConfig);
-    const router = this.routerProvider.createInstance();
-
-    this.applyRoutes(router, routes);
-
-    return router;
   }
 }

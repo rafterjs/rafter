@@ -1,4 +1,4 @@
-export type IPluginConfig = object;
+export type IPluginConfig = unknown;
 
 export type IPlugin = {
   plugin: string;

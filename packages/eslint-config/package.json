@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/eslint-config",
-  "version": "0.4.2-alpha.0",
+  "version": "0.4.2-alpha.3",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -36,5 +36,5 @@
     "prettier": "2.0.5",
     "typescript": "3.9.5"
   },
-  "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3"
+  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }

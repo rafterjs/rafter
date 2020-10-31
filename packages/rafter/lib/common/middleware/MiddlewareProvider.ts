@@ -6,11 +6,6 @@ export interface IMiddlewareProvider {
   createInstance(middlewareConfig: string[]): IMiddleware[];
 }
 
-/**
- * @param {IDiAutoloader} diContainer
- * @param {ILogger} logger
- * @return {MiddlewareProvider}
- */
 export default class MiddlewareProvider implements IMiddlewareProvider {
   private readonly diAutoloader: IDiAutoloader;
 
@@ -21,10 +16,6 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     this.logger = logger;
   }
 
-  /**
-   * @param {string[]} middleware
-   * @return {Function|Function[]}
-   */
   public createInstance(middleware: IMiddlewareConfig[]): IMiddleware[] {
     const middlewareCollection: IMiddleware[] = [];
 

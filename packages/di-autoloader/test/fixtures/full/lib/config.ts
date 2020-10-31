@@ -2,10 +2,10 @@ export type TestConfig1 = {
   bar: string;
 };
 
-const mergedConfig = (): TestConfig1 => {
+export const config1 = (): TestConfig1 => {
   return {
     bar: 'bar overridden',
   };
 };
 
-export default mergedConfig;
+export default config1;

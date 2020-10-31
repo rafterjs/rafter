@@ -1,6 +1,7 @@
-// @ts-nocheck
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createStubInstance } from 'sinon';
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/logger-plugin';
+import { ILogger, MockLogger } from '@rafterjs/logger-plugin';
 import MiddlewareProvider from './MiddlewareProvider';
 import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
 
@@ -14,7 +15,8 @@ describe('MiddlewareProvider', () => {
     mockDiAutoloader = ({
       get: jest.fn(),
     } as unknown) as IDiAutoloader;
-    mockLogger = console;
+
+    mockLogger = createStubInstance<ILogger>(MockLogger);
 
     mockMiddleware1 = jest.fn();
     mockMiddleware2 = jest.fn();
@@ -32,6 +34,4 @@ describe('MiddlewareProvider', () => {
     expect(middleware).toHaveLength(2);
     expect(middleware[0]).toBe(mockMiddleware1);
   });
-
-  // it.skip('should not fail on error', () => {  });
 });

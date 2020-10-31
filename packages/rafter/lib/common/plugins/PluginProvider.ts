@@ -6,12 +6,6 @@ export interface IPluginProvider {
   createInstance(pluginConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]>;
 }
 
-/**
- * @param {IDiAutoloader} diContainer
- * @param {ILogger} logger
- * @return {PluginProvider}
- */
-
 export default class PluginProvider<T extends IPluginConfig> implements IPluginProvider {
   private readonly diAutoloader: IDiAutoloader;
 
@@ -22,10 +16,6 @@ export default class PluginProvider<T extends IPluginConfig> implements IPluginP
     this.logger = logger;
   }
 
-  /**
-   * @param {IPluginConfig} pluginsConfig
-   * @return {Function|Function[]}
-   */
   public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];
 

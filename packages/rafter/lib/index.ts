@@ -1,4 +1,4 @@
-import diAutoloaderFactory, { IDiAutoloader } from '@rafterjs/di-autoloader';
+import { diAutoloaderFactory, IDiAutoloader } from '@rafterjs/di-autoloader';
 import consoleLoggerFactory from '@rafterjs/logger-plugin';
 import Rafter, {
   CORE_LIB_DIRECTORIES,
