@@ -1,6 +1,3 @@
 module.exports = {
-  'testPathIgnorePatterns': [
-    'dist',
-    'node_modules',
-  ],
+  testPathIgnorePatterns: ['dist', 'node_modules'],
 };

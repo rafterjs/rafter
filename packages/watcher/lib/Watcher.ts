@@ -11,7 +11,7 @@ export type WatcherConfig = {
   onChange: string;
   options: {
     extension?: string;
-    ignore?: (string | number)[];
+    ignore?: Array<string | number>[];
     delay?: number;
   };
 };

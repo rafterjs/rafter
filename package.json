@@ -25,7 +25,7 @@
     "build:mongo": "cd packages/rafter-mongodb-plugin && yarn build",
     "build:test": "cd packages/rafter-test-plugin && yarn build",
     "format": "yarn prettier && yarn lint:fix",
-    "prettier": "prettier --write \"packages/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint -- --fix",
     "lint:babel-preset-rafter": "cd packages/babel-preset-rafter && yarn lint",

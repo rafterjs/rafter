@@ -1,5 +1,5 @@
-Rafter
-======
+# Rafter
+
 Rafter is a lightweight, slightly opinionated Javascript framework for rapid development of web applications.
 
 ### Rafter:
@@ -11,11 +11,13 @@ Rafter is a lightweight, slightly opinionated Javascript framework for rapid dev
 - is flexible, reusable and testable.
 
 ## Install
+
 ```
 yarn add rafter
 ```
 
 ## Run
+
 ```
 yarn bootstrap & yarn build & yarn start:boilerplate
 ```
@@ -29,6 +31,7 @@ This will build and run the boilerplate project. You can access it via [http://l
 Dependency autoloading is at the heart of _Rafter_, and the most opinionated portion of the framework. Rafter utilizes [Awilix](https://github.com/jeffijoe/awilix) under the hood to [automatically scan your application directory and register services](https://github.com/jeffijoe/awilix#containerloadmodules). So there's no need to maintain configuration or add annotations, as long as the function or constructor arguments are the same name, it will wire everything up automatically.
 
 _Logger.ts_
+
 ```typescript
 class Logger implements ILogger {
   public log(...args: any[]): void {
@@ -38,6 +41,7 @@ class Logger implements ILogger {
 ```
 
 _MyService.ts_
+
 ```typescript
 class MyService {
   private logger: ILogger;
@@ -45,7 +49,7 @@ class MyService {
   constructor(logger: ILogger) {
     this.logger = logger;
   }
-  
+
   public run(): void {
     this.logger.log('I have been autowired');
   }
@@ -55,6 +59,7 @@ class MyService {
 The _Rafter_ autoloader will look recursively throughout your project for services, functions and config. This means you do not need to statically `import` all your dependencies, which maintains separation of concerns and improves reusability.
 
 ## Rafter specific config files
+
 The following configuration files are autoloaded by _Rafter_.
 
 - `config.ts`: a general application or module config.
@@ -139,10 +144,10 @@ import rafter from 'rafter';
 const run = async () => {
   // define the paths you want to autoload
   const paths = [join(__dirname, '/**/!(*.spec).@(ts|js)')];
-  
+
   // instantiate rafter
   const rafterServer = rafter({ paths });
-  
+
   // start rafter server
   await rafterServer.start();
 };
@@ -163,6 +168,7 @@ Once `start()` is called, Rafter will:
 To see an example project, visit the [skeleton rafter app](https://github.com/joshystuart/rafter-skeleton-app) repository, or look at the included `boilerplate` application within [packages](https://github.com/joshystuart/rafter/tree/master/packages/boilerplate).
 
 # Going deeper
+
 Rafter is slightly opinionated; which means we have outlined specific ways of doing some things. Not as much as say, Sails or Ruby on Rails, but just enough to provide a simple and fast foundation for your project.
 
 The foundations of the Rafter framework are:
@@ -182,11 +188,11 @@ eg.
 ```typescript
 import mongoose from 'mongoose';
 
-const connect = async connectionUrl => {
+const connect = async (connectionUrl) => {
   await mongoose.connect(connectionUrl);
 };
 
-const find = async query => {
+const find = async (query) => {
   await mongoose.find(query);
 };
 
@@ -198,9 +204,9 @@ export { connect, find };
 ```typescript
 export class DbDao {
   private db: IDatabaseDao;
-  private config: {connectionUrl: string};
+  private config: { connectionUrl: string };
 
-  constructor(db: IDatabaseDao, config: {connectionUrl: string}) {
+  constructor(db: IDatabaseDao, config: { connectionUrl: string }) {
     this.db = db;
     this.config = config;
   }

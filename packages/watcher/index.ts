@@ -58,7 +58,7 @@ const config: WatcherConfig = {
   onChange: argv.change as string,
   options: {
     extension: argv.extension as string,
-    ignore: argv.ignore as (string | number)[],
+    ignore: argv.ignore as Array<string | number>,
     delay: argv.delay as number,
   },
 };
