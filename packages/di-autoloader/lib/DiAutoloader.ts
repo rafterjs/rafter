@@ -33,7 +33,9 @@ export class DiAutoloader implements IDiAutoloader {
     mergableFilenames: IMergableFileNames = [],
     options: ILoadOptions = { formatName: this.formatName },
   ): Promise<void> {
-    this.logger.debug(`   Registering mergable files`);
+    this.logger.debug(`   Registering mergable 
+    
+    files`);
     await this.loadMergableFiles(paths, mergableFilenames);
 
     this.logger.debug(`   Registering non-mergable files`);
