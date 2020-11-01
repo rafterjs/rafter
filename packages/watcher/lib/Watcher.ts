@@ -1,3 +1,4 @@
+import { LernaPackageManager } from '@rafterjs/lerna-helpers';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { ChildProcess } from 'child_process';
 import chokidar, { FSWatcher } from 'chokidar';
@@ -31,6 +32,8 @@ export type PackageConfig = {
 };
 
 export class Watcher {
+  private readonly lernaPackageManager: LernaPackageManager;
+
   private readonly config: WatcherConfig;
 
   private readonly logger: ILogger;
@@ -45,14 +48,15 @@ export class Watcher {
 
   private readonly lookupPaths: Map<string, Package> = new Map<string, Package>();
 
-  constructor(config: WatcherConfig, logger: ILogger) {
+  constructor(lernaPackageManager: LernaPackageManager, config: WatcherConfig, logger: ILogger) {
+    this.lernaPackageManager = lernaPackageManager;
     this.config = config;
     this.logger = logger;
   }
 
   public async start(): Promise<void> {
     // load up all the lerna packages into the class state
-    await this.initPackages();
+    await this.lernaPackageManager.init();
 
     // execute the provided command
     await this.executeCommand();
@@ -85,22 +89,6 @@ export class Watcher {
       this.logger.info(`✔ Successfully executed "${command}":`);
     } else {
       this.logger.warn(`⏳ The command "${command}' is already executing. Please wait...`);
-    }
-  }
-
-  private async initPackages(): Promise<void> {
-    const packagesConfig: PackageConfig[] = JSON.parse(execute(DEFAULT_COMMANDS.PACKAGES));
-
-    for (const packageConfig of packagesConfig) {
-      const packageData: Package = {
-        name: packageConfig.name,
-        version: packageConfig.version,
-        path: packageConfig.location,
-        isUpdating: false,
-      };
-
-      this.packages.push(packageData);
-      this.lookupPaths.set(packageData.path, packageData);
     }
   }
 

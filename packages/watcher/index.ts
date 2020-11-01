@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { LernaPackageManager } from '@rafterjs/lerna-helpers';
 import loggerFactory, { LogLevel } from '@rafterjs/logger-plugin';
 import { Argv } from 'yargs';
 import yargs from 'yargs/yargs';
@@ -66,7 +67,8 @@ const config: WatcherConfig = {
 const logger = loggerFactory({ logger: { level: (process.env.LOG_LEVEL as LogLevel) || LogLevel.INFO } });
 
 logger.info(`Starting Rafter Watcher with the config`, config);
-const watcher = new Watcher(config, logger);
+const lernaPackageManager = new LernaPackageManager(logger);
+const watcher = new Watcher(lernaPackageManager, config, logger);
 
 async function run() {
   await watcher.start();

@@ -15,7 +15,7 @@
     "lint": "eslint ./index.js ./babel.config.js",
     "update:latest": "yarn upgrade --latest"
   },
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
