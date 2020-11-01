@@ -18,7 +18,6 @@
   "scripts": {
     "build": "yarn build:lib && yarn build:types",
     "buildonly": "yarn build:lib",
-    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn buildonly && yarn touch\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "copy": "copyfiles ./package.json ./dist/package.json",

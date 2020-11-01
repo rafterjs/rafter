@@ -1,11 +1,10 @@
-import { LernaPackageManager } from '@rafterjs/lerna-helpers';
+import { LernaPackageManager, ProcessExecutor } from '@rafterjs/lerna-helpers';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { ChildProcess } from 'child_process';
 import chokidar, { FSWatcher } from 'chokidar';
-import { isAbsolute, join, relative } from 'path';
+import { join } from 'path';
 import treeKill from 'tree-kill';
-import { execute, executeChild } from './Executor';
-import { DEFAULT_COMMANDS, PACKAGE_TOKEN } from './WatcherConstants';
+import { PACKAGE_TOKEN } from './WatcherConstants';
 
 export type WatcherConfig = {
   command: string;
@@ -38,15 +37,11 @@ export class Watcher {
 
   private readonly logger: ILogger;
 
-  private readonly packages: Package[] = [];
-
   private watching?: FSWatcher;
 
   private process?: ChildProcess;
 
   private isExecuting = false;
-
-  private readonly lookupPaths: Map<string, Package> = new Map<string, Package>();
 
   constructor(lernaPackageManager: LernaPackageManager, config: WatcherConfig, logger: ILogger) {
     this.lernaPackageManager = lernaPackageManager;
@@ -65,6 +60,10 @@ export class Watcher {
     this.watch();
   }
 
+  /**
+   * TODO move to the Lerna Helpers package eg. executor.command()
+   * @private
+   */
   private async executeCommand(): Promise<void> {
     const { command } = this.config;
     if (!this.isExecuting) {
@@ -77,7 +76,7 @@ export class Watcher {
       this.isExecuting = true;
       this.logger.info(`⏳ Executing "${command}". Please wait...`);
 
-      this.process = executeChild(command);
+      this.process = ProcessExecutor.executeChild(command);
       if (this.process.stdout) {
         this.process.stdout.on('data', (data) => {
           this.logger.debug(data);
@@ -92,22 +91,6 @@ export class Watcher {
     }
   }
 
-  private getUpdatedPackage(path: string): Package {
-    for (const [key, packageData] of this.lookupPaths.entries()) {
-      if (this.isSubDirectory(key, path)) {
-        return packageData;
-      }
-    }
-
-    throw Error(`Failed to get package`);
-  }
-
-  private isSubDirectory(parent: string, child: string): boolean {
-    const relativeDir = relative(parent, child);
-
-    return !!relativeDir && !relativeDir.startsWith('..') && !isAbsolute(relativeDir);
-  }
-
   private watch(): void {
     if (this.watching) {
       // if we are already watching, ensure that it is closed to prevent duplicate events
@@ -116,7 +99,7 @@ export class Watcher {
 
     const { extension = 'ts', ignore = [], delay = 500 } = this.config.options;
 
-    const watchedPaths: string[] = this.packages.map((packageData: Package): string => {
+    const watchedPaths: string[] = this.lernaPackageManager.getPackages().map((packageData: Package): string => {
       return join(packageData.path, `**/*.${extension}`);
     });
 
@@ -135,7 +118,7 @@ export class Watcher {
 
   private async handleOnChange(path: string): Promise<void> {
     this.logger.info(`⏳ "${path}" has changed`);
-    const packageData = this.getUpdatedPackage(path);
+    const packageData = this.lernaPackageManager.getPackageByPath(path);
 
     try {
       if (!packageData.isUpdating) {
@@ -145,7 +128,7 @@ export class Watcher {
         const onChangeCommand = this.getInterpolatedCommand(onChange, packageData.name);
         this.logger.info(`⏳ ${packageData.name} will now run "${onChangeCommand}"... please wait`);
 
-        const onUpdateOutput = execute(onChangeCommand);
+        const onUpdateOutput = ProcessExecutor.execute(onChangeCommand);
         this.logger.debug(onUpdateOutput);
 
         this.logger.info(`✔ Successfully completed updating ${packageData.name}`);

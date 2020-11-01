@@ -1,7 +1,7 @@
 import loggerFactory, { ILogger } from '@rafterjs/logger-plugin';
 import { isAbsolute, relative } from 'path';
-import { execute } from '../../../watcher/lib/Executor';
-import { DEFAULT_COMMANDS } from '../../../watcher/lib/WatcherConstants';
+import { DEFAULT_COMMANDS } from '../LernaConstants';
+import { ProcessExecutor } from '../ProcessExecutor';
 import { Package } from './Package';
 import { PackageConfig } from './PackageConfig';
 import { PackagePathMap } from './PackagePathMap';
@@ -28,7 +28,7 @@ export class LernaPackageManager implements ILernaPackageManager {
   }
 
   public async init(): Promise<void> {
-    const packagesConfig: PackageConfig[] = JSON.parse(execute(DEFAULT_COMMANDS.PACKAGES));
+    const packagesConfig: PackageConfig[] = JSON.parse(ProcessExecutor.execute(DEFAULT_COMMANDS.PACKAGES));
 
     for (const packageConfig of packagesConfig) {
       const packageData: Package = {

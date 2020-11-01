@@ -17,12 +17,10 @@
   },
   "scripts": {
     "build": "yarn build:lib && yarn build:types",
-    "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",
-    "start:dev": "nodemon -e ts --watch \"./**/*.ts\" --exec \"yarn build\"",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {

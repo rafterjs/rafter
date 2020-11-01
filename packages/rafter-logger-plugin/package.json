@@ -17,7 +17,6 @@
   },
   "scripts": {
     "build": "yarn build:lib && yarn build:types",
-    "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "copy": "copyfiles ./package.json ./dist/package.json",

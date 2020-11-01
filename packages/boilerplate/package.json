@@ -20,7 +20,6 @@
     "build:config": "babel --include-dotfiles lib/config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build && yarn start\"",
     "build:rafter": "cd ../ && yarn build:rafter",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
