@@ -21,7 +21,6 @@
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn buildonly && yarn touch\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",

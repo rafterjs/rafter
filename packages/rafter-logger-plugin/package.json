@@ -16,11 +16,10 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
+    "build": "yarn build:lib && yarn build:types",
     "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",

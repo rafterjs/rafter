@@ -22,7 +22,6 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:watch": "nodemon --watch \"./lib\" --exec \"yarn build && yarn start\"",
     "build:rafter": "cd ../ && yarn build:rafter",
-    "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",

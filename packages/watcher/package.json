@@ -18,11 +18,10 @@
   "scripts": {
     "start": "node dist/index.js \"cd ../../ && yarn boilerplate:start\"",
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn start\"",
-    "build": "yarn clean && yarn build:index && yarn build:lib && yarn build:types",
+    "build": "yarn build:index && yarn build:lib && yarn build:types",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js ./index.ts",
     "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\""
   },
