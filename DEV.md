@@ -1,5 +1,4 @@
-Rafter Dev
-==========
+# Rafter Dev
 
 ### Publishing the npm modules
 
