@@ -57,7 +57,7 @@ export class Watcher {
     await this.executeCommand();
 
     // watch all the lerna packages for changes
-    this.watch();
+    await this.watch();
   }
 
   /**
@@ -71,15 +71,26 @@ export class Watcher {
         this.logger.info(`❌ Killing the existing process.`);
         treeKill(this.process.pid);
         this.logger.info(`✔ Killed the existing process.`);
+        this.process = undefined;
       }
 
       this.isExecuting = true;
       this.logger.info(`⏳ Executing "${command}". Please wait...`);
 
       this.process = ProcessExecutor.executeChild(command);
+
       if (this.process.stdout) {
+        this.logger.info(`⏳ Watching stdout from the process "${command}"....`);
+
         this.process.stdout.on('data', (data) => {
-          this.logger.debug(data);
+          this.logger.debug(`✔ ${data.toString()}`);
+        });
+      }
+
+      if (this.process.stderr) {
+        this.logger.info(`⏳ Watching stderr from the process "${command}"....`);
+        this.process.stderr.on('data', (data) => {
+          this.logger.debug(`❌ ${data.toString()}`);
         });
       }
 
@@ -91,17 +102,19 @@ export class Watcher {
     }
   }
 
-  private watch(): void {
+  private async watch(): Promise<void> {
     if (this.watching) {
       // if we are already watching, ensure that it is closed to prevent duplicate events
-      this.watching.close();
+      await this.watching.close();
     }
 
     const { extension = 'ts', ignore = [], delay = 500 } = this.config.options;
 
-    const watchedPaths: string[] = this.lernaPackageManager.getPackages().map((packageData: Package): string => {
-      return join(packageData.path, `**/*.${extension}`);
-    });
+    const watchedPaths: string[] = (await this.lernaPackageManager.getPackages()).map(
+      (packageData: Package): string => {
+        return join(packageData.path, `**/*.${extension}`);
+      },
+    );
 
     this.logger.info('👀 Watching the following paths: ', watchedPaths);
 

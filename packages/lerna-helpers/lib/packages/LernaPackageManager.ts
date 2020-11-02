@@ -9,7 +9,7 @@ import { PackagePathMap } from './PackagePathMap';
 export interface ILernaPackageManager {
   init(): Promise<void>;
 
-  getPackages(): Package[];
+  getPackages(): Promise<Package[]>;
 
   getPackagePaths(): PackagePathMap;
 
@@ -28,6 +28,7 @@ export class LernaPackageManager implements ILernaPackageManager {
   }
 
   public async init(): Promise<void> {
+    this.logger.info(`Initializing lerna packages`);
     const packagesConfig: PackageConfig[] = JSON.parse(ProcessExecutor.execute(DEFAULT_COMMANDS.PACKAGES));
 
     for (const packageConfig of packagesConfig) {
@@ -41,9 +42,14 @@ export class LernaPackageManager implements ILernaPackageManager {
       this.packages.push(packageData);
       this.packagePaths.set(packageData.path, packageData);
     }
+
+    this.logger.info(`Completed initializing ${this.packages.length} lerna packages`);
   }
 
-  public getPackages(): Package[] {
+  public async getPackages(force = false): Promise<Package[]> {
+    if (force) {
+      await this.init();
+    }
     return this.packages;
   }
 
@@ -68,8 +74,7 @@ export class LernaPackageManager implements ILernaPackageManager {
   }
 }
 
-export function factory() {
-  const logger = loggerFactory();
+export function lernaPackageManagerFactory(logger: ILogger = loggerFactory()) {
   return new LernaPackageManager(logger);
 }
 

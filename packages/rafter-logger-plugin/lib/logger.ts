@@ -1,10 +1,11 @@
+import { Format } from 'logform';
 import winston, { createLogger, format as winstonFormat, transports as winstonTransports } from 'winston';
 import TransportStream from 'winston-transport';
-import { Format } from 'logform';
 
 /* eslint @typescript-eslint/no-unused-vars: 0 */
 export type LoggingArguments = unknown[];
 
+// eslint-disable-next-line no-shadow
 export enum LogLevel {
   DEBUG = 'debug',
   WARN = 'warn',
@@ -56,7 +57,7 @@ export type ILoggerConfig = {
   };
 };
 
-export default function loggerFactory(config?: ILoggerConfig): winston.Logger {
+export function loggerFactory(config?: ILoggerConfig): winston.Logger {
   const { level = LogLevel.DEBUG, format = winstonFormat.simple(), transports = [new winstonTransports.Console()] } =
     config?.logger || {};
 
@@ -66,3 +67,5 @@ export default function loggerFactory(config?: ILoggerConfig): winston.Logger {
     transports,
   });
 }
+
+export default loggerFactory;

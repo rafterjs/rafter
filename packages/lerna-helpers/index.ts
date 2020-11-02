@@ -1,3 +1,3 @@
 export * from './lib/packages';
-export * from './lib/DependencyUpdator';
+export * from './lib/dependencies/DependencyUpdator';
 export * from './lib/ProcessExecutor';

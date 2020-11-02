@@ -16,10 +16,12 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn build:index && yarn build:lib && yarn build:types",
+    "build": "yarn build:index && yarn build:lib && yarn build:bin && yarn build:types",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:bin": "babel bin --out-dir dist/bin --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
+    "start": "node dist/bin/update.js",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js ./index.ts"
   },
   "dependencies": {
@@ -33,6 +35,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "bin": {
+    "update": "./dist/bin/update.js"
+  },
   "engines": {
     "node": ">=9"
   },
