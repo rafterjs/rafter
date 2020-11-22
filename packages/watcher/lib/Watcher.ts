@@ -79,7 +79,7 @@ export class Watcher {
 
       this.process = ProcessExecutor.executeChild(command);
 
-      if (this.process.stdout) {
+      if (this.process?.stdout) {
         this.logger.info(`⏳ Watching stdout from the process "${command}"....`);
 
         this.process.stdout.on('data', (data) => {
@@ -87,7 +87,7 @@ export class Watcher {
         });
       }
 
-      if (this.process.stderr) {
+      if (this.process?.stderr) {
         this.logger.info(`⏳ Watching stderr from the process "${command}"....`);
         this.process.stderr.on('data', (data) => {
           this.logger.debug(`❌ ${data.toString()}`);

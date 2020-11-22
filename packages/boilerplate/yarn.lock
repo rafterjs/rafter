@@ -1014,7 +1014,7 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@rafterjs/babel-preset-rafter@^0.4.2-alpha.4":
+"@rafterjs/babel-preset-rafter@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/babel-preset-rafter/-/babel-preset-rafter-0.4.2-alpha.4.tgz#5c57c5ec68ef9729c96f6d97426acc601b102e25"
   integrity sha512-lFJxOHCipG/pZkyd/k3YqVouiXaeOha3dCA/zs0Mr/mtNWU/jqJ9oXgI4+c3e2PNo27u5DWIqF4lv13XXh9kSA==
@@ -1042,29 +1042,29 @@
     eslint-plugin-import "2.21.2"
     eslint-plugin-prettier "3.1.4"
 
-"@rafterjs/cors-plugin@^0.4.2-alpha.4":
+"@rafterjs/cors-plugin@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/cors-plugin/-/cors-plugin-0.4.2-alpha.4.tgz#ab61cf8d249995c85efb52ee6d33e168f2334e07"
   integrity sha512-+t0/hA4J2WBjZImHs5J6enAGFz4+ibDYeNflQPsDVHiWVhQSCJO4oVYLZvzHzkg+F47oe7vef56AuRgBm0OnpQ==
   dependencies:
-    "@rafterjs/logger-plugin" "^0.4.2-alpha.4"
+    "@rafterjs/logger-plugin" "0.5.0"
     acorn "7.3.1"
     cors "^2.8.5"
 
-"@rafterjs/di-autoloader@^0.4.2-alpha.4":
+"@rafterjs/di-autoloader@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/di-autoloader/-/di-autoloader-0.4.2-alpha.4.tgz#6d54b39075247c86d8d0b7d42076121ff24f5bd7"
   integrity sha512-0iEMRiPqiA+mrE7MbJHAZr8ytaTjpz+J9TGLoby43ODvqeyqcmldJuhHaV4Xnnb0o7OFNfVOC5JcVsWwjzZ8xg==
   dependencies:
     "@babel/core" "7.10.3"
-    "@rafterjs/logger-plugin" "^0.4.2-alpha.4"
+    "@rafterjs/logger-plugin" "0.5.0"
     acorn "7.3.1"
     awilix "4.2.6"
     is-class "^0.0.9"
     lodash "^4.17.15"
     ts-deepmerge "^1.0.5"
 
-"@rafterjs/eslint-config@^0.4.2-alpha.4":
+"@rafterjs/eslint-config@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/eslint-config/-/eslint-config-0.4.2-alpha.4.tgz#318d227f98fdfb50969f0469eeb9b7008af2026f"
   integrity sha512-dfM9bquB5gqUe5X5/ziXg74Trwffki0kAM1OTVMcySh0thIE/ndgsoxsgIXxkgZzuxmgOK/9PtF/sOXHYm/OPQ==
@@ -1080,7 +1080,7 @@
     prettier "2.0.5"
     typescript "3.9.5"
 
-"@rafterjs/logger-plugin@^0.4.2-alpha.4":
+"@rafterjs/logger-plugin@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/logger-plugin/-/logger-plugin-0.4.2-alpha.4.tgz#c036afb7c30cb164631458ac016b27b9f4088cbf"
   integrity sha512-JWd1DKgHVbYlETfIakCSGI6NoeKb7wWawJbGhjNUsMARuGQb99l7sU16fAATsCsGu6l/YhXz1FxxpoHLPP49Dg==
@@ -1089,12 +1089,12 @@
     winston "3.3.2"
     winston-transport "4.4.0"
 
-"@rafterjs/mongodb-plugin@^0.4.2-alpha.4":
+"@rafterjs/mongodb-plugin@0.5.0":
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/@rafterjs/mongodb-plugin/-/mongodb-plugin-0.4.2-alpha.4.tgz#1af5e199249aa87127dca2bc3227dd89e163a63b"
   integrity sha512-S6JLMQDiYBsRn0q1Y08GV9nt6Yk6zHKBB2MXfS2YTgAvr9wOtZ6xfaLwCub0Lbg0qHWZtiV5Nj1cWOjZpcc1bA==
   dependencies:
-    "@rafterjs/logger-plugin" "^0.4.2-alpha.4"
+    "@rafterjs/logger-plugin" "0.5.0"
     mongodb "3.5.9"
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
@@ -3780,13 +3780,13 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-rafter@^0.4.2-alpha.4:
+rafter@0.5.0:
   version "0.4.2-alpha.4"
   resolved "https://registry.yarnpkg.com/rafter/-/rafter-0.4.2-alpha.4.tgz#3c5e41e7336d7070a05c1df8deaf6a797607d9fa"
   integrity sha512-fyR2xPVd/MCTpqzX1Nsa9vq/CvBNCQ4WI+In5lP1/fyGLP31rIsxraxzzP+OL6zjSAJL4aj3K8NZr8/vvG3cRA==
   dependencies:
-    "@rafterjs/di-autoloader" "^0.4.2-alpha.4"
-    "@rafterjs/logger-plugin" "^0.4.2-alpha.4"
+    "@rafterjs/di-autoloader" "0.5.0"
+    "@rafterjs/logger-plugin" "0.5.0"
     acorn "7.3.1"
     awilix "^4.2.5"
     express "4.17.1"
