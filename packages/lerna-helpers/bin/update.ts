@@ -4,6 +4,7 @@ import { dependencyUpdatorFactory } from '../lib/dependencies/DependencyUpdator'
 const logger = loggerFactory({ logger: { level: LogLevel.DEBUG } });
 logger.info('--- WELCOME ---');
 logger.debug('--- DEBUG ON ---');
+
 const dependencyUpdator = dependencyUpdatorFactory(logger);
 
 async function run() {

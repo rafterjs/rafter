@@ -79,23 +79,28 @@ export class Watcher {
 
       this.process = ProcessExecutor.executeChild(command);
 
+      this.process?.on('close', (code) => {
+        this.logger.info(`✔ The process for "${command}" has now completed with code "${code}"`);
+      });
+
       if (this.process?.stdout) {
         this.logger.info(`⏳ Watching stdout from the process "${command}"....`);
 
+        this.process.stdout.setEncoding('utf8');
         this.process.stdout.on('data', (data) => {
-          this.logger.debug(`✔ ${data.toString()}`);
+          console.log(data.toString());
         });
       }
 
       if (this.process?.stderr) {
         this.logger.info(`⏳ Watching stderr from the process "${command}"....`);
         this.process.stderr.on('data', (data) => {
-          this.logger.debug(`❌ ${data.toString()}`);
+          this.logger.error(`❌
+          ${data.toString()}`);
         });
       }
 
       this.isExecuting = false;
-
       this.logger.info(`✔ Successfully executed "${command}":`);
     } else {
       this.logger.warn(`⏳ The command "${command}' is already executing. Please wait...`);
