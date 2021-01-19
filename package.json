@@ -65,7 +65,7 @@
     "@types/sinon": "9.0.4",
     "@typescript-eslint/eslint-plugin": "3.4.0",
     "@typescript-eslint/parser": "3.4.0",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.0.1",
@@ -89,7 +89,7 @@
   },
   "resolutions": {
     "@babel/core": "7.10.3",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "minimist": "1.2.5",
     "kind-of": "6.0.3",
     "acorn": "7.3.1"
