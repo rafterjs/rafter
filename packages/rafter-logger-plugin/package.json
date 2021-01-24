@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "logform": "2.2.0",
-    "winston": "3.3.2",
+    "winston": "3.3.3",
     "winston-transport": "4.4.0"
   },
   "devDependencies": {
