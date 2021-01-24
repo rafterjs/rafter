@@ -53,7 +53,7 @@
   },
   "resolutions": {
     "@babel/core": "7.12.10",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "minimist": "1.2.5",
     "kind-of": "6.0.3",
     "acorn": "7.3.1"
