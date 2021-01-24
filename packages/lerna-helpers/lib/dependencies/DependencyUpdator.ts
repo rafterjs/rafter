@@ -26,9 +26,9 @@ export class DependencyUpdator {
       this.logger.info(`⏳ Running update on ${lernaPackage.name}`);
 
       // run install to ensure there's a yarn.lock then run update
-      // const process = ProcessExecutor.execute(`cd ${lernaPackage.path} && ${YARN_COMMANDS.INSTALL}`);
+      ProcessExecutor.execute(`cd ${lernaPackage.path} && rimraf yarn.lock`);
+      ProcessExecutor.execute(`cd ${lernaPackage.path} && ${YARN_COMMANDS.INSTALL}`);
       const process = ProcessExecutor.execute(`cd ${lernaPackage.path} && ${YARN_COMMANDS.UPGRADE}`);
-      // const process = ProcessExecutor.execute(`cd ${lernaPackage.path} && ${YARN_COMMANDS.IMPORT}`);
 
       this.logger.info(`✔ Successfully updated dependencies for ${lernaPackage.name}
       `);
@@ -36,11 +36,18 @@ export class DependencyUpdator {
       
       `);
     } catch (error) {
-      this.logger.error(`❌ Failed to update dependencies for ${lernaPackage.name}
+      console.log('--------------------', error.message)
+      if (error.message === 'Outdated lockfile') {
+
+        this.logger.debug(`Updating the lockfile...`);
+        // ProcessExecutor.execute(`cd ${lernaPackage.path} && ${YARN_COMMANDS.IMPORT}`);
+      } else {
+        this.logger.error(`❌ Failed to update dependencies for ${lernaPackage.name}
       `);
-      this.logger.debug(`${error}
+        this.logger.debug(`${error}
       
       `);
+      }
     }
   }
 }
