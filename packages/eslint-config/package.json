@@ -33,7 +33,7 @@
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-prettier": "3.1.4",
-    "prettier": "2.0.5",
+    "prettier": "2.2.1",
     "typescript": "3.9.5"
   },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
