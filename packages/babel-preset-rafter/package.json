@@ -39,7 +39,7 @@
     "@babel/runtime-corejs2": "7.10.3",
     "@typescript-eslint/eslint-plugin": "3.4.0",
     "@typescript-eslint/parser": "3.4.0",
-    "acorn": "7.3.1",
+    "acorn": "7.4.1",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.0.1",
     "eslint": "7.3.1",
@@ -56,7 +56,7 @@
     "axios": "0.19.2",
     "minimist": "1.2.5",
     "kind-of": "6.0.3",
-    "acorn": "7.3.1"
+    "acorn": "7.4.1"
   },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }
