@@ -59,7 +59,7 @@
     "@types/express-serve-static-core": "4.17.7",
     "@types/jest": "26.0.0",
     "@types/lodash": "4.14.156",
-    "@types/node": "14.0.13",
+    "@types/node": "14.14.22",
     "@types/nodemon": "1.19.0",
     "@types/recursive-readdir": "2.2.0",
     "@types/sinon": "9.0.4",
