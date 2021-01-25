@@ -1,13 +1,13 @@
 {
   "name": "@rafterjs/mongodb-plugin",
-  "version": "0.5.0",
+  "version": "0.5.1-alpha.1",
   "contributors": [
     {
       "name": "Josh Stuart",
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
@@ -26,12 +26,12 @@
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.5.0",
-    "mongodb": "3.5.9"
+    "@rafterjs/logger-plugin": "^0.5.1-alpha.1",
+    "mongodb": "3.6.3"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.5.0",
-    "@rafterjs/eslint-config": "^0.5.0",
+    "@rafterjs/babel-preset-rafter": "^0.5.1-alpha.1",
+    "@rafterjs/eslint-config": "^0.5.1-alpha.1",
     "@types/mongodb": "3.5.17"
   },
   "description": "A simple mongodb plugin",

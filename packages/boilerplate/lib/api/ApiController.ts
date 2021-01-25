@@ -6,7 +6,7 @@ interface IApiController extends IController {
   index(request: Request, response: Response): void;
 }
 
-export default class ApiController {
+export default class ApiController implements IApiController {
   private readonly config: HomeControllerConfig;
 
   constructor(config: HomeControllerConfig) {

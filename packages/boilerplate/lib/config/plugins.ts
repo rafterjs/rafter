@@ -14,9 +14,4 @@ export default (): IPluginConfig[] => [
     path: join(modulesPath, 'cors-plugin/dist/**'),
     name: 'cors',
   },
-  {
-    plugin: '@rafterjs/mongodb-plugin',
-    path: join(modulesPath, 'mongodb-plugin/dist/**'),
-    name: 'mongodb',
-  },
 ];

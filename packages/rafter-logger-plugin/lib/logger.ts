@@ -5,6 +5,7 @@ import { Format } from 'logform';
 /* eslint @typescript-eslint/no-unused-vars: 0 */
 export type LoggingArguments = unknown[];
 
+// eslint-disable-next-line no-shadow
 export enum LogLevel {
   DEBUG = 'debug',
   WARN = 'warn',
