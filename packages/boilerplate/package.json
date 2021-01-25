@@ -36,7 +36,6 @@
     "@rafterjs/cors-plugin": "^0.5.0",
     "@rafterjs/di-autoloader": "^0.5.0",
     "@rafterjs/logger-plugin": "^0.5.0",
-    "@rafterjs/mongodb-plugin": "^0.5.0",
     "rafter": "^0.5.0"
   },
   "devDependencies": {
@@ -50,8 +49,5 @@
   "engines": {
     "node": ">=9"
   },
-  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807",
-  "resolutions": {
-    "minimist": "1.2.5"
-  }
+  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }

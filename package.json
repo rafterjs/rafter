@@ -46,11 +46,9 @@
   },
   "dependencies": {
     "acorn": "7.4.1",
-    "awilix": "4.3.1",
-    "dot-prop": "5.2.0",
+    "dot-prop": "5.3.0",
     "is-class": "0.0.9",
-    "lerna-dependency-graph": "1.0.2",
-    "lodash": "4.17.19"
+    "lerna-dependency-graph": "1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.12.10",
@@ -60,7 +58,7 @@
     "@types/express-serve-static-core": "4.17.13",
     "@types/jest": "26.0.20",
     "@types/lodash": "4.14.168",
-    "@types/node": "14.0.13",
+    "@types/node": "14.14.22",
     "@types/nodemon": "1.19.0",
     "@types/recursive-readdir": "2.2.0",
     "@types/sinon": "9.0.10",
@@ -87,12 +85,5 @@
     "ts-mockito": "2.6.1",
     "ts-node": "8.10.2",
     "typescript": "3.9.7"
-  },
-  "resolutions": {
-    "@babel/core": "7.12.10",
-    "axios": "0.21.1",
-    "minimist": "1.2.5",
-    "kind-of": "6.0.3",
-    "acorn": "7.3.1"
   }
 }

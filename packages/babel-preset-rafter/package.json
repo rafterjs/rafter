@@ -43,11 +43,5 @@
   "devDependencies": {
     "@rafterjs/eslint-config": "^0.5.0"
   },
-  "resolutions": {
-    "@babel/core": "7.12.10",
-    "minimist": "1.2.5",
-    "kind-of": "6.0.3",
-    "acorn": "7.3.1"
-  },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }
