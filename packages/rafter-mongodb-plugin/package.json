@@ -7,7 +7,7 @@
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.5.0",
-    "mongodb": "3.5.9"
+    "mongodb": "3.6.3"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.5.0",

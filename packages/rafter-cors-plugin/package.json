@@ -7,7 +7,7 @@
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
@@ -28,13 +28,12 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.5.0",
-    "acorn": "7.3.1",
-    "cors": "^2.8.5"
+    "cors": "2.8.5"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.5.0",
     "@rafterjs/eslint-config": "^0.5.0",
-    "@types/cors": "2.8.6"
+    "@types/cors": "2.8.9"
   },
   "description": "A simple CORS plugin",
   "main": "./dist/cors.js",

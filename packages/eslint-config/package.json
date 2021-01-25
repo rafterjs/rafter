@@ -7,7 +7,7 @@
       "email": "joshstuartx@gmail.com"
     }
   ],
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
@@ -23,18 +23,6 @@
   "module": "./index.js",
   "engines": {
     "node": ">=9"
-  },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "3.4.0",
-    "@typescript-eslint/parser": "3.4.0",
-    "acorn": "7.3.1",
-    "eslint": "7.3.1",
-    "eslint-config-airbnb": "18.2.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.21.2",
-    "eslint-plugin-prettier": "3.1.4",
-    "prettier": "2.0.5",
-    "typescript": "3.9.5"
   },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }
