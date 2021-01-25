@@ -13,13 +13,13 @@ export const CORE_LIB_DIRECTORIES = ['common', 'utils', 'vendor'];
 export const PLUGIN_FILENAME = 'plugins';
 export const CONFIG_FILENAME = 'config';
 
-export enum DEFAULT_MERGABLE_FILENAMES {
-  CONFIG = 'config',
-  MIDDLEWARE = 'middleware',
-  ROUTES = 'routes',
-  PRE_START_HOOKS = 'preStartHooks',
-  PLUGINS = 'plugins',
-}
+export const DEFAULT_MERGABLE_FILENAMES = {
+  CONFIG: 'config',
+  MIDDLEWARE: 'middleware',
+  ROUTES: 'routes',
+  PRE_START_HOOKS: 'preStartHooks',
+  PLUGINS: 'plugins',
+};
 
 export const DEFAULT_MERGABLE_FILENAME_VALUES = Object.values(DEFAULT_MERGABLE_FILENAMES);
 

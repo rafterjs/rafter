@@ -1,12 +1,12 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
 import { ILogger } from '@rafterjs/logger-plugin';
-import { IPlugin, IPluginConfig, IPluginsConfig } from './IPlugin';
+import { IPlugin, IPluginsConfig } from './IPlugin';
 
 export interface IPluginProvider {
   createInstance(pluginConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]>;
 }
 
-export default class PluginProvider<T extends IPluginConfig> implements IPluginProvider {
+export default class PluginProvider implements IPluginProvider {
   private readonly diAutoloader: IDiAutoloader;
 
   private readonly logger: ILogger;
