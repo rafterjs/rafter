@@ -19,23 +19,14 @@ import { IService } from './IService';
 export class DiAutoloader implements IDiAutoloader {
   private mergableFiles: IMergableFiles = new Map();
 
-  public readonly container: IDiContainer;
-
-  private readonly logger: ILogger;
-
-  constructor(container: IDiContainer, logger: ILogger = console) {
-    this.container = container;
-    this.logger = logger;
-  }
+  constructor(public readonly container: IDiContainer, public readonly logger: ILogger = console) {}
 
   public async load(
     paths: IPaths = [],
     mergableFilenames: IMergableFileNames = [],
     options: ILoadOptions = { formatName: this.formatName },
   ): Promise<void> {
-    this.logger.debug(`   Registering mergable 
-    
-    files`);
+    this.logger.debug(`   Registering mergable files`);
     await this.loadMergableFiles(paths, mergableFilenames);
 
     this.logger.debug(`   Registering non-mergable files`);
@@ -51,19 +42,21 @@ export class DiAutoloader implements IDiAutoloader {
     return this.container.resolve<T>(name);
   }
 
-  public registerMergableFiles(specialFiles: IMergableFiles): void {
+  public async registerMergableFiles(specialFiles: IMergableFiles): Promise<void> {
     this.logger.debug(`   Loading ${specialFiles.size} mergable files`);
     for (const [name, value] of specialFiles.entries()) {
       this.logger.debug(`   Merging ${name}`);
       let normalizedValue = value;
 
       if (normalizedValue instanceof Function) {
-        normalizedValue = normalizedValue();
+        normalizedValue = await normalizedValue();
       }
 
       if (this.container.has(name)) {
-        this.updateMergedFile(name, normalizedValue);
+        this.logger.debug(`   Updating ${name}`);
+        await this.updateMergedFile(name, normalizedValue);
       } else {
+        this.logger.debug(`   Setting ${name}`);
         this.mergableFiles.set(name, normalizedValue);
         this.registerFunction(name, () => this.mergableFiles.get(name));
       }
@@ -99,11 +92,11 @@ export class DiAutoloader implements IDiAutoloader {
     return camelCase(name);
   }
 
-  public updateMergedFile<T extends IMergableFile>(name: string, service: T): void {
+  public async updateMergedFile<T extends IMergableFile>(name: string, service: T): Promise<void> {
     let specialFile: T = service;
     if (service instanceof Function) {
       // @ts-ignore
-      specialFile = service();
+      specialFile = await service();
     }
 
     this.logger.debug(`Adding to special file ${name}`, specialFile);
@@ -145,7 +138,7 @@ export class DiAutoloader implements IDiAutoloader {
         }
 
         if (specialFile instanceof Function) {
-          specialFile = specialFile();
+          specialFile = await specialFile();
         }
 
         this.logger.debug(`Merging file ${name}`);
@@ -172,7 +165,7 @@ export class DiAutoloader implements IDiAutoloader {
   public async loadMergableFiles(paths: IPaths, mergableFileNames: IMergableFileNames): Promise<void> {
     const dependencies = this.getMergablePaths(this.list(paths), mergableFileNames);
     const files = await this.mergeFilesFromDependencies(dependencies);
-    this.registerMergableFiles(files);
+    return this.registerMergableFiles(files);
   }
 
   private getMergablePaths(

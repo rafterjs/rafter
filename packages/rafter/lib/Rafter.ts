@@ -76,8 +76,6 @@ export default class Rafter implements IRafter {
     const pluginPaths = await this.getPluginPaths(allPathsWithSuffix);
     const pluginPathsWithSuffix = this.getPathsWithSuffix(pluginPaths);
 
-    // TODO clean up the plugins. It's too tightly coupled atm.
-    // await this.loadPlugins(allPathsWithSuffix);
     const allPaths = [...pluginPathsWithSuffix, ...allPathsWithSuffix];
 
     this.logger.info(`Loading dependencies from: `, allPaths);
@@ -148,16 +146,6 @@ export default class Rafter implements IRafter {
 
     this.logger.debug(`    The plugin paths are:`, pluginPaths);
     return Array.from(pluginPaths);
-  }
-
-  private async loadPlugins(paths: IPaths = []): Promise<void> {
-    if (paths.length > 0) {
-      await this.loadPluginConfigFiles(paths);
-
-      this.logger.debug(`   Getting plugin configs`);
-      const plugins = await this.diAutoloader.get<IPluginsConfig>(PLUGIN_FILENAME);
-      await this.pluginProvider.createInstance(plugins);
-    }
   }
 
   private async loadPluginFiles(paths: IPaths): Promise<void> {

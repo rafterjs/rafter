@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import * as http from 'http';
+import * as https from 'https';
 import { ILogger } from '@rafterjs/logger-plugin';
 import { RequestHandler } from 'express-serve-static-core';
 import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
@@ -18,57 +19,21 @@ export interface IServer {
 }
 
 export default class Server implements IServer {
-  private serverInstance?: http.Server;
-
-  private readonly express: Express;
-
-  private readonly routesProvider: IRoutesProvider;
-
-  private readonly middlewareProvider: IMiddlewareProvider;
-
-  private readonly preStartHooksProvider: IPreStartHooksProvider;
-
-  private readonly pluginProvider: IPluginProvider;
-
-  private readonly middleware: IMiddlewareConfig[] = [];
-
-  private readonly routes: IRouteConfig[] = [];
-
-  private readonly preStartHooks: IPreStartHookConfig[] = [];
-
-  private readonly plugins: IPluginsConfig;
-
-  private readonly config: IRafterServerConfig;
-
-  private readonly logger: ILogger;
+  private serverInstance?: http.Server | https.Server;
 
   constructor(
-    express: Express,
-    routesProvider: IRoutesProvider,
-    middlewareProvider: IMiddlewareProvider,
-    preStartHooksProvider: IPreStartHooksProvider,
-    pluginProvider: IPluginProvider,
-    middleware: IMiddlewareConfig[] = [],
-    routes: IRouteConfig[] = [],
-    preStartHooks: IPreStartHookConfig[] = [],
-    plugins: IPluginsConfig,
-    config: IRafterServerConfig = { server: { port: 3000 } },
-    logger: ILogger = console,
-  ) {
-    this.express = express;
-
-    this.routesProvider = routesProvider;
-    this.middlewareProvider = middlewareProvider;
-    this.preStartHooksProvider = preStartHooksProvider;
-    this.pluginProvider = pluginProvider;
-    this.middleware = middleware;
-    this.routes = routes;
-    this.preStartHooks = preStartHooks;
-    this.plugins = plugins;
-
-    this.config = config;
-    this.logger = logger;
-  }
+    private readonly express: Express,
+    private readonly routesProvider: IRoutesProvider,
+    private readonly middlewareProvider: IMiddlewareProvider,
+    private readonly preStartHooksProvider: IPreStartHooksProvider,
+    private readonly pluginProvider: IPluginProvider,
+    private readonly middleware: IMiddlewareConfig[] = [],
+    private readonly routes: IRouteConfig[] = [],
+    private readonly preStartHooks: IPreStartHookConfig[] = [],
+    private readonly plugins: IPluginsConfig,
+    private readonly config: IRafterServerConfig = { server: { port: 3000 } },
+    private readonly logger: ILogger = console,
+  ) {}
 
   /**
    * Runs all the pre start hooks that have been registered
@@ -128,10 +93,26 @@ export default class Server implements IServer {
       await this.initRoutes();
 
       return new Promise((resolve): void => {
-        this.serverInstance = this.express.listen(this.config.server.port, (): void => {
-          this.logger.info(`ExpressServer::start Server running on port ${this.config.server.port}`);
-          resolve();
-        });
+        const { ssl = {} } = this.config.server;
+        const { enabled = false, certificate, privateKey, password } = ssl;
+        if (enabled) {
+          if (!certificate && !privateKey) {
+            throw new Error('SSL is enabled but there is no certificate and private key');
+          }
+
+          this.logger.info(`ExpressServer::start ssl enabled`);
+          this.serverInstance = https.createServer(
+            { key: privateKey, cert: certificate, passphrase: password },
+            this.express,
+          );
+        } else {
+          this.serverInstance = http.createServer(this.express);
+        }
+
+        this.serverInstance.listen(this.config.server.port);
+        this.logger.info(`ExpressServer::start Server running on port ${this.config.server.port}`);
+
+        resolve();
       });
     }
 

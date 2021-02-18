@@ -4,11 +4,7 @@ import { BoilerplateConfig } from '../config/config';
 
 type IOtherController = IController;
 export default class OtherController implements IOtherController {
-  private readonly config: BoilerplateConfig;
-
-  constructor(config: BoilerplateConfig) {
-    this.config = config;
-  }
+  constructor(private readonly config: BoilerplateConfig) {}
 
   public index(request: Request, response: Response): void {
     response.send(

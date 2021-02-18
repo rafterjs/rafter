@@ -31,10 +31,6 @@ export type PackageConfig = {
 };
 
 export class Watcher {
-  private readonly config: WatcherConfig;
-
-  private readonly logger: ILogger;
-
   private readonly packages: Package[] = [];
 
   private watching?: FSWatcher;
@@ -45,10 +41,7 @@ export class Watcher {
 
   private readonly lookupPaths: Map<string, Package> = new Map<string, Package>();
 
-  constructor(config: WatcherConfig, logger: ILogger) {
-    this.config = config;
-    this.logger = logger;
-  }
+  constructor(private readonly config: WatcherConfig, private readonly logger: ILogger) {}
 
   public async start(): Promise<void> {
     // load up all the lerna packages into the class state
@@ -68,20 +61,36 @@ export class Watcher {
         this.logger.info(`❌ Killing the existing process.`);
         treeKill(this.process.pid);
         this.logger.info(`✔ Killed the existing process.`);
+        this.process = undefined;
       }
 
       this.isExecuting = true;
       this.logger.info(`⏳ Executing "${command}". Please wait...`);
 
       this.process = executeChild(command);
-      if (this.process.stdout) {
+
+      this.process?.on('close', (code) => {
+        this.logger.info(`✔ The process for "${command}" has now completed with code "${code}"`);
+      });
+
+      if (this.process?.stdout) {
+        this.logger.info(`⏳ Watching stdout from the process "${command}"....`);
+
+        this.process.stdout.setEncoding('utf8');
         this.process.stdout.on('data', (data) => {
-          this.logger.debug(data);
+          this.logger.debug(data.toString());
+        });
+      }
+
+      if (this.process?.stderr) {
+        this.logger.info(`⏳ Watching stderr from the process "${command}"....`);
+        this.process.stderr.on('data', (data) => {
+          this.logger.error(`❌
+          ${data.toString()}`);
         });
       }
 
       this.isExecuting = false;
-
       this.logger.info(`✔ Successfully executed "${command}":`);
     } else {
       this.logger.warn(`⏳ The command "${command}' is already executing. Please wait...`);

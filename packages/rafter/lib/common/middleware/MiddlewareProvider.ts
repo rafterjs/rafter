@@ -7,14 +7,7 @@ export interface IMiddlewareProvider {
 }
 
 export default class MiddlewareProvider implements IMiddlewareProvider {
-  private readonly diAutoloader: IDiAutoloader;
-
-  private readonly logger: ILogger;
-
-  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diAutoloader;
-    this.logger = logger;
-  }
+  constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
 
   public createInstance(middleware: IMiddlewareConfig[]): IMiddleware[] {
     const middlewareCollection: IMiddleware[] = [];

@@ -26,6 +26,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
     'no-restricted-syntax': 'off',
+    'no-useless-constructor': 'off',
     'no-await-in-loop': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
