@@ -13,6 +13,7 @@ import { IRafterOptions } from './IRafterOptions';
 import { IRafter } from './IRafter';
 import PluginProvider from './common/plugins/PluginProvider';
 
+export * from './config/IRafterServerConfig';
 export * from './common/errors';
 export * from './common/helpers';
 export * from './common/mappers';

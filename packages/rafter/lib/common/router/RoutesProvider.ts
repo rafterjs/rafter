@@ -10,21 +10,11 @@ export interface IRoutesProvider {
 }
 
 export default class RoutesProvider implements IRoutesProvider {
-  private readonly configToRouteDtoTransformer: ConfigToRouteDtoTransformer;
-
-  private readonly routerProvider: RouterProvider;
-
-  private readonly logger: ILogger;
-
   constructor(
-    configToRouteDtoTransformer: ConfigToRouteDtoTransformer,
-    routerProvider: RouterProvider,
-    logger: ILogger,
-  ) {
-    this.configToRouteDtoTransformer = configToRouteDtoTransformer;
-    this.routerProvider = routerProvider;
-    this.logger = logger;
-  }
+    private readonly configToRouteDtoTransformer: ConfigToRouteDtoTransformer,
+    private readonly routerProvider: RouterProvider,
+    private readonly logger: ILogger,
+  ) {}
 
   public createInstance(routesConfig: IRouteConfig[]): IRouter {
     const routes = this.configToRouteDtoTransformer.convert(routesConfig);

@@ -7,14 +7,7 @@ export interface IPreStartHooksProvider {
 }
 
 export default class PreStartHooksProvider implements IPreStartHooksProvider {
-  private readonly diAutoloader: IDiAutoloader;
-
-  private readonly logger: ILogger;
-
-  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diAutoloader;
-    this.logger = logger;
-  }
+  constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
 
   public createInstance(preStartHooksConfig: IPreStartHookConfig[]): IPreStartHook[] {
     const hooksCollection: IPreStartHook[] = [];

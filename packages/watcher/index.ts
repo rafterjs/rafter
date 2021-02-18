@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import loggerFactory, { LogLevel } from '@rafterjs/logger-plugin';
 import { Argv } from 'yargs';
 import yargs from 'yargs/yargs';
 import { Watcher, WatcherConfig } from './lib/Watcher';
@@ -63,10 +62,8 @@ const config: WatcherConfig = {
   },
 };
 
-const logger = loggerFactory({ logger: { level: (process.env.LOG_LEVEL as LogLevel) || LogLevel.INFO } });
-
-logger.info(`Starting Rafter Watcher with the config`, config);
-const watcher = new Watcher(config, logger);
+console.info(`Starting Rafter Watcher with the config`, config);
+const watcher = new Watcher(config, console);
 
 async function run() {
   await watcher.start();

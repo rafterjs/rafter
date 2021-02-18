@@ -7,14 +7,7 @@ export interface IPluginProvider {
 }
 
 export default class PluginProvider implements IPluginProvider {
-  private readonly diAutoloader: IDiAutoloader;
-
-  private readonly logger: ILogger;
-
-  constructor(diAutoloader: IDiAutoloader, logger: ILogger) {
-    this.diAutoloader = diAutoloader;
-    this.logger = logger;
-  }
+  constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
 
   public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];

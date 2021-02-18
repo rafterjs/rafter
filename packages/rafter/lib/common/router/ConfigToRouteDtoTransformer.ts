@@ -9,11 +9,7 @@ import { IController, IControllerAction } from './IControllerAction';
  * A config to route mapper.
  */
 export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteConfig[], RouteDto[]> {
-  private readonly diAutoloader: IDiAutoloader;
-
-  constructor(diAutoloader: IDiAutoloader) {
-    this.diAutoloader = diAutoloader;
-  }
+  constructor(private readonly diAutoloader: IDiAutoloader) {}
 
   private getControllerAction(controllerName: string, action: string): IControllerAction {
     const controller = this.diAutoloader.get<IController>(controllerName);

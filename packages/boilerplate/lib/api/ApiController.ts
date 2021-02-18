@@ -7,11 +7,7 @@ interface IApiController extends IController {
 }
 
 export default class ApiController implements IApiController {
-  private readonly config: HomeControllerConfig;
-
-  constructor(config: HomeControllerConfig) {
-    this.config = config;
-  }
+  constructor(private readonly config: HomeControllerConfig) {}
 
   public index(request: Request, response: Response): void {
     response.json({
