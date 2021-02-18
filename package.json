@@ -50,9 +50,9 @@
     "lerna-dependency-graph": "1.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.13",
-    "@babel/core": "7.12.13",
-    "@babel/node": "7.12.13",
+    "@babel/cli": "7.12.17",
+    "@babel/core": "7.12.17",
+    "@babel/node": "7.12.17",
     "@types/express": "4.17.11",
     "@types/express-serve-static-core": "4.17.13",
     "@types/jest": "26.0.20",
