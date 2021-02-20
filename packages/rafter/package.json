@@ -34,7 +34,7 @@
   "dependencies": {
     "@rafterjs/di-autoloader": "^0.6.0",
     "@rafterjs/logger-plugin": "^0.6.0",
-    "awilix": "4.3.1",
+    "awilix": "4.3.3",
     "express": "4.17.1",
     "recursive-readdir": "2.2.2",
     "require-resolve": "0.0.2"
