@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.6.0",
-    "awilix": "4.3.1",
+    "awilix": "4.3.3",
     "is-class": "0.0.9",
     "lodash": "4.17.20",
     "ts-deepmerge": "1.0.6"
