@@ -39,8 +39,8 @@
     "rafter": "^0.6.0"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0"
+    "@rafterjs/babel-preset-rafter": "0.6.0",
+    "@rafterjs/eslint-config": "0.6.0"
   },
   "description": "A simple boilerplate to start new projects",
   "main": "./dist/lib/index.js",
