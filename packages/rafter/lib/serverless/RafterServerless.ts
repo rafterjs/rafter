@@ -14,17 +14,17 @@ export const SERVERLESS_DEFAULT_MERGABLE_FILENAME_VALUES = Object.values(SERVERL
 
 export const SERVERLESS_CORE_PATH = join(__dirname, `/@(${SERVERLESS_CORE_LIB_DIRECTORIES.join('|')})/**/`);
 
-export interface IRafterCliConfig {
+export interface IRafterServerlessConfig {
   rafter: IRafter;
   logger?: ILogger;
 }
 
-export class RafterServerlessCli implements IRafterServerless {
+export class RafterServerless implements IRafterServerless {
   private readonly rafter: IRafter;
 
   private readonly logger: ILogger;
 
-  constructor(rafterConfig: IRafterCliConfig) {
+  constructor(rafterConfig: IRafterServerlessConfig) {
     const { rafter, logger = loggerFactory() } = rafterConfig;
 
     this.rafter = rafter;

@@ -7,6 +7,6 @@ export * from './common/pre-start-hooks';
 export * from './common/router';
 export * from './common/server';
 export * from './vendor/express';
+export * from './IRafterServer';
 export * from './RafterServer';
 export * from './RafterServerFactory';
-export * from './IRafterServer';

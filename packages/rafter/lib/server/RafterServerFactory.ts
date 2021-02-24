@@ -1,9 +1,7 @@
 import { diAutoloaderFactory, IDiAutoloader } from '@rafterjs/di-autoloader';
 import { loggerFactory } from '@rafterjs/logger-plugin';
-
 import { IRafterOptions } from '../IRafterOptions';
 import { IRafterServer } from './IRafterServer';
-
 import { IRafterConfig, Rafter } from '../Rafter';
 import {
   SERVER_CORE_PATH,

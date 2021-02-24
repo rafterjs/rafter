@@ -1,24 +1,22 @@
 import { diAutoloaderFactory, IDiAutoloader } from '@rafterjs/di-autoloader';
 import { loggerFactory } from '@rafterjs/logger-plugin';
-
 import { IRafterOptions } from '../IRafterOptions';
-import { IRafterServer } from '../server/IRafterServer';
-
+import { PluginProvider } from '../plugins/PluginProvider';
 import { IRafterConfig, Rafter } from '../Rafter';
+import { IRafterServerless } from './IRafterServerless';
 import {
+  IRafterServerlessConfig,
+  RafterServerless,
   SERVERLESS_CORE_PATH,
   SERVERLESS_DEFAULT_MERGABLE_FILENAME_VALUES,
-  IRafterCliConfig,
-  RafterServerlessCli,
-} from './RafterServerlessCli';
-import { PluginProvider } from '../plugins/PluginProvider';
+} from './RafterServerless';
 
 export function rafterServerlessFactory({
   corePath = SERVERLESS_CORE_PATH,
   paths,
   mergableFileNames = SERVERLESS_DEFAULT_MERGABLE_FILENAME_VALUES,
   logger = loggerFactory('rafter serverless'),
-}: IRafterOptions): IRafterServer {
+}: IRafterOptions): IRafterServerless {
   const diAutoloader: IDiAutoloader = diAutoloaderFactory({ logger });
   const pluginProvider = new PluginProvider(diAutoloader, logger);
 
@@ -33,6 +31,6 @@ export function rafterServerlessFactory({
 
   const rafter = new Rafter(rafterConfig);
 
-  const rafterServerConfig: IRafterCliConfig = { rafter, logger };
-  return new RafterServerlessCli(rafterServerConfig);
+  const rafterServerConfig: IRafterServerlessConfig = { rafter, logger };
+  return new RafterServerless(rafterServerConfig);
 }
