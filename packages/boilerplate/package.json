@@ -24,12 +24,9 @@
     "build:rafter": "cd ../ && yarn build:rafter",
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",
     "start": "node ./dist/lib/index.js",
     "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn start\"",
-    "stop": "echo 'stop'",
-    "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {

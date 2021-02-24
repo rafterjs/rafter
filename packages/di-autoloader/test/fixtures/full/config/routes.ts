@@ -1,4 +1,4 @@
-import { IRouteConfig } from '../../../../../rafter/lib/common/router';
+import { IRouteConfig } from '../../../../../rafter/lib/server/common/router';
 
 export const routes1 = (): IRouteConfig[] => [
   {

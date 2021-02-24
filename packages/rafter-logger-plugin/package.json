@@ -16,30 +16,29 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn clean:lib && yarn build:lib && yarn build:types",
-    "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
-    "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build": "yarn clean && yarn build:config && yarn build:lib && yarn build:index && yarn build:types",
+    "build:config": "babel ./config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel ./lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
+    "clean": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
-    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "lint": "eslint \"./lib/**/*\" \"./config/**/*\" ./babel.config.js",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "logform": "2.2.0",
-    "winston": "3.3.3",
-    "winston-transport": "4.4.0"
+    "log4js": "6.3.0"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0"
+    "@rafterjs/eslint-config": "^0.6.0",
+    "@types/log4js": "2.3.5"
   },
   "description": "Utils for Rafter projects",
-  "main": "./dist/logger.js",
-  "module": "./dist/logger.js",
-  "typings": "./dist/logger.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "engines": {
     "node": ">=9"
   },

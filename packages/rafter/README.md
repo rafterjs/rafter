@@ -11,13 +11,13 @@ Rafter is a lightweight, slightly opinionated Javascript framework for rapid dev
 
 ## Install
 
-```javascript
+```typescript
 npm install --save rafter
 ```
 
 OR
 
-```javascript
+```typescript
 yarn add rafter
 ```
 
@@ -36,7 +36,7 @@ The Rafter autoloader will look for all of these files recursively throughout yo
 
 The config file (`config.ts`) is a place to define all your application style config.
 
-```javascript
+```typescript
 export default {
   db: {
     connectionUrl: 'mongodb://localhost:27000/rafter' || process.env.NODE_DB_CONNECTION,
@@ -54,8 +54,8 @@ export default {
 
 The middleware file (`middleware.js`) exports an array of service name references which will be loaded/registered in the order in which they were defined. eg.
 
-```javascript
-export default () => [`corsMiddleware`, `authenticationMiddleware`];
+```typescript
+export default (): IMiddlewares => new Set<IMiddlewareConfig>([`corsMiddleware`, `authenticationMiddleware`]);
 ```
 
 Note; the middleware must be registered in the `.services.ts` config.
@@ -64,15 +64,16 @@ Note; the middleware must be registered in the `.services.ts` config.
 
 The routes file (`routes.ts`) exports an array of objects which define the http method, route, controller and action. eg.
 
-```javascript
-export default () => [
-  {
-    endpoint: `/`,
-    controller: `exampleController`,
-    action: `index`,
-    method: `get`,
-  },
-];
+```typescript
+export default (): IRoutes =>
+  new Set<IRouteConfig>([
+    {
+      endpoint: `/`,
+      controller: `exampleController`,
+      action: `index`,
+      method: `get`,
+    },
+  ]);
 ```
 
 This would call `exampleController.index(req, res)` when the route `GET /` is hit.
@@ -81,13 +82,13 @@ This would call `exampleController.index(req, res)` when the route `GET /` is hi
 
 The routes file (`pre-start-hooks.js`) exports an array of service references that will be executed before Rafter has started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
-```javascript
-export default () => [`connectDbService`];
+```typescript
+export default (): IPreStartHooks => new Set<IPreStartHookConfig>([`connectDbService`]);
 ```
 
 An example of the `connectDbService` would be:
 
-```javascript
+```typescript
 export default (dbDao, logger) => {
   return async () => {
     logger.info(`Connecting to the database`);
@@ -100,7 +101,7 @@ export default (dbDao, logger) => {
 
 Along with the aforementioned configs, all that is required to run Rafter is the following:
 
-```javascript
+```typescript
 import rafter from 'rafter';
 
 const run = async () => {
@@ -140,7 +141,7 @@ eg.
 
 ### With RequireJs
 
-```javascript
+```typescript
 import mongoose from 'mongoose';
 
 const connect = async (connectionUrl) => {
@@ -156,7 +157,7 @@ export { connect };
 
 ### With DI
 
-```javascript
+```typescript
 export default class DbDao {
   constructor(db) {
     this._db = db;

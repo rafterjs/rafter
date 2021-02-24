@@ -1,16 +1,14 @@
+import { ILogger, ILoggerFactory } from '@rafterjs/logger-plugin';
 import { Express } from 'express';
+import { RequestHandler } from 'express-serve-static-core';
 import * as http from 'http';
 import * as https from 'https';
-import { ILogger } from '@rafterjs/logger-plugin';
-import { RequestHandler } from 'express-serve-static-core';
-import { IPreStartHookConfig, IPreStartHooksProvider } from '../pre-start-hooks';
+import { IPluginProvider, IPluginsConfig } from '../../../plugins';
+import { IServerConfig } from '../../config/IServerConfig';
+import { IMiddlewareProvider, IMiddlewares } from '../middleware';
+import { IPreStartHooks, IPreStartHooksProvider } from '../pre-start-hooks';
+import { IRoutes } from '../router';
 import { IRoutesProvider } from '../router/RoutesProvider';
-import { IMiddlewareConfig, IMiddlewareProvider } from '../middleware';
-
-import { IRouteConfig } from '../router';
-
-import { IPluginProvider, IPluginsConfig } from '../plugins';
-import { IRafterServerConfig } from '../../config/IRafterServerConfig';
 
 export interface IServer {
   start(): Promise<void>;
@@ -19,6 +17,8 @@ export interface IServer {
 }
 
 export default class Server implements IServer {
+  private readonly logger: ILogger;
+
   private serverInstance?: http.Server | https.Server;
 
   constructor(
@@ -27,19 +27,21 @@ export default class Server implements IServer {
     private readonly middlewareProvider: IMiddlewareProvider,
     private readonly preStartHooksProvider: IPreStartHooksProvider,
     private readonly pluginProvider: IPluginProvider,
-    private readonly middleware: IMiddlewareConfig[] = [],
-    private readonly routes: IRouteConfig[] = [],
-    private readonly preStartHooks: IPreStartHookConfig[] = [],
+    private readonly middleware: IMiddlewares = new Set(),
+    private readonly routes: IRoutes = new Set(),
+    private readonly preStartHooks: IPreStartHooks = new Set(),
     private readonly plugins: IPluginsConfig,
-    private readonly config: IRafterServerConfig = { server: { port: 3000 } },
-    private readonly logger: ILogger = console,
-  ) {}
+    private readonly config: IServerConfig = { server: { port: 3000 } },
+    private readonly loggerFactory: ILoggerFactory,
+  ) {
+    this.logger = loggerFactory('server');
+  }
 
   /**
    * Runs all the pre start hooks that have been registered
    */
   private async initPreStartHooks(): Promise<void> {
-    if (this.preStartHooks.length > 0) {
+    if (this.preStartHooks.size > 0) {
       // get the hooks from config
       const hooks = this.preStartHooksProvider.createInstance(this.preStartHooks);
 
@@ -60,8 +62,7 @@ export default class Server implements IServer {
    * Initializes all the middleware from the provided config.
    */
   private async initMiddleware(): Promise<void> {
-    // TODO re-merge any middleware
-    if (this.middleware.length > 0) {
+    if (this.middleware.size > 0) {
       const middlewareFunctions: RequestHandler[] = this.middlewareProvider.createInstance(this.middleware);
       if (middlewareFunctions.length > 0) {
         this.express.use(middlewareFunctions);
@@ -70,7 +71,7 @@ export default class Server implements IServer {
   }
 
   private async initRoutes(): Promise<void> {
-    if (this.routes.length > 0) {
+    if (this.routes.size > 0) {
       this.express.use(this.routesProvider.createInstance(this.routes));
     }
   }
@@ -78,18 +79,18 @@ export default class Server implements IServer {
   public async start(): Promise<void> {
     if (!this.serverInstance) {
       // get all plugins
-      // this.logger.info(`ExpressServer::start plugins have already been loaded`);
+      // this.logger.info(`plugins have already been loaded`);
 
       // add all the middleware
-      this.logger.info(`ExpressServer::start running pre-start hooks`);
+      this.logger.info(`Running pre-start hooks`);
       await this.initPreStartHooks();
 
       // add all the middleware
-      this.logger.info(`ExpressServer::start applying middleware`);
+      this.logger.info(`Applying middleware`);
       await this.initMiddleware();
 
       // add the router
-      this.logger.info(`ExpressServer::start applying the router`);
+      this.logger.info(`Applying the router`);
       await this.initRoutes();
 
       return new Promise((resolve): void => {
@@ -100,7 +101,7 @@ export default class Server implements IServer {
             throw new Error('SSL is enabled but there is no certificate and private key');
           }
 
-          this.logger.info(`ExpressServer::start ssl enabled`);
+          this.logger.info(`SSL enabled`);
           this.serverInstance = https.createServer(
             { key: privateKey, cert: certificate, passphrase: password },
             this.express,
@@ -110,13 +111,13 @@ export default class Server implements IServer {
         }
 
         this.serverInstance.listen(this.config.server.port);
-        this.logger.info(`ExpressServer::start Server running on port ${this.config.server.port}`);
+        this.logger.info(`Server running on port ${this.config.server.port}`);
 
         resolve();
       });
     }
 
-    this.logger.warn(`ExpressServer::start Server is already running on port ${this.config}`);
+    this.logger.warn(`Server is already running on port ${this.config}`);
     return Promise.reject();
   }
 

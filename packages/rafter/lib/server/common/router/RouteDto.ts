@@ -1,7 +1,7 @@
 import { IControllerAction } from './IControllerAction';
 import { MethodActions } from './RouteMethodConstants';
 
-export default class RouteDto {
+export class RouteDto {
   constructor(
     private readonly method: MethodActions,
     private readonly endpoint: string,

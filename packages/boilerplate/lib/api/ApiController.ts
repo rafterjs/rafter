@@ -1,4 +1,4 @@
-import { IController } from 'rafter/lib/common/router/IControllerAction';
+import { IController } from 'rafter';
 import { Request, Response } from 'express';
 import { HomeControllerConfig } from './config';
 

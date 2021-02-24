@@ -19,12 +19,8 @@
     "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
-    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
-    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn touch\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest --notify",
-    "touch": "yarn touch:rafter",
-    "touch:rafter": "nodetouch ../rafter/lib/index.ts",
     "types": "tsc"
   },
   "repository": {

@@ -1,6 +1,6 @@
-import { IRafterServerConfig } from '../../../../lib/config/IRafterServerConfig';
+import { IServerConfig } from '../../../../lib/server/config/IServerConfig';
 
-export type TestConfig = IRafterServerConfig & {
+export type TestConfig = IServerConfig & {
   bar: string;
 };
 

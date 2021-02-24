@@ -6,13 +6,13 @@ export interface IPluginProvider {
   createInstance(pluginConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]>;
 }
 
-export default class PluginProvider implements IPluginProvider {
+export class PluginProvider implements IPluginProvider {
   constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
 
   public async createInstance(pluginsConfig: IPluginsConfig): Promise<IPlugin | IPlugin[]> {
     const plugins: IPlugin | IPlugin[] = [];
 
-    if (pluginsConfig.length > 0) {
+    if (pluginsConfig.size > 0) {
       this.logger.debug(`   Found plugin configs`, plugins);
 
       for (const pluginConfig of pluginsConfig) {
@@ -39,3 +39,5 @@ export default class PluginProvider implements IPluginProvider {
     return plugins;
   }
 }
+
+export default PluginProvider;

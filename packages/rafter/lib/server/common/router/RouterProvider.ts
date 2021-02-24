@@ -8,8 +8,10 @@ export interface IRouterProvider {
 /**
  * A provider that creates new router instances
  */
-export default class RouterProvider implements IRouterProvider {
+export class RouterProvider implements IRouterProvider {
   public createInstance(): IRouter {
     return Express.Router();
   }
 }
+
+export default RouterProvider;

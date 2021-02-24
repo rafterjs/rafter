@@ -1,4 +1,4 @@
-export type IRafterServerConfig = {
+export type IServerConfig = {
   server: {
     ssl?: {
       enabled?: boolean;

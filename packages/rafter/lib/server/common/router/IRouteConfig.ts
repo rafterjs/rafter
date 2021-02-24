@@ -6,3 +6,5 @@ export interface IRouteConfig {
   action: string;
   method: MethodActions;
 }
+
+export type IRoutes = Set<IRouteConfig>;

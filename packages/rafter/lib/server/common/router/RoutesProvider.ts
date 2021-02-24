@@ -1,22 +1,26 @@
+import { ILogger, ILoggerFactory } from '@rafterjs/logger-plugin';
 import { IRouter } from 'express-serve-static-core';
-import { ILogger } from '@rafterjs/logger-plugin';
-import ConfigToRouteDtoTransformer from './ConfigToRouteDtoTransformer';
-import RouterProvider from './RouterProvider';
-import RouteDto from './RouteDto';
-import { IRouteConfig } from './IRouteConfig';
+import { ConfigToRouteDtoTransformer } from './ConfigToRouteDtoTransformer';
+import { IRoutes } from './IRouteConfig';
+import { RouteDto } from './RouteDto';
+import { RouterProvider } from './RouterProvider';
 
 export interface IRoutesProvider {
-  createInstance(routesConfig: IRouteConfig[]): IRouter;
+  createInstance(routesConfig: IRoutes): IRouter;
 }
 
 export default class RoutesProvider implements IRoutesProvider {
+  private readonly logger: ILogger;
+
   constructor(
     private readonly configToRouteDtoTransformer: ConfigToRouteDtoTransformer,
     private readonly routerProvider: RouterProvider,
-    private readonly logger: ILogger,
-  ) {}
+    private readonly loggerFactory: ILoggerFactory,
+  ) {
+    this.logger = loggerFactory('routes provider');
+  }
 
-  public createInstance(routesConfig: IRouteConfig[]): IRouter {
+  public createInstance(routesConfig: IRoutes): IRouter {
     const routes = this.configToRouteDtoTransformer.convert(routesConfig);
     const router = this.routerProvider.createInstance();
 

@@ -1,18 +1,24 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import { ILogger } from '@rafterjs/logger-plugin';
-import { IMiddleware, IMiddlewareConfig } from './IMiddleware';
+import { ILogger, ILoggerFactory } from '@rafterjs/logger-plugin';
+import { IMiddleware, IMiddlewares } from './IMiddleware';
 
 export interface IMiddlewareProvider {
-  createInstance(middlewareConfig: string[]): IMiddleware[];
+  createInstance(middlewareConfig: IMiddlewares): IMiddleware[];
 }
 
 export default class MiddlewareProvider implements IMiddlewareProvider {
-  constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
+  private readonly logger: ILogger;
 
-  public createInstance(middleware: IMiddlewareConfig[]): IMiddleware[] {
+  constructor(private readonly diAutoloader: IDiAutoloader, private readonly loggerFactory: ILoggerFactory) {
+    this.logger = loggerFactory('middleware provider');
+  }
+
+  public createInstance(middleware: IMiddlewares): IMiddleware[] {
     const middlewareCollection: IMiddleware[] = [];
 
-    Object.values(middleware).forEach((middlewareServiceName): void => {
+    this.logger.info(`    Creating middleware from:`, middleware);
+
+    for (const middlewareServiceName of middleware) {
       try {
         this.logger.info(`    Adding middleware: ${middlewareServiceName}`);
         const middlewareFunction = this.diAutoloader.get<IMiddleware>(middlewareServiceName);
@@ -20,7 +26,7 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
       } catch (error) {
         this.logger.error(`    Could not add middleware: ${middlewareServiceName}`, error);
       }
-    });
+    }
 
     return middlewareCollection;
   }

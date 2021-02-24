@@ -1,3 +1,3 @@
-import { IMiddlewareConfig } from 'rafter';
+import { IMiddlewareConfig, IMiddlewares } from 'rafter';
 
-export default (): IMiddlewareConfig[] => ['cors'];
+export default (): IMiddlewares => new Set<IMiddlewareConfig>(['cors']);

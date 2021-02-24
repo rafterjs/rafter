@@ -1,14 +1,14 @@
 import { IDiAutoloader } from '@rafterjs/di-autoloader';
-import RouteDto from './RouteDto';
-import { METHODS } from './RouteMethodConstants';
 import { ITransformer } from '../mappers';
-import { IRouteConfig } from './IRouteConfig';
 import { IController, IControllerAction } from './IControllerAction';
+import { IRouteConfig, IRoutes } from './IRouteConfig';
+import { RouteDto } from './RouteDto';
+import { METHODS } from './RouteMethodConstants';
 
 /**
  * A config to route mapper.
  */
-export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteConfig[], RouteDto[]> {
+export class ConfigToRouteDtoTransformer implements ITransformer<IRoutes, RouteDto[]> {
   constructor(private readonly diAutoloader: IDiAutoloader) {}
 
   private getControllerAction(controllerName: string, action: string): IControllerAction {
@@ -28,13 +28,15 @@ export default class ConfigToRouteDtoTransformer implements ITransformer<IRouteC
     return new RouteDto(method, endpoint, this.getControllerAction(controller, action));
   }
 
-  public convert(source: IRouteConfig[]): RouteDto[] {
+  public convert(source: IRoutes): RouteDto[] {
     const routes: RouteDto[] = [];
 
-    Object.values(source).forEach((config: IRouteConfig): void => {
+    for (const config of source) {
       routes.push(this.convertSingle(config));
-    });
+    }
 
     return routes;
   }
 }
+
+export default ConfigToRouteDtoTransformer;

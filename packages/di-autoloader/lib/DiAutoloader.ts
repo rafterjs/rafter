@@ -1,10 +1,10 @@
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
-import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafterjs/logger-plugin';
+import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
+import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
+import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
 import merge from 'ts-deepmerge';
-import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
 import {
   IDiAutoloader,
   ILoadOptions,
@@ -88,6 +88,10 @@ export class DiAutoloader implements IDiAutoloader {
     this.container.register(name, asValue(service));
   }
 
+  public async unregister(): Promise<void> {
+    return this.container.dispose();
+  }
+
   private formatName(name: string): string {
     return camelCase(name);
   }
@@ -108,7 +112,9 @@ export class DiAutoloader implements IDiAutoloader {
       let mergedFile: IMergableFile;
       this.logger.debug(`Deep merging two files:`, specialFile2, specialFile1);
       if (specialFile1 instanceof Array && specialFile2 instanceof Array) {
-        mergedFile = specialFile1.concat(specialFile2);
+        mergedFile = [...specialFile1, ...specialFile2];
+      } else if (specialFile1 instanceof Set && specialFile2 instanceof Set) {
+        mergedFile = new Set([...specialFile1, ...specialFile2]);
       } else {
         mergedFile = merge(specialFile2, specialFile1);
       }

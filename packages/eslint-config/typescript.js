@@ -41,6 +41,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'import/no-extraneous-dependencies': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-member-accessibility': [
       2,

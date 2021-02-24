@@ -101,7 +101,7 @@ The middleware file (`middleware.js`) exports an array of service name reference
 order in which they were defined. eg.
 
 ```typescript
-export default (): IMiddlewareConfig[] => [`corsMiddleware`, `authenticationMiddleware`];
+export default (): IMiddlewares => new Set<IMiddlewareConfig>([`corsMiddleware`, `authenticationMiddleware`]);
 ```
 
 #### Routes
@@ -110,14 +110,15 @@ The routes file (`routes.ts`) exports an array of objects which define the http 
 eg.
 
 ```typescript
-export default (): IRouteConfig[] => [
-  {
-    endpoint: `/`,
-    controller: `exampleController`,
-    action: `index`,
-    method: `get`,
-  },
-];
+export default (): IRoutes =>
+  new Set<IRouteConfig>([
+    {
+      endpoint: `/`,
+      controller: `exampleController`,
+      action: `index`,
+      method: `get`,
+    },
+  ]);
 ```
 
 This would call `exampleController.index(req, res)` when the route `GET /` is hit. `exampleController` will be the name
@@ -129,7 +130,7 @@ The routes file (`pre-start-hooks.js`) exports an array of service references th
 started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
 ```typescript
-export default (): IPreStartHookConfig[] => [`connectDbService`];
+export default (): IPreStartHooks => new Set<IPreStartHookConfig>([`connectDbService`]);
 ```
 
 An example of the `connectDbService` pre start hook would be:

@@ -1,3 +1,3 @@
-import { IPreStartHookConfig } from 'rafter';
+import { IPreStartHooks } from 'rafter';
 
-export default (): IPreStartHookConfig[] => [];
+export default (): IPreStartHooks => new Set();

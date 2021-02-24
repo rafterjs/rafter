@@ -6,3 +6,4 @@ export type INextFunction = NextFunction;
 
 export type IMiddleware = (request: IRequest, response: IResponse, next: INextFunction) => void;
 export type IMiddlewareConfig = string;
+export type IMiddlewares = Set<IMiddlewareConfig>;
