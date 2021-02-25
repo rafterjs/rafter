@@ -4,7 +4,7 @@ import { IRafter } from '../IRafter';
 import { IRafterServer } from './IRafterServer';
 import { IServer } from './common/server';
 
-export const SERVER_CORE_LIB_DIRECTORIES: string[] = ['common', 'utils', 'vendor'];
+export const SERVER_CORE_LIB_DIRECTORIES: string[] = ['common', 'vendor'];
 
 export const SERVER_DEFAULT_MERGABLE_FILENAMES = {
   CONFIG: 'config',

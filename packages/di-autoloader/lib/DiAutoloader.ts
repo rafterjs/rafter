@@ -15,6 +15,7 @@ import {
 } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
+import { MergableFileSet } from './MergableFileSet';
 
 export class DiAutoloader implements IDiAutoloader {
   private mergableFiles: IMergableFiles = new Map();
@@ -111,10 +112,11 @@ export class DiAutoloader implements IDiAutoloader {
     if (specialFile1 && specialFile2) {
       let mergedFile: IMergableFile;
       this.logger.debug(`Deep merging two files:`, specialFile2, specialFile1);
-      if (specialFile1 instanceof Array && specialFile2 instanceof Array) {
-        mergedFile = [...specialFile1, ...specialFile2];
-      } else if (specialFile1 instanceof Set && specialFile2 instanceof Set) {
-        mergedFile = new Set([...specialFile1, ...specialFile2]);
+      if (
+        (specialFile1 instanceof Array && specialFile2 instanceof Array) ||
+        (specialFile1 instanceof Set && specialFile2 instanceof Set)
+      ) {
+        mergedFile = new MergableFileSet([...specialFile1, ...specialFile2]);
       } else {
         mergedFile = merge(specialFile2, specialFile1);
       }

@@ -1,24 +1,17 @@
-/**
- * An extension of the javascript error class for http errors.
- */
-export class HttpError extends Error {
-  private readonly status: number;
+import { Status } from '../response';
 
-  constructor(status: number, message: string) {
+export class HttpError extends Error {
+  public readonly status: Status;
+
+  constructor(status: Status, message: string) {
     super(message);
     this.status = status;
   }
 
-  /**
-   * The http status code.
-   */
-  public getStatus(): number {
+  public getStatus(): Status {
     return this.status;
   }
 
-  /**
-   * The http error message
-   */
   public getMessage(): string {
     return this.message;
   }
