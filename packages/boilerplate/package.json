@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/boilerplate",
-  "version": "0.7.0-alpha.2",
+  "version": "0.7.0-alpha.3",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -31,9 +31,9 @@
   },
   "dependencies": {
     "@rafterjs/cors-plugin": "^0.7.0-alpha.0",
-    "@rafterjs/di-autoloader": "^0.7.0-alpha.2",
+    "@rafterjs/di-autoloader": "^0.7.0-alpha.3",
     "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
-    "rafter": "^0.7.0-alpha.2"
+    "rafter": "^0.7.0-alpha.3"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",

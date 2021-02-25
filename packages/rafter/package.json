@@ -1,6 +1,6 @@
 {
   "name": "rafter",
-  "version": "0.7.0-alpha.2",
+  "version": "0.7.0-alpha.3",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -28,7 +28,7 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/di-autoloader": "^0.7.0-alpha.2",
+    "@rafterjs/di-autoloader": "^0.7.0-alpha.3",
     "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
     "awilix": "4.3.3",
     "express": "4.17.1",
