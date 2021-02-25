@@ -4,5 +4,6 @@ import { HttpError } from './HttpError';
 export class NotFoundError extends HttpError {
   constructor(message = `The resource is not found`) {
     super(Status.NOT_FOUND, message);
+    this.name = 'Not Found';
   }
 }
