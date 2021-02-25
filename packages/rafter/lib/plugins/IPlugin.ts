@@ -1,8 +1,4 @@
-export type IPlugin = {
-  plugin: string;
-  name: string;
-  path: string;
-};
+export type IPlugin = string;
 
 export type IPluginsConfig = Set<IPlugin>;
 

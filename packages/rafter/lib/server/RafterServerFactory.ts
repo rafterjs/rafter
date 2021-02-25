@@ -9,7 +9,7 @@ import {
   IRafterServerConfig,
   RafterServer,
 } from './RafterServer';
-import { PluginProvider } from '../plugins/PluginProvider';
+import { PluginPathProvider } from '../plugins/PluginPathProvider';
 
 export function rafterServerFactory({
   corePath = SERVER_CORE_PATH,
@@ -18,14 +18,14 @@ export function rafterServerFactory({
   logger = loggerFactory('rafter server'),
 }: IRafterOptions): IRafterServer {
   const diAutoloader: IDiAutoloader = diAutoloaderFactory({ logger });
-  const pluginProvider = new PluginProvider(diAutoloader, logger);
+  const pluginPathProvider = new PluginPathProvider(logger);
 
   const rafterConfig: IRafterConfig = {
     diAutoloader,
     corePath,
     paths,
     mergableFileNames,
-    pluginProvider,
+    pluginPathProvider,
     logger,
   };
 

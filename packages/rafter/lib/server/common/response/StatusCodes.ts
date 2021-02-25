@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-shadow
 export enum Status {
   SUCCESS = 200,
   BAD_REQUEST = 400,

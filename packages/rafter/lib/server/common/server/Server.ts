@@ -3,7 +3,7 @@ import { Express } from 'express';
 import { RequestHandler } from 'express-serve-static-core';
 import * as http from 'http';
 import * as https from 'https';
-import { IPluginProvider, IPluginsConfig } from '../../../plugins';
+import { IPluginsConfig } from '../../../plugins';
 import { IServerConfig } from '../../config/IServerConfig';
 import { IMiddlewareProvider, IMiddlewares } from '../middleware';
 import { IPreStartHooks, IPreStartHooksProvider } from '../pre-start-hooks';
@@ -26,7 +26,6 @@ export default class Server implements IServer {
     private readonly routesProvider: IRoutesProvider,
     private readonly middlewareProvider: IMiddlewareProvider,
     private readonly preStartHooksProvider: IPreStartHooksProvider,
-    private readonly pluginProvider: IPluginProvider,
     private readonly middleware: IMiddlewares = new Set(),
     private readonly routes: IRoutes = new Set(),
     private readonly preStartHooks: IPreStartHooks = new Set(),
