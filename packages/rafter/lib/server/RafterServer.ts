@@ -1,8 +1,9 @@
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { join } from 'path';
+import { IService } from '../vendor';
 import { IRafter } from '../IRafter';
-import { IRafterServer } from './IRafterServer';
 import { IServer } from './common/server';
+import { IRafterServer } from './IRafterServer';
 
 export const SERVER_CORE_LIB_DIRECTORIES: string[] = ['common', 'vendor'];
 
@@ -65,7 +66,11 @@ export class RafterServer implements IRafterServer {
     throw new Error('Rafter::stop the server has not been started');
   }
 
-  public async get<T>(serviceName: string): Promise<T> {
+  public get<T>(serviceName: string): T {
     return this.rafter.get<T>(serviceName);
+  }
+
+  public register<T>(name: string, service: IService<T>): void {
+    return this.rafter.register<T>(name, service);
   }
 }

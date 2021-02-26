@@ -1,5 +1,6 @@
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { join } from 'path';
+import { IService } from '../vendor';
 import { IRafter } from '../IRafter';
 import { IRafterServerless } from './IRafterServerless';
 
@@ -44,7 +45,11 @@ export class RafterServerless implements IRafterServerless {
     await this.rafter.stop();
   }
 
-  public async get<T>(serviceName: string): Promise<T> {
+  public get<T>(serviceName: string): T {
     return this.rafter.get<T>(serviceName);
+  }
+
+  public register<T>(name: string, service: IService<T>): void {
+    return this.rafter.register<T>(name, service);
   }
 }

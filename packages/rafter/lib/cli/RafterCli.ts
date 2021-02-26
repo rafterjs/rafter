@@ -1,6 +1,7 @@
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { join } from 'path';
 import { IRafter } from '../IRafter';
+import { IService } from '../vendor';
 import { IRafterCli } from './IRafterCli';
 
 export const CLI_CORE_LIB_DIRECTORIES: string[] = [];
@@ -44,7 +45,11 @@ export class RafterCli implements IRafterCli {
     await this.rafter.stop();
   }
 
-  public async get<T>(serviceName: string): Promise<T> {
+  public get<T>(serviceName: string): T {
     return this.rafter.get<T>(serviceName);
+  }
+
+  public register<T>(name: string, service: IService<T>): void {
+    return this.rafter.register<T>(name, service);
   }
 }

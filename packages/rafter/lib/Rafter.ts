@@ -1,4 +1,4 @@
-import { IDiAutoloader, IMergableFileNames, IPath, IPaths } from '@rafterjs/di-autoloader';
+import { IDiAutoloader, IMergableFileNames, IPath, IPaths, IService } from '@rafterjs/di-autoloader';
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { GlobWithOptions } from 'awilix';
 import { join } from 'path';
@@ -83,8 +83,12 @@ export class Rafter implements IRafter {
     return this.diAutoloader.unregister();
   }
 
-  public async get<T>(serviceName: string): Promise<T> {
+  public get<T>(serviceName: string): T {
     return this.diAutoloader.get<T>(serviceName);
+  }
+
+  public register<T>(name: string, service: IService<T>): void {
+    this.diAutoloader.register<T>(name, service);
   }
 
   private getPathsWithSuffix(paths: IPaths = []): IPaths {
