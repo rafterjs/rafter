@@ -54,12 +54,12 @@ export class Rafter implements IRafter {
     this.diAutoloader.registerValue('diAutoloader', this.diAutoloader);
     this.diAutoloader.registerValue('logger', this.logger);
 
-    const appPaths = [this.corePath, ...this.paths];
-    const allPathsWithSuffix = this.getPathsWithSuffix(appPaths);
-    const pluginPaths = await this.getPluginPaths(allPathsWithSuffix);
+    const corePathsWithSuffix = this.getPathsWithSuffix([this.corePath]);
+    const appPathsWithSuffix = this.getPathsWithSuffix(this.paths);
+    const pluginPaths = await this.getPluginPaths([...corePathsWithSuffix, ...appPathsWithSuffix]);
     const pluginPathsWithSuffix = this.getPathsWithSuffix(pluginPaths);
 
-    const allPaths = [...pluginPathsWithSuffix, ...allPathsWithSuffix];
+    const allPaths = [...corePathsWithSuffix, ...pluginPathsWithSuffix, ...appPathsWithSuffix];
 
     this.logger.info(`Loading dependencies from: `, allPaths);
 
