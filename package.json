@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "yarn install && lerna bootstrap --npm-client=yarn -- --force",
-    "start": "node packages/watcher/dist/index.js \"yarn start:boilerplate\"",
+    "start": "node packages/watcher/dist/index.js \"yarn start:boilerplate\" -i \"**/node_modules/*\" -i \"**/*spec*\" -i \"**/dist/*\"",
     "start:boilerplate": "cd packages/boilerplate && yarn start",
     "clean": "lerna clean -y",
     "clean:lib": "lerna run clean:lib",

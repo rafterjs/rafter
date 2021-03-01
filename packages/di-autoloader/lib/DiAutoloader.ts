@@ -116,9 +116,11 @@ export class DiAutoloader implements IDiAutoloader {
         (specialFile1 instanceof Array && specialFile2 instanceof Array) ||
         (specialFile1 instanceof Set && specialFile2 instanceof Set)
       ) {
-        mergedFile = new MergableFileSet([...specialFile1, ...specialFile2]);
+        // adding the last items first ensures they are not overridden since this is a Set.
+        mergedFile = new MergableFileSet([...specialFile2, ...specialFile1]);
       } else {
-        mergedFile = merge(specialFile2, specialFile1);
+        // override the values of 1 from 2
+        mergedFile = merge(specialFile1, specialFile2);
       }
       this.logger.debug(`Deep merged file:`, mergedFile);
 
