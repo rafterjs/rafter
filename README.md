@@ -49,11 +49,7 @@ _MyService.ts_
 
 ```typescript
 class MyService {
-  private logger: ILogger;
-
-  constructor(logger: ILogger) {
-    this.logger = logger;
-  }
+  constructor(private readonly logger: ILogger) {}
 
   public run(): void {
     this.logger.log('I have been autowired');
@@ -221,13 +217,7 @@ export { connect, find };
 
 ```typescript
 export default class DbDao {
-  private db: IDatabaseDao;
-  private config: { connectionUrl: string };
-
-  constructor(db: IDatabaseDao, config: { connectionUrl: string }) {
-    this.db = db;
-    this.config = config;
-  }
+  constructor(private readonly db: IDatabaseDao, private readonly config: { connectionUrl: string }) {}
 
   public async connect(): Promise<IDatabaseConnection> {
     return this.db.connect(this.config.connectionUrl);
@@ -261,14 +251,7 @@ We have the following service with the filename: `lib/CommentManager.ts`
 
 ```typescript
 export default class CommentManager {
-  private readonly dbDao: DbDao;
-
-  private readonly logger: ILogger;
-
-  constructor(dbDao: DbDao, logger: ILogger) {
-    this.dbDao = dbDao;
-    this.logger = logger;
-  }
+  constructor(private readonly dbDao: DbDao, private readonly logger: ILogger) {}
 
   public async getComment(id: string): Promise<Comment> {
     this.logger.info(`Getting comment for id: ${id}`);
@@ -282,11 +265,7 @@ If we want to inject the `CommentManager` into another service we must name the 
 
 ```typescript
 export default class CommentController {
-  private readonly commentManager: CommentManager;
-
-  constructor(commentManager: CommentManager) {
-    this.commentManager = commentManager;
-  }
+  constructor(private readonly commentManager: CommentManager) {}
 
   public async index(request: IRequest, response: IResponse): Promise<void> {
     const comment = await this.commentManager.getComment(1);
