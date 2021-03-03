@@ -6,15 +6,9 @@ import { TestConfig2 } from '../config/config';
 import TestFunction from './TestFunction';
 
 class TestClass {
-  private readonly config: TestConfig2;
-
-  private readonly testFunction: typeof TestFunction;
-
   private readonly data: string;
 
-  constructor(config: TestConfig2, testFunction: typeof TestFunction) {
-    this.config = config;
-    this.testFunction = testFunction;
+  constructor(private readonly config: TestConfig2, private readonly testFunction: typeof TestFunction) {
     this.data = `here's some data`;
   }
 

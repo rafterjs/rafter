@@ -5,8 +5,8 @@ export type TestConfig2 = {
 
 export const config2 = (): TestConfig2 => {
   return {
-    bar: 'bar not overridden',
-    foo: 'foo not overridden',
+    bar: 'bar 2',
+    foo: 'foo 1',
   };
 };
 

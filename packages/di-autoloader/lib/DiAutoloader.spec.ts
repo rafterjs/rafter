@@ -2,7 +2,6 @@ import { ILogger } from '@rafterjs/logger-plugin';
 import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import { join } from 'path';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { stubInterface } from 'ts-sinon';
 import { IRoutes } from '../../rafter/lib';
 import { config2, TestConfig2 } from '../test/fixtures/full/config/config';
@@ -31,7 +30,7 @@ describe('DI Autoloader', () => {
   });
 
   describe('load', () => {
-    it('successfully register configs', async () => {
+    it('successfully merges configs with the last added overriding the first', async () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
       const configMap1 = new Map();
       configMap1.set('config', config1);
@@ -41,11 +40,11 @@ describe('DI Autoloader', () => {
       await diAutoloader.registerMergableFiles(configMap2);
 
       const testConfig = diAutoloader.get<TestConfig1 & TestConfig2>('config');
-      expect(testConfig.foo).toBe('foo not overridden');
-      expect(testConfig.bar).toBe('bar overridden');
+      expect(testConfig.foo).toBe('foo 1');
+      expect(testConfig.bar).toBe('bar 2');
     });
 
-    it('successfully merge routes', async () => {
+    it('successfully merge and dedupe routes', async () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
       const routeMap1 = new Map();
       routeMap1.set('routes', routes1());
@@ -79,7 +78,7 @@ describe('DI Autoloader', () => {
 
       expect(testClass).toBeInstanceOf(TestClass);
       expect(testClass.getData()).toBe(`here's some data`);
-      expect(testClass.getBar()).toBe('bar overridden');
+      expect(testClass.getBar()).toBe('bar 1');
       expect(testClass.getFunction()).toBeInstanceOf(Function);
       expect(testClass.getFunction()()).toBe('This is a function');
     });
