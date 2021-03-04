@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/cors-plugin",
-  "version": "0.7.0-alpha.0",
+  "version": "0.7.0",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,12 +25,12 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
+    "@rafterjs/logger-plugin": "^0.7.0",
     "cors": "2.8.5"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",
-    "@rafterjs/eslint-config": "^0.7.0-alpha.0",
+    "@rafterjs/babel-preset-rafter": "^0.7.0",
+    "@rafterjs/eslint-config": "^0.7.0",
     "@types/cors": "2.8.10"
   },
   "description": "A simple CORS plugin",
