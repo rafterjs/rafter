@@ -4,7 +4,7 @@ export type TestConfig1 = {
 
 export const config1 = (): TestConfig1 => {
   return {
-    bar: 'bar overridden',
+    bar: 'bar 1',
   };
 };
 

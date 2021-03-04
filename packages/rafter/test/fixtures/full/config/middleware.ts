@@ -1,4 +1,4 @@
-import { IMiddlewareConfig } from '../../../../lib/common/middleware';
+import { IMiddlewareConfig } from '../../../../lib/server/common/middleware';
 
 const middleware = (): IMiddlewareConfig[] => ['requestLogger'];
 

@@ -4,7 +4,7 @@ import { Constructor, FunctionReturning } from 'awilix';
 import { IService } from './IService';
 
 export type IMergableFileFunction = () => Record<string, unknown> | Array<unknown>;
-export type IMergableFile = Record<string, unknown> | Array<unknown> | IMergableFileFunction;
+export type IMergableFile = Record<string, unknown> | Array<unknown> | Set<unknown> | IMergableFileFunction;
 export type IMergableFiles = Map<string, IMergableFile>;
 export type IMergableFileNames = string[];
 export type IPath = string | GlobWithOptions;
@@ -30,6 +30,8 @@ export interface IDiAutoloader {
   get<T>(name: string): T;
 
   list(paths: IPaths): ModuleDescriptor[];
+
+  unregister(): Promise<void>;
 
   register<T>(name: string, service: IService<T>): void;
 

@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/di-autoloader",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha.6",
   "author": "Josh Stuart <joshstuartx@gmail.com>",
   "description": "An autoloading DI container",
   "keywords": [
@@ -19,12 +19,8 @@
     "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
-    "format": "prettier --write \"{lib,test}/**/*.{js,jsx,ts,tsx}\"",
-    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build && yarn touch\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest --notify",
-    "touch": "yarn touch:rafter",
-    "touch:rafter": "nodetouch ../rafter/lib/index.ts",
     "types": "tsc"
   },
   "repository": {
@@ -36,15 +32,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.6.0",
+    "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
     "awilix": "4.3.3",
     "is-class": "0.0.9",
     "lodash": "4.17.21",
     "ts-deepmerge": "1.0.6"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0"
+    "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",
+    "@rafterjs/eslint-config": "^0.7.0-alpha.0"
   },
   "engines": {
     "node": ">=9"

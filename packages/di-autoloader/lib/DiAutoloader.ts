@@ -1,10 +1,10 @@
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
-import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { ILogger } from '@rafterjs/logger-plugin';
+import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
+import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
+import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
 import merge from 'ts-deepmerge';
-import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
 import {
   IDiAutoloader,
   ILoadOptions,
@@ -15,6 +15,7 @@ import {
 } from './IDiAutoloader';
 import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
+import { MergableFileSet } from './MergableFileSet';
 
 export class DiAutoloader implements IDiAutoloader {
   private mergableFiles: IMergableFiles = new Map();
@@ -88,6 +89,10 @@ export class DiAutoloader implements IDiAutoloader {
     this.container.register(name, asValue(service));
   }
 
+  public async unregister(): Promise<void> {
+    return this.container.dispose();
+  }
+
   private formatName(name: string): string {
     return camelCase(name);
   }
@@ -107,10 +112,15 @@ export class DiAutoloader implements IDiAutoloader {
     if (specialFile1 && specialFile2) {
       let mergedFile: IMergableFile;
       this.logger.debug(`Deep merging two files:`, specialFile2, specialFile1);
-      if (specialFile1 instanceof Array && specialFile2 instanceof Array) {
-        mergedFile = specialFile1.concat(specialFile2);
+      if (
+        (specialFile1 instanceof Array && specialFile2 instanceof Array) ||
+        (specialFile1 instanceof Set && specialFile2 instanceof Set)
+      ) {
+        // adding the last items first ensures they are not overridden since this is a Set.
+        mergedFile = new MergableFileSet([...specialFile2, ...specialFile1]);
       } else {
-        mergedFile = merge(specialFile2, specialFile1);
+        // override the values of 1 from 2
+        mergedFile = merge(specialFile1, specialFile2);
       }
       this.logger.debug(`Deep merged file:`, mergedFile);
 

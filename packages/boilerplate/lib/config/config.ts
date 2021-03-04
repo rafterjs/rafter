@@ -1,6 +1,6 @@
-import { IRafterServerConfig } from 'rafter';
+import { IServerConfig } from 'rafter';
 
-export type BoilerplateConfig = IRafterServerConfig & {
+export type BoilerplateConfig = IServerConfig & {
   message: string;
   api: {
     version: string;

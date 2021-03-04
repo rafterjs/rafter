@@ -1,6 +1,6 @@
 {
   "name": "rafter",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha.6",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -18,30 +18,27 @@
   "scripts": {
     "build": "yarn build:lib && yarn build:types",
     "buildonly": "yarn build:lib",
-    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn buildonly && yarn touch\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest --notify ./lib",
-    "touch": "yarn touch:boilerplate",
-    "touch:boilerplate": "nodetouch ../boilerplate/lib/index.ts",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/di-autoloader": "^0.6.0",
-    "@rafterjs/logger-plugin": "^0.6.0",
+    "@rafterjs/di-autoloader": "^0.7.0-alpha.6",
+    "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
     "awilix": "4.3.3",
     "express": "4.17.1",
+    "find-node-modules": "2.1.2",
     "recursive-readdir": "2.2.2",
     "require-resolve": "0.0.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0"
+    "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",
+    "@rafterjs/eslint-config": "^0.7.0-alpha.0"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./dist/index.js",

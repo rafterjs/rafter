@@ -49,11 +49,7 @@ _MyService.ts_
 
 ```typescript
 class MyService {
-  private logger: ILogger;
-
-  constructor(logger: ILogger) {
-    this.logger = logger;
-  }
+  constructor(private readonly logger: ILogger) {}
 
   public run(): void {
     this.logger.log('I have been autowired');
@@ -101,7 +97,7 @@ The middleware file (`middleware.js`) exports an array of service name reference
 order in which they were defined. eg.
 
 ```typescript
-export default (): IMiddlewareConfig[] => [`corsMiddleware`, `authenticationMiddleware`];
+export default (): IMiddlewares => new Set<IMiddlewareConfig>([`corsMiddleware`, `authenticationMiddleware`]);
 ```
 
 #### Routes
@@ -110,14 +106,15 @@ The routes file (`routes.ts`) exports an array of objects which define the http 
 eg.
 
 ```typescript
-export default (): IRouteConfig[] => [
-  {
-    endpoint: `/`,
-    controller: `exampleController`,
-    action: `index`,
-    method: `get`,
-  },
-];
+export default (): IRoutes =>
+  new Set<IRouteConfig>([
+    {
+      endpoint: `/`,
+      controller: `exampleController`,
+      action: `index`,
+      method: `get`,
+    },
+  ]);
 ```
 
 This would call `exampleController.index(req, res)` when the route `GET /` is hit. `exampleController` will be the name
@@ -129,7 +126,7 @@ The routes file (`pre-start-hooks.js`) exports an array of service references th
 started, in the order in which they were defined. This is useful for instantiating DB connections, logging etc.
 
 ```typescript
-export default (): IPreStartHookConfig[] => [`connectDbService`];
+export default (): IPreStartHooks => new Set<IPreStartHookConfig>([`connectDbService`]);
 ```
 
 An example of the `connectDbService` pre start hook would be:
@@ -220,13 +217,7 @@ export { connect, find };
 
 ```typescript
 export default class DbDao {
-  private db: IDatabaseDao;
-  private config: { connectionUrl: string };
-
-  constructor(db: IDatabaseDao, config: { connectionUrl: string }) {
-    this.db = db;
-    this.config = config;
-  }
+  constructor(private readonly db: IDatabaseDao, private readonly config: { connectionUrl: string }) {}
 
   public async connect(): Promise<IDatabaseConnection> {
     return this.db.connect(this.config.connectionUrl);
@@ -260,14 +251,7 @@ We have the following service with the filename: `lib/CommentManager.ts`
 
 ```typescript
 export default class CommentManager {
-  private readonly dbDao: DbDao;
-
-  private readonly logger: ILogger;
-
-  constructor(dbDao: DbDao, logger: ILogger) {
-    this.dbDao = dbDao;
-    this.logger = logger;
-  }
+  constructor(private readonly dbDao: DbDao, private readonly logger: ILogger) {}
 
   public async getComment(id: string): Promise<Comment> {
     this.logger.info(`Getting comment for id: ${id}`);
@@ -281,11 +265,7 @@ If we want to inject the `CommentManager` into another service we must name the 
 
 ```typescript
 export default class CommentController {
-  private readonly commentManager: CommentManager;
-
-  constructor(commentManager: CommentManager) {
-    this.commentManager = commentManager;
-  }
+  constructor(private readonly commentManager: CommentManager) {}
 
   public async index(request: IRequest, response: IResponse): Promise<void> {
     const comment = await this.commentManager.getComment(1);

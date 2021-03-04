@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/mongodb-plugin",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha.0",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -21,17 +21,15 @@
     "build:config": "babel config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
-    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
-    "start:dev": "nodemon -e ts --watch \"./lib/**/*.ts\" --exec \"yarn build\""
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.6.0",
+    "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
     "mongodb": "3.6.4"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0",
+    "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",
+    "@rafterjs/eslint-config": "^0.7.0-alpha.0",
     "@types/mongodb": "3.6.8"
   },
   "description": "A simple mongodb plugin",

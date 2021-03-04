@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IController } from '../../../../lib/common/router';
+import { IController } from '../../../../lib/server/common/router';
 
 type IHomeController = IController;
 

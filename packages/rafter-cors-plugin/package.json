@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/cors-plugin",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha.0",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -21,18 +21,16 @@
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
-    "format": "prettier --write \"lib/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",
-    "start:dev": "nodemon -e ts --watch \"./**/*.ts\" --exec \"yarn build\"",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.6.0",
+    "@rafterjs/logger-plugin": "^0.7.0-alpha.0",
     "cors": "2.8.5"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.6.0",
-    "@rafterjs/eslint-config": "^0.6.0",
+    "@rafterjs/babel-preset-rafter": "^0.7.0-alpha.0",
+    "@rafterjs/eslint-config": "^0.7.0-alpha.0",
     "@types/cors": "2.8.10"
   },
   "description": "A simple CORS plugin",
