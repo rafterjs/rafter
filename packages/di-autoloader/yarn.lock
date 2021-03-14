@@ -340,10 +340,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-ts-deepmerge@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/ts-deepmerge/-/ts-deepmerge-1.0.6.tgz#228b213d4eed7a7c337bb4f561982dde2af9447c"
-  integrity sha512-ryWj3fZ9zlXvfHQqpvh+XqxbZWWOKIB+sXSQ6uj9k+mKggLm/D8QPlUbxW1hieMcMKEWX9ZkldIi9iuu7C1zgg==
+ts-deepmerge@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/ts-deepmerge/-/ts-deepmerge-1.0.7.tgz#8931501f750b3fb4d1e564d6753063fa3ed05298"
+  integrity sha512-zJInx1VKRn9S20n80P8/G19Xrov4xtcNFEUH0GwPfIUr24U/bNiw+I1X2RmQsnL2n0KT/7HQ6L5fbDuE7by/zw==
 
 tslib@^2.0.3:
   version "2.1.0"
