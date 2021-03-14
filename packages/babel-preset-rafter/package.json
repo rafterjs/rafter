@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/babel-preset-rafter",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -27,6 +27,7 @@
   "dependencies": {
     "@babel/cli": "7.13.10",
     "@babel/core": "7.13.10",
+    "@babel/eslint-parser": "7.13.10",
     "@babel/helper-plugin-utils": "7.13.0",
     "@babel/node": "7.13.10",
     "@babel/plugin-proposal-class-properties": "7.13.0",
@@ -37,17 +38,16 @@
     "@babel/preset-typescript": "7.13.0",
     "@babel/register": "7.13.8",
     "@babel/runtime-corejs2": "7.13.10",
-    "@babel/eslint-parser": "7.13.10",
     "babel-jest": "26.6.3"
   },
   "devDependencies": {
-    "@rafterjs/eslint-config": "^0.7.0"
+    "@rafterjs/eslint-config": "^0.7.1"
   },
   "peerDependencies": {
     "@babel/cli": ">=7.13.0",
     "@babel/core": ">=7.13.0",
-    "@babel/node": ">=7.13.0",
     "@babel/eslint-parser": ">=7.13.0",
+    "@babel/node": ">=7.13.0",
     "babel-jest": ">=26.6.3"
   },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
