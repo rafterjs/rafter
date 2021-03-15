@@ -31,7 +31,8 @@
     "@rafterjs/di-autoloader": "^0.7.1",
     "@rafterjs/logger-plugin": "^0.7.1",
     "awilix": "4.3.3",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "find-node-modules": "2.1.2"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.7.1",
