@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.7.1",
-    "mongodb": "3.6.4"
+    "mongodb": "3.6.6"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.7.1",
     "@rafterjs/eslint-config": "^0.7.1",
-    "@types/mongodb": "3.6.9"
+    "@types/mongodb": "3.6.12"
   },
   "description": "A simple mongodb plugin",
   "main": "./dist/lib/mongoDb.js",
