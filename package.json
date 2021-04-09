@@ -43,7 +43,7 @@
   "dependencies": {
     "dot-prop": "6.0.1",
     "is-class": "0.0.9",
-    "lerna-dependency-graph": "1.0.2"
+    "lerna-dependency-graph": "1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "7.13.10",
