@@ -1,5 +1,6 @@
 {
-  "name": "rafter",
+  "name": "@rafterjs/simple-app",
+  "private": true,
   "version": "0.7.2",
   "contributors": [
     {
@@ -16,32 +17,31 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn build:lib && yarn build:types",
-    "buildonly": "yarn build:lib",
-    "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build": "yarn build:lib && yarn build:config && yarn build:types",
+    "build:config": "babel --include-dotfiles lib/config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
+    "build:rafter": "cd ../ && yarn build:rafter",
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "test": "jest --notify ./lib",
-    "types": "tsc",
+    "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",
+    "start": "node ./dist/lib/index.js",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
+    "@rafterjs/cors-plugin": "^0.7.1",
     "@rafterjs/di-autoloader": "^0.7.1",
     "@rafterjs/logger-plugin": "^0.7.1",
-    "awilix": "4.3.3",
-    "express": "4.17.1",
-    "find-node-modules": "2.1.2"
+    "rafter": "^0.7.2"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.7.1",
     "@rafterjs/eslint-config": "^0.7.1"
   },
-  "description": "A slightly opinionated JS framework that makes building apps easy and testable",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "description": "A simple example app to start new projects",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
   "engines": {
     "node": ">=14"
   },

@@ -6,13 +6,13 @@ import { dirname, join } from 'path';
 import { IPlugin } from './IPlugin';
 
 export interface IPluginPathProvider {
-  createInstance(pluginConfig: IPlugin): Promise<IPath>;
+  getPath(pluginConfig: IPlugin): Promise<IPath>;
 }
 
 export class PluginPathProvider implements IPluginPathProvider {
   constructor(private readonly logger: ILogger = loggerFactory('plugin path provider')) {}
 
-  public async createInstance(pluginName: IPlugin): Promise<IPath> {
+  public async getPath(pluginName: IPlugin): Promise<IPath> {
     const pluginPath = await this.getPluginPath(pluginName);
 
     if (pluginPath) {
@@ -24,7 +24,6 @@ export class PluginPathProvider implements IPluginPathProvider {
 
   private async getPluginPath(pluginName: string): Promise<string | undefined> {
     let pluginPath;
-
     if (require.main?.path) {
       const modulesPath: string[] = findNodeModules({ relative: false, cwd: join(require.main?.path) });
 
@@ -32,7 +31,7 @@ export class PluginPathProvider implements IPluginPathProvider {
 
       pluginPath = this.getValidPackagePath(packageJsonPaths);
     } else {
-      pluginPath = require.resolve(pluginName);
+      pluginPath = join(dirname(require.resolve(pluginName)), '**');
     }
 
     return pluginPath;

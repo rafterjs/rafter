@@ -1,0 +1,34 @@
+{
+  "name": "@rafterjs/utils",
+  "description": "Common utils",
+  "version": "0.7.1",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:lib && npm run build:index && npm run build:types",
+    "build:lib": "babel ./lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@rafterjs/logger-plugin": "0.7.1",
+    "axios": "0.21.1",
+    "luxon": "1.26.0",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.7.1",
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@rafterjs/test": "^0.7.1",
+    "@types/axios": "0.14.0",
+    "@types/luxon": "1.26.2",
+    "@types/uuid": "8.3.0"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

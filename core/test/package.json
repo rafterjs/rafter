@@ -1,0 +1,31 @@
+{
+  "name": "@rafterjs/test",
+  "description": "Testing utils and helpers",
+  "version": "0.7.1",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:lib && npm run build:index && npm run build:types",
+    "build:lib": "babel ./lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" ./babel.config.js",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "node-fetch": "2.6.1",
+    "stubby": "5.1.0",
+    "ts-sinon": "2.0.1"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.7.1",
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@rafterjs/logger-plugin": "^0.7.1",
+    "@types/node-fetch": "2.5.8"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

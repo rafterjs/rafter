@@ -44,7 +44,7 @@
     "watch": "./dist/index.js"
   },
   "engines": {
-    "node": ">=9"
+    "node": ">=14"
   },
   "gitHead": "cec73cfa8cbfe5bd8422f1ea53f1711330514cc3"
 }

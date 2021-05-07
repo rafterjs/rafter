@@ -4,20 +4,26 @@
   "scripts": {
     "bootstrap": "yarn install && lerna bootstrap --npm-client=yarn -- --force",
     "start": "node core/watcher/dist/index.js \"yarn start:boilerplate\" -i \"**/node_modules/*\" -i \"**/*spec*\" -i \"**/dist/*\"",
-    "start:boilerplate": "cd examples/boilerplate && yarn start",
+    "start:example:app": "cd examples/simple-app && yarn start",
+    "start:example:app:watch": "yarn watch \"yarn start:example:app\"",
+    "start:example:api": "cd examples/simple-api && yarn start",
+    "start:example:api:watch": "yarn watch \"yarn start:example:api\" -i \"**/*steps*\" -i \"**/*node_modules*\" -i \"**/*spec*\" -i \"**/dist\"",
+    "watch": "node ./core/watcher/dist/index.js",
     "clean": "lerna clean -y",
     "clean:lib": "lerna run clean:lib",
     "build": "lerna run build",
     "build:package": "lerna run build --stream --scope",
     "build:watcher": "yarn build:package @rafterjs/watcher",
-    "build:boilerplate": "cd examples/boilerplate && yarn build",
-    "build:local:all": "yarn build:babel && yarn build:di-autoloader && yarn build:rafter && yarn build:rafter-cors-plugin",
-    "build:local:boilerplate": "yarn build:rafter && yarn build:rafter-cors-plugin && yarn build:boilerplate",
+    "build:example:app": "cd examples/simple-app && yarn build",
+    "build:example:api": "cd examples/simple-api && yarn build",
+    "build:api": "cd core/api && yarn build",
     "build:rafter": "cd core/rafter && yarn build",
     "build:cors": "cd plugins/rafter-cors-plugin && yarn build",
     "build:babel": "cd core/babel-preset-rafter && yarn build",
     "build:di-autoloader": "cd core/di-autoloader && yarn build",
     "build:logger": "cd plugins/rafter-logger-plugin && yarn build",
+    "build:test": "cd core/test && yarn build",
+    "build:utils": "cd core/utils && yarn build",
     "build:types": "lerna run build:types",
     "build:mongo": "cd plugins/rafter-mongodb-plugin && yarn build",
     "format": "yarn prettier && yarn lint:fix",
@@ -77,5 +83,8 @@
     "ts-mockito": "2.6.1",
     "ts-node": "9.1.1",
     "typescript": "4.2.4"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

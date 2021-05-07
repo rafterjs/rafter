@@ -43,7 +43,7 @@
     "@rafterjs/eslint-config": "^0.7.1"
   },
   "engines": {
-    "node": ">=9"
+    "node": ">=14"
   },
   "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
 }

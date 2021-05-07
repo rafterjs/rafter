@@ -1,7 +1,7 @@
 import { IDiAutoloader, IMergableFileNames, IPath, IPaths, IService } from '@rafterjs/di-autoloader';
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { GlobWithOptions } from 'awilix';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { IRafter } from './IRafter';
 import { IPluginPathProvider, IPlugins } from './plugins';
 
@@ -107,7 +107,8 @@ export class Rafter implements IRafter {
         this.logger.debug(`   Found plugin configs`, plugins);
         for (const plugin of plugins) {
           try {
-            const path = await this.pluginPathProvider.createInstance(plugin);
+            const path = await this.pluginPathProvider.getPath(plugin);
+            console.log('----------------', path, dirname(`${path}`));
             this.logger.debug(`    The plugin ${plugin} is located in ${path}`);
             pluginPaths.add(path);
           } catch (error) {
