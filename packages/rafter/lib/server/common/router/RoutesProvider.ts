@@ -30,19 +30,17 @@ export default class RoutesProvider implements IRoutesProvider {
   }
 
   private applyRoutes(router: IRouter, routes: RouteDto[]): void {
-    Object.values(routes).forEach(
-      async (route): Promise<void> => {
-        const controller = route.getController();
+    Object.values(routes).forEach(async (route): Promise<void> => {
+      const controller = route.getController();
 
-        // add the route to the router
-        if (router[route.getMethod()]) {
-          router[route.getMethod()](route.getEndpoint(), controller.bind(controller));
+      // add the route to the router
+      if (router[route.getMethod()]) {
+        router[route.getMethod()](route.getEndpoint(), controller.bind(controller));
 
-          this.logger.info(`    Added route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
-        } else {
-          this.logger.error(`    Failed to add route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
-        }
-      },
-    );
+        this.logger.info(`    Added route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
+      } else {
+        this.logger.error(`    Failed to add route: ${route.getMethod().toUpperCase()} ${route.getEndpoint()}`);
+      }
+    });
   }
 }

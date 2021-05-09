@@ -33,14 +33,15 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.7.1",
-    "awilix": "4.3.3",
+    "awilix": "4.3.4",
     "is-class": "0.0.9",
     "lodash": "4.17.21",
     "ts-deepmerge": "1.0.7"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.7.1",
-    "@rafterjs/eslint-config": "^0.7.1"
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@types/glob": "7.1.3"
   },
   "engines": {
     "node": ">=9"
