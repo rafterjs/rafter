@@ -1,13 +1,14 @@
-import { Server } from '@rafterjs/api';
+import rafter from 'rafter';
 import { logger } from '@rafterjs/logger-plugin';
 import { join } from 'path';
 
 const paths = [join(__dirname, `{lib,config}/**/`)];
-const server = new Server({ paths });
+
+const server = rafter({ paths });
 
 async function run(): Promise<void> {
   try {
-    logger.info(`Starting the simple rafter api`);
+    logger.info(`Starting the simple rafter app`);
     await server.start();
   } catch (error) {
     logger.error(error);

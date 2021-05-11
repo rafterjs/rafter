@@ -1,6 +1,6 @@
 import { IController } from 'rafter';
 import { Request, Response } from 'express';
-import { SimpleExampleAppConfig } from '../config/config';
+import { SimpleExampleAppConfig } from '../../config/config';
 
 type IOtherController = IController;
 export default class OtherController implements IOtherController {

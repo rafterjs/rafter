@@ -8,6 +8,9 @@
 - [ ] "create react app" style boilerplate
 - [x] Example of middleware being autoloaded
 - [x] Example of a "simple" app with autoloading
+- [x] Example of an api with autoloading
+- [ ] Create an openapi plugin for @rafterjs/api
+- [ ] Create a serverless / aws lamda version of rafter
 - [ ] Example of a "modern" app eg using React, GraphQL Api
 - [ ] Create CI pipelines for PRs
 - [ ] Create CI pipelines for docs releases

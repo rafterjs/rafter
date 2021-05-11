@@ -108,7 +108,6 @@ export class Rafter implements IRafter {
         for (const plugin of plugins) {
           try {
             const path = await this.pluginPathProvider.getPath(plugin);
-            console.log('----------------', path, dirname(`${path}`));
             this.logger.debug(`    The plugin ${plugin} is located in ${path}`);
             pluginPaths.add(path);
           } catch (error) {

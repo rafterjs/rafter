@@ -11,17 +11,19 @@ import { METHODS } from './RouteMethodConstants';
 export class ConfigToRouteDtoTransformer implements ITransformer<IRoutes, RouteDto[]> {
   constructor(private readonly diAutoloader: IDiAutoloader) {}
 
-  private getControllerAction(controllerName: string, action: string): IControllerAction {
-    const controller = this.diAutoloader.get<IController>(controllerName);
-    const methods = Object.keys(controller);
+  private getControllerAction(controllerName: string, action?: string): IControllerAction {
+    const controller =
+      this.diAutoloader.get<(IController & { [key: string]: IControllerAction }) | IControllerAction>(controllerName);
 
-    if (methods.includes(action)) {
-      throw new Error(`Could not register the controller ${controllerName} with the action ${action}`);
+    if (controller instanceof Function) {
+      return controller;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return controller[action].bind(controller);
+    if (action && controller[action]) {
+      return controller[action].bind(controller) as IControllerAction;
+    }
+
+    throw Error(`Cannot create controller for ${controllerName} with action: ${action}`);
   }
 
   private convertSingle({ method = METHODS.get, endpoint, controller, action }: IRouteConfig): RouteDto {

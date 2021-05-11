@@ -1,6 +1,7 @@
 export * from './IJsonController';
 export * from './IJsonErrorResponse';
 export * from './IJsonResponse';
+export * from './IJsonResponseTransformer';
 export * from './JsonController';
 export * from './JsonErrorResponseDto';
 export * from './JsonResponseDto';

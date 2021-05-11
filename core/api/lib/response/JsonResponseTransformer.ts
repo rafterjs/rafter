@@ -6,8 +6,9 @@ import { IJsonError, IJsonErrorResponse } from './IJsonErrorResponse';
 import { IJsonResponse, IJsonResponseData, IJsonResponseLinks, IJsonResponseMeta } from './IJsonResponse';
 import { JsonErrorResponseDto } from './JsonErrorResponseDto';
 import { JsonResponseDto } from './JsonResponseDto';
+import { IJsonResponseTransformer } from './IJsonResponseTransformer';
 
-export class JsonResponseTransformer {
+export class JsonResponseTransformer implements IJsonResponseTransformer {
   constructor(private readonly httpContextHelper: HttpContextHelper, private readonly urlHelper: UrlHelper) {}
 
   public convert<T extends IJsonResponseData>(
@@ -30,6 +31,8 @@ export class JsonResponseTransformer {
         totalRecords: meta.totalRecords,
       };
     }
+
+    return undefined;
   }
 
   private convertLinks(request: IRequest): IJsonResponseLinks {

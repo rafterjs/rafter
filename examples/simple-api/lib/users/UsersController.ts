@@ -20,6 +20,7 @@ export default class UsersController extends JsonController implements IHomeCont
       new JsonResponseDto({
         message: 'This is the users endpoint',
         data: { name: 'Daniel Ricciardo', email: 'dan@mclaren.com' },
+        meta: { totalPages: 1, totalRecords: 1 },
         status: Status.SUCCESS,
       }),
     );

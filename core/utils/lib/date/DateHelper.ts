@@ -13,6 +13,7 @@ export type DateTimeOptions = LuxonDateTimeOptions;
 export type DateTimeJSOptions = LuxonDateTimeJSOptions;
 export type DateTimeFormatOptions = LuxonDateTimeFormatOptions;
 
+// eslint-disable-next-line no-shadow
 export enum DateFormats {
   YYYYMMDD = 'yyyy-MM-dd',
   YYYYMMDDhhmmss = 'yyyy-MM-dd HH:mm:ss.000',

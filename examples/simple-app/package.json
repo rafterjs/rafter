@@ -17,16 +17,15 @@
     "url": "https://github.com/joshystuart/rafter.git"
   },
   "scripts": {
-    "build": "yarn build:lib && yarn build:config && yarn build:types",
-    "build:config": "babel --include-dotfiles lib/config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:lib": "babel --include-dotfiles lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build": "yarn clean && yarn build:config && yarn build:lib && yarn build:index && yarn build:types",
+    "build:config": "babel ./config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:rafter": "cd ../ && yarn build:rafter",
-    "clean:lib": "rimraf ./dist",
-    "copy": "copyfiles ./package.json ./dist/package.json",
-    "lint": "eslint \"./lib/**/*\" lib/index.ts ./babel.config.js",
-    "start": "node ./dist/lib/index.js",
-    "update:latest": "yarn upgrade --latest"
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" \"./config/**/*\" ./babel.config.js",
+    "lint:fix": "yarn lint --fix",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "@rafterjs/cors-plugin": "^0.7.1",
@@ -39,9 +38,9 @@
     "@rafterjs/eslint-config": "^0.7.1"
   },
   "description": "A simple example app to start new projects",
-  "main": "./dist/lib/index.js",
-  "module": "./dist/lib/index.js",
-  "typings": "./dist/lib/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "engines": {
     "node": ">=14"
   },

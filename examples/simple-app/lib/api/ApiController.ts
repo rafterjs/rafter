@@ -2,9 +2,7 @@ import { IController } from 'rafter';
 import { Request, Response } from 'express';
 import { HomeControllerConfig } from './config';
 
-interface IApiController extends IController {
-  index(request: Request, response: Response): void;
-}
+type IApiController = IController;
 
 export default class ApiController implements IApiController {
   constructor(private readonly config: HomeControllerConfig) {}

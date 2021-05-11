@@ -1,11 +1,16 @@
 import { join } from 'path';
-import { IService, rafterServerFactory, IRafterServer } from 'rafter';
+import { IRafterServer, IService, rafterServerFactory } from 'rafter';
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
+
+export interface IServerProps {
+  paths?: string[];
+  logger?: ILogger;
+}
 
 export class Server {
   private readonly server: IRafterServer;
 
-  constructor(paths: string[] = [], logger: ILogger = loggerFactory('server')) {
+  constructor({ paths = [], logger = loggerFactory('server') }: IServerProps) {
     const apiPaths = [join(__dirname, `/../{lib,config}/**/`)];
 
     this.server = rafterServerFactory({

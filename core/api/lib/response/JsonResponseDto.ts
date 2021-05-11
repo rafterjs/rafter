@@ -1,23 +1,23 @@
 import { IJsonResponseData, IJsonResponseMeta } from './IJsonResponse';
 import { Status } from './StatusCodes';
 
-export type JsonResponseParams<T extends IJsonResponseData> = {
+export type JsonResponseParams<T extends IJsonResponseData, M = IJsonResponseMeta> = {
   message?: string;
   data?: T;
   status?: Status;
-  meta?: IJsonResponseMeta;
+  meta?: M;
 };
 
-export class JsonResponseDto<T extends IJsonResponseData> {
+export class JsonResponseDto<T extends IJsonResponseData, M = IJsonResponseMeta> {
   public readonly message?: string;
 
   public readonly data?: T;
 
-  public readonly meta?: IJsonResponseMeta;
+  public readonly meta?: M;
 
   public readonly status: Status;
 
-  constructor(params: JsonResponseParams<T>) {
+  constructor(params: JsonResponseParams<T, M>) {
     const { message, data, status = Status.SUCCESS, meta } = params;
     this.message = message;
     this.data = data;
