@@ -20,10 +20,10 @@ yarn add rafter
 ## Run
 
 ```
-yarn bootstrap & yarn build & yarn start:boilerplate
+yarn bootstrap & yarn build & yarn start:example:simple
 ```
 
-This will build and run the boilerplate project. You can access it via [http://localhost:3000](http://localhost:3000).
+This will build and run the simple example project. You can access it via [http://localhost:3000](http://localhost:3000).
 
 ## Building your own Rafter application
 
@@ -175,8 +175,8 @@ Once `start()` is called, Rafter will:
 7. Start the server.
 
 To see an example project, visit the [skeleton rafter app](https://github.com/joshystuart/rafter-skeleton-app)
-repository, or look at the included `boilerplate` application
-within [packages](https://github.com/joshystuart/rafter/tree/master/packages/boilerplate).
+repository, or look at the included `simple example` application
+within [packages](https://github.com/joshystuart/rafter/tree/master/examples/simple-app).
 
 # Going deeper
 

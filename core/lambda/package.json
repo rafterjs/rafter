@@ -1,0 +1,33 @@
+{
+  "name": "@rafterjs/lambda",
+  "description": "A serverless version of rafter",
+  "version": "0.7.2",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:config && npm run build:lib && npm run build:example && npm run build:index && npm run build:types",
+    "build:config": "babel config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:example": "babel example --out-dir dist/example --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" \"config/**/*\" ./babel.config.js",
+    "lint:fix": "yarn lint --fix",
+    "start": "node dist/example/index.js"
+  },
+  "dependencies": {
+    "@rafterjs/logger-plugin": "0.7.1",
+    "@rafterjs/utils": "0.7.1",
+    "rafter": "0.7.2"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.7.1",
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@rafterjs/test": "^0.7.1"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

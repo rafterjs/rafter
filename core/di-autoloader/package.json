@@ -1,0 +1,50 @@
+{
+  "name": "@rafterjs/di-autoloader",
+  "version": "0.7.1",
+  "author": "Josh Stuart <joshstuartx@gmail.com>",
+  "description": "An autoloading DI container",
+  "keywords": [
+    "di",
+    "factory",
+    "dependency injection",
+    "ioc",
+    "inversion of control",
+    "solid"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "yarn build:lib && yarn build:types",
+    "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean:lib": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
+    "test": "jest --notify",
+    "types": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshystuart/rafter.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@rafterjs/logger-plugin": "^0.7.1",
+    "awilix": "4.3.4",
+    "is-class": "0.0.9",
+    "lodash": "4.17.21",
+    "ts-deepmerge": "1.0.8"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.7.1",
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@types/glob": "7.1.3"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
+}
