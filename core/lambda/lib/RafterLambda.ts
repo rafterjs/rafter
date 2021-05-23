@@ -7,7 +7,7 @@ export interface IFunctionProps {
   logger?: ILogger;
 }
 
-export type ILambdaFunction = (...args: any[]) => void;
+export type ILambdaFunction = (...args: any[]) => void | Promise<void>;
 export type ILambdaFactoryFunction = (...args: any[]) => ILambdaFunction;
 
 const LAMBDA_FUNCTION_NAME = 'rafterLambda';
@@ -33,7 +33,7 @@ export async function rafterLambda(
 
   // execute
   try {
-    lambda();
+    await lambda();
   } catch (error) {
     logger?.error(`Failed to execute lambda`, error);
   } finally {

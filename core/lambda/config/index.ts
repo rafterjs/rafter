@@ -1,1 +1,1 @@
-export * from './IApiConfig';
+export * from './ILambdaConfig';

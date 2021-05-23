@@ -1,0 +1,48 @@
+{
+  "name": "@rafterjs/simple-lambda",
+  "private": true,
+  "version": "0.7.2",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshystuart/rafter.git"
+  },
+  "scripts": {
+    "build": "yarn clean && yarn build:config && yarn build:lib && yarn build:index && yarn build:types",
+    "build:config": "babel ./config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rimraf ./dist",
+    "lint": "eslint \"./lib/**/*\" \"./config/**/*\" ./babel.config.js",
+    "lint:fix": "yarn lint --fix",
+    "start": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "@rafterjs/lambda": "^0.7.1",
+    "@rafterjs/logger-plugin": "0.7.1",
+    "@rafterjs/utils": "^0.7.1",
+    "readline-sync": "1.4.10"
+  },
+  "devDependencies": {
+    "@rafterjs/babel-preset-rafter": "^0.7.1",
+    "@rafterjs/eslint-config": "^0.7.1",
+    "@types/readline-sync": "1.4.3"
+  },
+  "description": "A simple lambda example app",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/lib/index.js",
+  "typings": "./dist/lib/index.d.ts",
+  "engines": {
+    "node": ">=14"
+  }
+}

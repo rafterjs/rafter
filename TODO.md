@@ -8,8 +8,8 @@
 - [x] Example of middleware being autoloaded
 - [x] Example of a "simple" app with autoloading
 - [x] Example of an api with autoloading
-- [ ] Create @rafterjs/function ie. executes a single function with di
-- [ ] Create an aws lamda example of @rafterjs/function
+- [x] Create @rafterjs/function ie. executes a single function with di
+- [ ] Create an aws lamda example of @rafterjs/lambda
 - [ ] Example of a "modern" app eg using React, GraphQL Api
 - [ ] Create an openapi plugin for @rafterjs/api
 - [ ] Create CI pipelines for PRs
@@ -27,4 +27,4 @@
 - [ ] Create tests for existing services in CORE
 - [ ] Disambiguate DI `config` from plugin or app `config`
 - [ ] Restructure code into core, examples and plugins
-- [ ] Create a default export for @rafterjs/api
+- [x] Create a default export for @rafterjs/api
