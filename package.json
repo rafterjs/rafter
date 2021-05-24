@@ -40,7 +40,7 @@
     "lint:di-autoloader": "cd core/di-autoloader && yarn lint",
     "lint:eslint-config": "cd core/eslint-config && yarn lint",
     "lint:mongo": "cd plugins/rafter-mongodb-plugin && yarn lint -- --fix",
-    "test": "lerna run test",
+    "test": "lerna run test -- --ci --watchAll=false",
     "test:di-autoloader": "cd core/di-autoloader && yarn test",
     "test:rafter": "cd core/rafter && yarn test",
     "update:latest": "yarn upgrade --latest",
