@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/api",
   "description": "A JSON API server module for AEMO applications",
-  "version": "0.7.2",
+  "version": "0.8.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -17,21 +17,21 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "0.7.1",
-    "@rafterjs/utils": "0.7.1",
-    "@rafterjs/cors-plugin": "0.7.1",
+    "@rafterjs/cors-plugin": "^0.8.1",
+    "@rafterjs/logger-plugin": "^0.8.1",
+    "@rafterjs/utils": "^0.8.1",
     "@types/express": "4.17.11",
     "@types/express-serve-static-core": "4.17.19",
     "body-parser": "1.19.0",
     "express": "4.17.1",
     "express-http-context": "1.2.4",
     "helmet": "4.4.1",
-    "rafter": "0.7.2"
+    "rafter": "^0.8.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.7.1",
-    "@rafterjs/eslint-config": "^0.7.1",
-    "@rafterjs/test": "^0.7.1"
+    "@rafterjs/babel-preset-rafter": "^0.8.1",
+    "@rafterjs/eslint-config": "^0.8.1",
+    "@rafterjs/test": "^0.8.1"
   },
   "engines": {
     "node": ">=14"
