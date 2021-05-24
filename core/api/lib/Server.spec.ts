@@ -14,6 +14,7 @@ describe('Server', () => {
     it(`should successfully start the rafter server with default paths`, async () => {
       await server.start();
       expect(server).toBeDefined();
+      await server.stop();
     });
   });
 });
