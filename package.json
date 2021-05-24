@@ -47,7 +47,11 @@
     "test": "jest --ci --watchAll=false",
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest",
-    "graph": "lerna-dependency-graph"
+    "graph": "lerna-dependency-graph",
+    "lerna:publish": "lerna publish from-package",
+    "lerna:version": "lerna version --include-merged-tags --message 'chore(release): publish [skip ci]'",
+    "cz": "git-cz",
+    "cz:retry": "git-cz --retry"
   },
   "dependencies": {
     "dot-prop": "6.0.1",
@@ -57,6 +61,7 @@
   "devDependencies": {
     "@babel/cli": "7.14.3",
     "@babel/core": "7.14.3",
+    "@babel/eslint-parser": "7.14.3",
     "@babel/node": "7.14.2",
     "@types/express": "4.17.11",
     "@types/express-serve-static-core": "4.17.19",
@@ -69,9 +74,11 @@
     "@typescript-eslint/parser": "4.24.0",
     "axios": "0.21.1",
     "babel-core": "7.0.0-bridge.0",
-    "@babel/eslint-parser": "7.14.3",
     "babel-jest": "26.6.3",
+    "commitizen": "4.2.4",
+    "commitlint": "12.1.4",
     "copyfiles": "2.4.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.27.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "8.3.0",
@@ -82,12 +89,17 @@
     "nodemon": "2.0.7",
     "prettier": "2.3.0",
     "rimraf": "3.0.2",
-    "ts-sinon": "2.0.1",
     "ts-jest": "26.5.6",
     "ts-node": "9.1.1",
+    "ts-sinon": "2.0.1",
     "typescript": "4.2.4"
   },
   "engines": {
     "node": ">=14"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

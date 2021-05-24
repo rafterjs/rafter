@@ -27,6 +27,6 @@ jobs:
       - name: Test
         run: yarn test
       - name: Publish
-        run: yarn publish
+        run: yarn lerna:version && yarn lerna:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
