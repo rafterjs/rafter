@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/api",
   "description": "An API server that simplifies creating json apis with rafter",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -34,21 +34,21 @@
     "access": "public"
   },
   "dependencies": {
-    "@rafterjs/cors-plugin": "0.8.1",
-    "@rafterjs/logger-plugin": "0.8.1",
-    "@rafterjs/utils": "0.8.1",
+    "@rafterjs/cors-plugin": "^0.8.2",
+    "@rafterjs/logger-plugin": "^0.8.2",
+    "@rafterjs/utils": "^0.8.2",
     "@types/express": "4.17.11",
     "@types/express-serve-static-core": "4.17.19",
     "body-parser": "1.19.0",
     "express": "4.17.1",
     "express-http-context": "1.2.4",
     "helmet": "4.4.1",
-    "rafter": "0.8.1"
+    "rafter": "^0.8.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "0.8.1",
-    "@rafterjs/eslint-config": "0.8.1",
-    "@rafterjs/test": "0.8.1"
+    "@rafterjs/babel-preset-rafter": "^0.8.2",
+    "@rafterjs/eslint-config": "^0.8.2",
+    "@rafterjs/test": "^0.8.2"
   },
   "engines": {
     "node": ">=14"

@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/utils",
   "description": "Common utils",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -32,15 +32,15 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/utils",
   "dependencies": {
-    "@rafterjs/logger-plugin": "0.8.1",
+    "@rafterjs/logger-plugin": "^0.8.2",
     "axios": "0.21.1",
     "luxon": "1.27.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "0.8.1",
-    "@rafterjs/eslint-config": "0.8.1",
-    "@rafterjs/test": "0.8.1",
+    "@rafterjs/babel-preset-rafter": "^0.8.2",
+    "@rafterjs/eslint-config": "^0.8.2",
+    "@rafterjs/test": "^0.8.2",
     "@types/axios": "0.14.0",
     "@types/luxon": "1.26.2",
     "@types/uuid": "8.3.0"
