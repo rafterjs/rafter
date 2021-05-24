@@ -40,9 +40,9 @@
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.2",
     "@rafterjs/eslint-config": "^0.8.2",
-    "@rafterjs/test": "^0.8.2",
+    "@rafterjs/test": "0.8.2",
     "@types/axios": "0.14.0",
-    "@types/luxon": "1.26.2",
+    "@types/luxon": "1.26.5",
     "@types/uuid": "8.3.0"
   },
   "engines": {
