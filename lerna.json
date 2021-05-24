@@ -1,5 +1,9 @@
 {
-  "packages": ["core/*", "examples/*", "plugins/*"],
-  "version": "0.8.1",
+  "packages": [
+    "core/*",
+    "examples/*",
+    "plugins/*"
+  ],
+  "version": "0.8.2",
   "npmClient": "yarn"
 }

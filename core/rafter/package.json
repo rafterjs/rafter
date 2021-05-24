@@ -1,6 +1,6 @@
 {
   "name": "rafter",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -30,15 +30,15 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/di-autoloader": "0.8.1",
-    "@rafterjs/logger-plugin": "0.8.1",
+    "@rafterjs/di-autoloader": "^0.8.2",
+    "@rafterjs/logger-plugin": "^0.8.2",
     "awilix": "4.3.4",
     "express": "4.17.1",
     "find-node-modules": "2.1.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "0.8.1",
-    "@rafterjs/eslint-config": "0.8.1",
+    "@rafterjs/babel-preset-rafter": "^0.8.2",
+    "@rafterjs/eslint-config": "^0.8.2",
     "@types/glob": "7.1.3"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
@@ -48,5 +48,5 @@
   "engines": {
     "node": ">=14"
   },
-  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
+  "gitHead": "11da44fed33e1fbddfbb7bab5ca88116a58fcb70"
 }
