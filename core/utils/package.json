@@ -2,6 +2,16 @@
   "name": "@rafterjs/utils",
   "description": "Common utils",
   "version": "0.8.1",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,18 +22,25 @@
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "test": "jest --notify ./lib"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "core/utils"
+  },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/core/utils",
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
     "axios": "0.21.1",
-    "luxon": "1.26.0",
+    "luxon": "1.27.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1",
-    "@rafterjs/test": "^0.8.1",
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
+    "@rafterjs/test": "0.8.1",
     "@types/axios": "0.14.0",
     "@types/luxon": "1.26.2",
     "@types/uuid": "8.3.0"

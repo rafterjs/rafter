@@ -1,5 +1,5 @@
 import { mockLoggerFactory } from '@rafterjs/test';
-import { UuidHelper } from '@aemo/utils';
+import { UuidHelper } from '@rafterjs/utils';
 import sinon, { StubbedInstance, stubConstructor, stubInterface } from 'ts-sinon';
 import { IMiddleware, IRequest, IResponse } from 'rafter';
 import { HttpContextHelper } from '../utils';

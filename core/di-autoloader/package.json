@@ -20,27 +20,29 @@
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "test": "jest --notify",
+    "test": "jest --notify ./lib",
     "types": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "core/di-autoloader"
   },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/core/di-autoloader",
   "license": "GPL-3.0-or-later",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
     "awilix": "4.3.4",
     "is-class": "0.0.9",
     "lodash": "4.17.21",
     "ts-deepmerge": "1.0.8"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1",
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
     "@types/glob": "7.1.3"
   },
   "engines": {

@@ -13,7 +13,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "plugins/cors"
   },
   "scripts": {
     "build": "yarn clean && yarn build:lib && yarn build:types",
@@ -25,12 +26,12 @@
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
     "cors": "2.8.5"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1",
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
     "@types/cors": "2.8.10"
   },
   "description": "A simple CORS plugin",

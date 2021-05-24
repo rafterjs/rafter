@@ -13,8 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "core/eslint-config"
   },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/core/eslint-config",
   "description": "eslint rules for rafter projects",
   "main": "./index.js",
   "module": "./index.js",

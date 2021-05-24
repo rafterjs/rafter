@@ -1,3 +1,3 @@
-# Simple Example App
+# Simple Example Api
 
-This package serves as a starting point for applications wanting to use `rafter`. You don't have to use it, however it enables you to get something working faster.
+This package serves as a starting point for JSON API applications. It provides a simple wrapper around `rafter` and also some additional services that help return consistent json responses.

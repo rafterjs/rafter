@@ -14,8 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "examples/simple-app"
   },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/examples/simple-app",
   "scripts": {
     "build": "yarn clean && yarn build:config && yarn build:lib && yarn build:index && yarn build:types",
     "build:config": "babel ./config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
@@ -28,14 +30,14 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@rafterjs/cors-plugin": "^0.7.1",
-    "@rafterjs/di-autoloader": "^0.7.1",
-    "@rafterjs/logger-plugin": "^0.7.1",
-    "rafter": "^0.7.2"
+    "@rafterjs/cors-plugin": "0.8.1",
+    "@rafterjs/di-autoloader": "0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
+    "rafter": "0.8.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.7.1",
-    "@rafterjs/eslint-config": "^0.7.1"
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1"
   },
   "description": "A simple example app to start new projects",
   "main": "./dist/index.js",

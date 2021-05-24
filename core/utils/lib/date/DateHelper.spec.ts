@@ -1,5 +1,4 @@
-import { SinonFakeTimers } from 'sinon';
-import sinon from 'ts-sinon';
+import { SinonFakeTimers, useFakeTimers } from 'sinon';
 import { DateHelper } from './DateHelper';
 
 describe('DateHelper', () => {
@@ -7,7 +6,7 @@ describe('DateHelper', () => {
   let clock: SinonFakeTimers;
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers(new Date('2021-02-23T00:00:00.000Z'));
+    clock = useFakeTimers(new Date('2021-02-23T00:00:00.000Z'));
   });
 
   afterEach(() => {

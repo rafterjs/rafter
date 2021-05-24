@@ -18,7 +18,7 @@ describe('RequestLoggerMiddleware', () => {
     it(`should successfully log each request`, async () => {
       mockRequest.method = 'GET';
       mockRequest.protocol = 'https';
-      mockRequest.get.withArgs('host').returns('aemo.com.au');
+      mockRequest.get.withArgs('host').returns('rafterjs.com.au');
       mockRequest.originalUrl = '/about';
 
       const done = sinon.stub();
@@ -28,7 +28,7 @@ describe('RequestLoggerMiddleware', () => {
       expect(mockLogger.info.calledOnce).toBeTruthy();
       const log = mockLogger.info.args[0][0];
 
-      expect(log).toEqual('GET https://aemo.com.au/about');
+      expect(log).toEqual('GET https://rafterjs.com.au/about');
     });
   });
 });

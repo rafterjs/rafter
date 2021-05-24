@@ -7,7 +7,7 @@ describe('Server', () => {
   let server: Server;
 
   beforeEach(() => {
-    server = new Server([], logger);
+    server = new Server({ paths: [], logger });
   });
 
   describe('start()', () => {
