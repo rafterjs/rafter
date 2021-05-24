@@ -48,7 +48,7 @@
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest",
     "graph": "lerna-dependency-graph",
-    "publish": "lerna version -y --conventional-commit --create-release github && lerna publish -y --no-private from-package"
+    "publish": "lerna version -y --conventional-commits --create-release github && lerna publish -y --no-private"
   },
   "dependencies": {
     "dot-prop": "6.0.1",
