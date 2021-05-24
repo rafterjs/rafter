@@ -1,6 +1,10 @@
-name: Rafter CI
+name: Rafter PR Merged
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - master
+      - main
 
 jobs:
   test:
@@ -13,6 +17,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: yarn bootstrap
       - name: Build
@@ -21,3 +26,7 @@ jobs:
         run: yarn lint
       - name: Test
         run: yarn test
+      - name: Publish
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

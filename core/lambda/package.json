@@ -2,6 +2,16 @@
   "name": "@rafterjs/lambda",
   "description": "A serverless version of rafter",
   "version": "0.8.1",
+  "contributors": [
+    {
+      "name": "Josh Stuart",
+      "email": "joshstuartx@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -17,15 +27,21 @@
     "lint:fix": "yarn lint --fix",
     "start": "node dist/example/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "core/lambda"
+  },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/core/lambda",
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.1",
-    "@rafterjs/utils": "^0.8.1",
-    "rafter": "^0.8.1"
+    "@rafterjs/logger-plugin": "0.8.1",
+    "@rafterjs/utils": "0.8.1",
+    "rafter": "0.8.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1",
-    "@rafterjs/test": "^0.8.1"
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
+    "@rafterjs/test": "0.8.1"
   },
   "engines": {
     "node": ">=14"

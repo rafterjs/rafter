@@ -1,11 +1,11 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFileSync, writeFileSync } from 'fs';
 
 export class FileHelper {
   public async readFile(
     filename: string,
     options: { encoding: BufferEncoding } = { encoding: 'utf8' },
   ): Promise<string> {
-    return readFile(filename, options);
+    return readFileSync(filename, options);
   }
 
   public async writeFile(
@@ -13,7 +13,7 @@ export class FileHelper {
     data: string,
     options: { encoding: BufferEncoding } = { encoding: 'utf8' },
   ): Promise<void> {
-    return writeFile(filename, data, options);
+    return writeFileSync(filename, data, options);
   }
 
   public async readJsonFile<T extends Record<string, unknown>>(filename: string): Promise<T> {

@@ -7,13 +7,14 @@ describe('Server', () => {
   let server: Server;
 
   beforeEach(() => {
-    server = new Server([], logger);
+    server = new Server({ paths: [], logger });
   });
 
   describe('start()', () => {
     it(`should successfully start the rafter server with default paths`, async () => {
       await server.start();
       expect(server).toBeDefined();
+      await server.stop();
     });
   });
 });

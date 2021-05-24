@@ -13,8 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "core/rafter"
   },
+  "homepage": "https://github.com/rafterjs/rafter/tree/master/core/rafter",
   "scripts": {
     "build": "yarn build:lib && yarn build:types",
     "buildonly": "yarn build:lib",
@@ -23,20 +25,21 @@
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "test": "jest --notify ./lib",
+    "test": "jest ./lib",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/di-autoloader": "^0.8.1",
-    "@rafterjs/logger-plugin": "^0.8.1",
-    "awilix": "4.3.3",
+    "@rafterjs/di-autoloader": "0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
+    "awilix": "4.3.4",
     "express": "4.17.1",
     "find-node-modules": "2.1.2"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1"
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
+    "@types/glob": "7.1.3"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./dist/index.js",

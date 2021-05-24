@@ -19,6 +19,7 @@ export async function applySslConfig(
     return {
       ...config,
       server: {
+        ...config.server,
         ssl: {
           enabled: true,
           privateKey: sslPrivateKey,
@@ -31,6 +32,7 @@ export async function applySslConfig(
   return {
     ...config,
     server: {
+      ...config.server,
       ssl: {
         enabled: false,
       },

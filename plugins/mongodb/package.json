@@ -13,7 +13,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshystuart/rafter.git"
+    "url": "https://github.com/rafterjs/rafter.git",
+    "directory": "plugins/mongodb"
   },
   "scripts": {
     "build": "yarn clean && yarn build:lib && yarn build:config && yarn build:types",
@@ -24,12 +25,12 @@
     "lint": "eslint \"./lib/**/*\" ./babel.config.js"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.1",
+    "@rafterjs/logger-plugin": "0.8.1",
     "mongodb": "3.6.8"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.1",
-    "@rafterjs/eslint-config": "^0.8.1",
+    "@rafterjs/babel-preset-rafter": "0.8.1",
+    "@rafterjs/eslint-config": "0.8.1",
     "@types/mongodb": "3.6.16"
   },
   "description": "A simple mongodb plugin",

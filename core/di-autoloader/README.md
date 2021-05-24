@@ -7,7 +7,7 @@ A config driven autoloader for dependency injection.
 ## Getting started
 
 ```
-npm install --save box-di-autoloader
+yarn add @rafterjs/di-autoloader
 ```
 
 ## Example
