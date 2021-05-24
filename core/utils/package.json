@@ -23,7 +23,7 @@
     "clean": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" ./babel.config.js",
     "lint:fix": "yarn lint --fix",
-    "test": "jest --notify ./lib"
+    "test": "jest ./lib"
   },
   "repository": {
     "type": "git",

@@ -20,7 +20,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "clean:lib": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "test": "jest --notify ./lib",
+    "test": "jest ./lib",
     "types": "tsc"
   },
   "repository": {

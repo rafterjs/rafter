@@ -21,7 +21,7 @@
     "clean": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" \"config/**/*\" ./babel.config.js",
     "lint:fix": "yarn lint --fix",
-    "test": "jest --notify ./lib"
+    "test": "jest ./lib"
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/api",
   "repository": {

@@ -25,7 +25,7 @@
     "clean:lib": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
-    "test": "jest --notify ./lib",
+    "test": "jest ./lib",
     "types": "tsc",
     "update:latest": "yarn upgrade --latest"
   },
