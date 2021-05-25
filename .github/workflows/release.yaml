@@ -1,4 +1,4 @@
-name: Rafter PR Merged
+name: Rafter Release
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  test:
+  release:
 
     runs-on: ubuntu-latest
 
