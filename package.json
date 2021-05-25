@@ -48,8 +48,8 @@
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest",
     "graph": "lerna-dependency-graph",
-    "lerna:publish": "lerna publish from-package",
-    "lerna:version": "lerna version -y --conventional-commits --message 'chore(release): publish [skip ci]'",
+    "lerna:version": "lerna version --yes --conventional-commits --message 'chore(release): publish [skip ci]'",
+    "lerna:publish": "lerna publish --no-verify-access --yes from-package",
     "cz": "git-cz",
     "cz:retry": "git-cz --retry"
   },
