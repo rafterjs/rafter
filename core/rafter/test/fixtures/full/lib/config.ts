@@ -1,11 +1,11 @@
-import { IServerConfig } from '../../../../lib/server/config/IServerConfig';
+import { IServerConfig } from '../../../../lib';
 
 export type TestConfig = IServerConfig & {
   bar: string;
 };
 
 export default (): TestConfig => ({
-  bar: 'test something',
+  bar: 'test something 2',
   server: {
     port: 2009,
   },

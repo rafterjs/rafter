@@ -9,6 +9,7 @@
 - [x] Example of a "simple" app with autoloading
 - [x] Example of an api with autoloading
 - [x] Create @rafterjs/function ie. executes a single function with di
+- [ ] Load plugins recursively including configs
 - [ ] Create an aws lamda example of @rafterjs/lambda
 - [ ] Example of a "modern" app eg using React, GraphQL Api
 - [ ] Create an openapi plugin for @rafterjs/api

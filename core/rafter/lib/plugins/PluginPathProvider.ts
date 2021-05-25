@@ -55,4 +55,12 @@ export class PluginPathProvider implements IPluginPathProvider {
   }
 }
 
+export type IPluginPathProviderFactoryOptions = {
+  logger: ILogger;
+};
+
+export function pluginPathProviderFactory({ logger }: IPluginPathProviderFactoryOptions): PluginPathProvider {
+  return new PluginPathProvider(logger);
+}
+
 export default PluginPathProvider;

@@ -1,4 +1,4 @@
-import { IRouteConfig, METHODS } from '../../../../lib/server/common/router';
+import { IRouteConfig, METHODS } from '../../../../lib';
 
 const routes = (): IRouteConfig[] => [
   {

@@ -1,4 +1,4 @@
-import { IPreStartHookConfig } from '../../../../lib/server/common/pre-start-hooks';
+import { IPreStartHookConfig } from '../../../../lib';
 
 const hooks = (): IPreStartHookConfig[] => ['motd'];
 

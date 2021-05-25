@@ -6,7 +6,7 @@ export interface IMiddlewareProvider {
   createInstance(middlewareConfig: IMiddlewares): IMiddleware[];
 }
 
-export default class MiddlewareProvider implements IMiddlewareProvider {
+export class MiddlewareProvider implements IMiddlewareProvider {
   private readonly logger: ILogger;
 
   constructor(private readonly diAutoloader: IDiAutoloader, private readonly loggerFactory: ILoggerFactory) {
@@ -31,3 +31,5 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     return middlewareCollection;
   }
 }
+
+export default MiddlewareProvider;

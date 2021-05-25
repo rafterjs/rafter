@@ -1,0 +1,3 @@
+{
+  "ignoreDeps": ["@rafterjs/test", "ts-node"]
+}

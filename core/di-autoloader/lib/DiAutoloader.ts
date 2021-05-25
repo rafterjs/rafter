@@ -43,10 +43,15 @@ export class DiAutoloader implements IDiAutoloader {
     return this.container.resolve<T>(name);
   }
 
+  public has(name: string): boolean {
+    this.logger.debug(`Checking if ${name} exists`);
+    return this.container.has(name);
+  }
+
   public async registerMergableFiles(specialFiles: IMergableFiles): Promise<void> {
-    this.logger.debug(`   Loading ${specialFiles.size} mergable files`);
+    this.logger.debug(`   Registering ${specialFiles.size} mergable files`);
     for (const [name, value] of specialFiles.entries()) {
-      this.logger.debug(`   Merging ${name}`);
+      this.logger.debug(`   Registering ${name}`);
       let normalizedValue = value;
 
       if (normalizedValue instanceof Function) {
@@ -54,10 +59,10 @@ export class DiAutoloader implements IDiAutoloader {
       }
 
       if (this.container.has(name)) {
-        this.logger.debug(`   Updating ${name}`);
+        this.logger.debug(`   Updating the registry for ${name}`);
         await this.updateMergedFile(name, normalizedValue);
       } else {
-        this.logger.debug(`   Setting ${name}`);
+        this.logger.debug(`   Setting the registry for ${name}`);
         this.mergableFiles.set(name, normalizedValue);
         this.registerFunction(name, () => this.mergableFiles.get(name));
       }
@@ -156,6 +161,8 @@ export class DiAutoloader implements IDiAutoloader {
       }
 
       this.logger.debug(`Completed merging files`, mergedSpecialFiles.entries());
+
+      console.log('----------', this.get('config'));
     }
 
     return mergedSpecialFiles;

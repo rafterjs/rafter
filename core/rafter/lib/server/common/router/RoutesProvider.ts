@@ -9,7 +9,7 @@ export interface IRoutesProvider {
   createInstance(routesConfig: IRoutes): IRouter;
 }
 
-export default class RoutesProvider implements IRoutesProvider {
+export class RoutesProvider implements IRoutesProvider {
   private readonly logger: ILogger;
 
   constructor(
@@ -44,3 +44,5 @@ export default class RoutesProvider implements IRoutesProvider {
     });
   }
 }
+
+export default RoutesProvider;

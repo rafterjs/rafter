@@ -32,6 +32,7 @@
   "dependencies": {
     "@rafterjs/di-autoloader": "^0.8.3",
     "@rafterjs/logger-plugin": "^0.8.3",
+    "@rafterjs/utils": "^0.8.3",
     "awilix": "4.3.4",
     "express": "4.17.1",
     "find-node-modules": "2.1.2"

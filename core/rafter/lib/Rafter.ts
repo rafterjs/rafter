@@ -1,7 +1,7 @@
 import { IDiAutoloader, IMergableFileNames, IPath, IPaths, IService } from '@rafterjs/di-autoloader';
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { GlobWithOptions } from 'awilix';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { IRafter } from './IRafter';
 import { IPluginPathProvider, IPlugins } from './plugins';
 
@@ -101,9 +101,9 @@ export class Rafter implements IRafter {
     if (paths.length > 0) {
       await this.loadPluginConfigs(paths);
       this.logger.debug(`   Getting plugin configs`);
-      const plugins = await this.diAutoloader.get<IPlugins>(PLUGIN_FILENAME);
 
-      if (plugins.size > 0) {
+      if (this.diAutoloader.has(PLUGIN_FILENAME)) {
+        const plugins = this.diAutoloader.get<IPlugins>(PLUGIN_FILENAME);
         this.logger.debug(`   Found plugin configs`, plugins);
         for (const plugin of plugins) {
           try {
@@ -124,9 +124,6 @@ export class Rafter implements IRafter {
   private async loadPluginConfigs(paths: IPaths): Promise<void> {
     const dependencies = this.diAutoloader.list(paths);
     const pluginPaths = dependencies.filter(({ name }) => name === PLUGIN_FILENAME).map(({ path }) => path);
-
     return this.diAutoloader.loadMergableFiles(pluginPaths, [PLUGIN_FILENAME]);
   }
 }
-
-export default Rafter;

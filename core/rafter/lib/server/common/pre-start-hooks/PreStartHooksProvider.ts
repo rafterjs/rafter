@@ -6,7 +6,7 @@ export interface IPreStartHooksProvider {
   createInstance(preStartHooksConfig: IPreStartHooks): IPreStartHook[];
 }
 
-export default class PreStartHooksProvider implements IPreStartHooksProvider {
+export class PreStartHooksProvider implements IPreStartHooksProvider {
   constructor(private readonly diAutoloader: IDiAutoloader, private readonly logger: ILogger) {}
 
   public createInstance(preStartHooksConfig: IPreStartHooks): IPreStartHook[] {
@@ -27,3 +27,5 @@ export default class PreStartHooksProvider implements IPreStartHooksProvider {
     return hooksCollection;
   }
 }
+
+export default PreStartHooksProvider;

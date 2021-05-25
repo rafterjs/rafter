@@ -29,6 +29,8 @@ export interface IDiAutoloader {
 
   get<T>(name: string): T;
 
+  has(name: string): boolean;
+
   list(paths: IPaths): ModuleDescriptor[];
 
   unregister(): Promise<void>;
