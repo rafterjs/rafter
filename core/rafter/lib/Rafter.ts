@@ -1,7 +1,7 @@
 import { IDiAutoloader, IMergableFileNames, IPath, IPaths, IService } from '@rafterjs/di-autoloader';
 import { ILogger, loggerFactory } from '@rafterjs/logger-plugin';
 import { GlobWithOptions } from 'awilix';
-import { dirname, join } from 'path';
+import { join } from 'path';
 import { IRafter } from './IRafter';
 import { IPluginPathProvider, IPlugins } from './plugins';
 

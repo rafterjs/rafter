@@ -44,7 +44,7 @@
     "test:rafter": "cd core/rafter && yarn test",
     "test:rafter-api": "cd core/api && yarn test",
     "test:utils": "cd core/utils && yarn test",
-    "test": "jest --ci --watchAll=false",
+    "test": "lerna run test",
     "update:latest": "yarn upgrade --latest",
     "update:all": "lerna run update:latest",
     "graph": "lerna-dependency-graph",
