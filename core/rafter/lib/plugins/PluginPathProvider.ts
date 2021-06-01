@@ -23,18 +23,21 @@ export class PluginPathProvider implements IPluginPathProvider {
   }
 
   private async getPluginPath(pluginName: string): Promise<string | undefined> {
-    let pluginPath;
-    if (require.main?.path) {
-      const modulesPath: string[] = findNodeModules({ relative: false, cwd: join(require.main?.path) });
+    let validPath;
 
-      const packageJsonPaths = modulesPath.map((path) => join(path, pluginName, `package.json`));
+    try {
+      validPath = join(dirname(require.resolve(pluginName)), `**`);
+    } catch (error) {
+      this.logger.warn(`Failed to load the package.json for ${pluginName}, trying another approach`);
 
-      pluginPath = this.getValidPackagePath(packageJsonPaths);
-    } else {
-      pluginPath = join(dirname(require.resolve(pluginName)), '**');
+      const modulesPaths: string[] = findNodeModules({ relative: false });
+      const packageJsonPaths = modulesPaths.map((modulesPath) => join(modulesPath, pluginName, `package.json`));
+      this.logger.debug(`Checking the following node_modules for the package: ${packageJsonPaths.join(', ')}`);
+
+      validPath = this.getValidPackagePath(packageJsonPaths);
     }
 
-    return pluginPath;
+    return validPath;
   }
 
   // eslint-disable-next-line consistent-return
@@ -43,6 +46,7 @@ export class PluginPathProvider implements IPluginPathProvider {
       try {
         // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require,import/no-dynamic-require
         const packageJson = require(path);
+
         if (packageJson?.main) {
           const pluginPath = join(dirname(join(dirname(path), packageJson.main)), '**');
           this.logger.debug(`Found plugin path ${pluginPath}`);
