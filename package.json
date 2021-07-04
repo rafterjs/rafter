@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "bootstrap": "yarn install && lerna bootstrap --npm-client=yarn -- --force",
+    "bootstrap": "yarn install && lerna bootstrap --npm-client=yarn",
     "start:example:app": "cd examples/simple-app && yarn start",
     "start:example:app:watch": "yarn watch \"yarn start:example:app\"",
     "start:example:api": "cd examples/simple-api && yarn start",
