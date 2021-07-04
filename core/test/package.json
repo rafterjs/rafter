@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/test",
   "description": "Testing utils and helpers",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -36,9 +36,9 @@
     "ts-sinon": "2.0.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.4",
-    "@rafterjs/eslint-config": "^0.8.4",
-    "@rafterjs/logger-plugin": "^0.8.4",
+    "@rafterjs/babel-preset-rafter": "^0.8.5",
+    "@rafterjs/eslint-config": "^0.8.5",
+    "@rafterjs/logger-plugin": "^0.8.5",
     "@types/node-fetch": "2.5.8"
   },
   "engines": {
