@@ -1,5 +1,6 @@
 import { ILogger } from '@rafterjs/logger-plugin';
 import { stubInterface } from 'ts-sinon';
+import { join } from 'path';
 import { PluginPathProvider } from './PluginPathProvider';
 
 describe('PluginPathProvider', () => {
@@ -11,7 +12,7 @@ describe('PluginPathProvider', () => {
 
       const path = await pluginPathProvider.getPath('@rafterjs/logger-plugin');
 
-      expect(path).toContain('/plugins/logger/dist/**');
+      expect(path).toContain(join('/plugins/logger/dist/**'));
     });
   });
 });

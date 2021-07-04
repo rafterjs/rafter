@@ -12,8 +12,9 @@ export class ConfigToRouteDtoTransformer implements ITransformer<IRoutes, RouteD
   constructor(private readonly diAutoloader: IDiAutoloader) {}
 
   private getControllerAction(controllerName: string, action?: string): IControllerAction {
-    const controller =
-      this.diAutoloader.get<(IController & { [key: string]: IControllerAction }) | IControllerAction>(controllerName);
+    const controller = this.diAutoloader.get<(IController & { [key: string]: IControllerAction }) | IControllerAction>(
+      controllerName,
+    );
 
     if (controller instanceof Function) {
       return controller;
