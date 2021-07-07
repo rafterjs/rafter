@@ -68,7 +68,7 @@
     "@types/jest": "26.0.23",
     "@types/lodash": "4.14.170",
     "@types/node": "14.17.4",
-    "@types/nodemon": "1.19.0",
+    "@types/nodemon": "1.19.1",
     "@types/sinon": "10.0.2",
     "@typescript-eslint/eslint-plugin": "4.28.1",
     "@typescript-eslint/parser": "4.28.1",
