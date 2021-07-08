@@ -38,7 +38,7 @@
     "@rafterjs/logger-plugin": "^0.8.5",
     "@rafterjs/utils": "^0.8.5",
     "@types/express": "4.17.12",
-    "@types/express-serve-static-core": "4.17.22",
+    "@types/express-serve-static-core": "4.17.24",
     "body-parser": "1.19.0",
     "express": "4.17.1",
     "express-http-context": "1.2.4",
@@ -51,7 +51,7 @@
     "@rafterjs/test": "^0.8.5"
   },
   "resolutions": {
-    "@types/express-serve-static-core": "4.17.22"
+    "@types/express-serve-static-core": "4.17.24"
   },
   "engines": {
     "node": ">=14"
