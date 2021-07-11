@@ -34,7 +34,7 @@
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.8.5",
     "axios": "0.21.1",
-    "luxon": "1.27.0",
+    "luxon": "2.0.1",
     "uuid": "8.3.2"
   },
   "devDependencies": {
