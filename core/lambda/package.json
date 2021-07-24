@@ -41,7 +41,7 @@
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.7",
     "@rafterjs/eslint-config": "^0.8.7",
-    "@rafterjs/test": "^0.8.7"
+    "@rafterjs/test": "0.8.7"
   },
   "engines": {
     "node": ">=14"
