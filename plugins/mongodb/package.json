@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/mongodb-plugin",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,12 +25,12 @@
     "lint": "eslint \"./lib/**/*\" ./babel.config.js"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.14",
+    "@rafterjs/logger-plugin": "^0.8.15",
     "mongodb": "3.6.10"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.14",
-    "@rafterjs/eslint-config": "^0.8.14",
+    "@rafterjs/babel-preset-rafter": "^0.8.15",
+    "@rafterjs/eslint-config": "^0.8.15",
     "@types/mongodb": "3.6.20"
   },
   "description": "A simple mongodb plugin",
