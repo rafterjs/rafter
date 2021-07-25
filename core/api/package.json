@@ -48,7 +48,7 @@
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.23",
     "@rafterjs/eslint-config": "^0.8.23",
-    "@rafterjs/test": "^0.8.23"
+    "@rafterjs/test": "0.8.23"
   },
   "resolutions": {
     "@types/express-serve-static-core": "4.17.24"
