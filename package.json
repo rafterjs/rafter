@@ -10,7 +10,7 @@
     "start:example:lambda": "cd examples/simple-lambda && yarn start",
     "start:example:lambda:watch": "yarn watch \"yarn start:example:lambda\" -i \"**/*steps*\" -i \"**/*node_modules*\" -i \"**/*spec*\" -i \"**/dist\"",
     "watch": "node ./core/watcher/dist/index.js",
-    "clean": "lerna clean -y",
+    "clean": "lerna clean -y && rimraf node_modules",
     "clean:lib": "lerna run clean:lib",
     "build": "lerna run build",
     "build:package": "lerna run build --stream --scope",
