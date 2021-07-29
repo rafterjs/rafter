@@ -5,6 +5,9 @@
   "rebaseLabel": "rebase",
   "semanticCommits": true,
   "requiredStatusChecks": [],
+  "ignoreDeps": [
+    "@rafterjs"
+  ],
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
@@ -21,6 +24,10 @@
     {
       "packagePatterns": ["@types"],
       "groupName": "types"
+    },
+    {
+      "packagePatterns": ["@rafterjs"],
+      "automerge": false
     }
   ]
 }
