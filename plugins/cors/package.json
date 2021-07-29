@@ -18,7 +18,6 @@
   },
   "scripts": {
     "build": "yarn clean && yarn build:lib && yarn build:types",
-    "start:watch": "nodemon --watch \"./lib\" --exec \"yarn build\"",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",

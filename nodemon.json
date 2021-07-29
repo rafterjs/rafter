@@ -1,0 +1,5 @@
+{
+  "watch": ["core", "examples", "plugins"],
+  "ext": "ts,json",
+  "ignore": ["**/*.spec.ts", "**/dist/*", "**/node_modules/*"]
+}

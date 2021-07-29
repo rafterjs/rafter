@@ -27,14 +27,14 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@rafterjs/api": "0.8.1",
-    "@rafterjs/cors-plugin": "0.8.1",
-    "@rafterjs/logger-plugin": "0.8.1",
-    "@rafterjs/utils": "0.8.1"
+    "@rafterjs/api": "0.8.31",
+    "@rafterjs/cors-plugin": "0.8.31",
+    "@rafterjs/logger-plugin": "0.8.31",
+    "@rafterjs/utils": "0.8.31"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "0.8.1",
-    "@rafterjs/eslint-config": "0.8.1"
+    "@rafterjs/babel-preset-rafter": "0.8.31",
+    "@rafterjs/eslint-config": "0.8.31"
   },
   "description": "A simple example app to start new projects",
   "main": "./dist/lib/index.js",

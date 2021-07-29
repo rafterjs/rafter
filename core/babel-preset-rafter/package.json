@@ -10,9 +10,9 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
-    "build": "yarn clean:lib && yarn build:index",
+    "build": "yarn clean && yarn build:index",
     "build:index": "babel index.js --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "clean:lib": "rimraf ./dist",
+    "clean": "rimraf ./dist",
     "lint": "eslint ./index.js ./babel.config.js",
     "update:latest": "yarn upgrade --latest"
   },

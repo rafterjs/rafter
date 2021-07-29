@@ -15,10 +15,10 @@
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn build:lib && yarn build:types",
+    "build": "yarn clean && yarn build:lib && yarn build:types",
     "build:lib": "babel --include-dotfiles ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
+    "clean": "rimraf ./dist",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest ./lib",
     "types": "tsc"

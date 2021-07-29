@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/rafter",
   "scripts": {
-    "build": "yarn build:lib && yarn build:types",
+    "build": "yarn clean && yarn build:lib && yarn build:types",
     "buildonly": "yarn build:lib",
     "build:lib": "babel ./lib --out-dir ./dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean:lib": "rimraf ./dist",
+    "clean": "rimraf ./dist",
     "copy": "copyfiles ./package.json ./dist/package.json",
     "lint": "eslint \"./lib/**/*\" \"./test/**/*\" ./babel.config.js",
     "test": "jest ./lib",
