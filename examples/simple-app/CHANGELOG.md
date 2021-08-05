@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.37 (2021-08-05)
+
+
+### Bug Fixes
+
+* **broadens the search for plugins:** increases the search space for rafter plugins ([#222](https://github.com/rafterjs/rafter/issues/222)) ([bcc5b6a](https://github.com/rafterjs/rafter/commit/bcc5b6af7b0323e5a87afba436acb24163c3581d))
+
+
+
+
+
 ## 0.8.36 (2021-08-01)
 
 **Note:** Version bump only for package @rafterjs/simple-app

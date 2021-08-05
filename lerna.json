@@ -4,6 +4,6 @@
     "examples/*",
     "plugins/*"
   ],
-  "version": "0.8.36",
+  "version": "0.8.37",
   "npmClient": "yarn"
 }
