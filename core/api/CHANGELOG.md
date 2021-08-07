@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.42 (2021-08-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v17.1.0 ([dbf136c](https://github.com/rafterjs/rafter/commit/dbf136c428cea772d90652a1bb14bf25c6029f3c))
+
+
+
+
+
 ## 0.8.41 (2021-08-07)
 
 **Note:** Version bump only for package @rafterjs/api
