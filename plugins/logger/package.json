@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/logger-plugin",
-  "version": "0.8.39",
+  "version": "0.8.40",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -32,8 +32,8 @@
     "log4js": "6.3.0"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.39",
-    "@rafterjs/eslint-config": "^0.8.39",
+    "@rafterjs/babel-preset-rafter": "^0.8.40",
+    "@rafterjs/eslint-config": "^0.8.40",
     "@types/log4js": "2.3.5"
   },
   "description": "Utils for Rafter projects",
