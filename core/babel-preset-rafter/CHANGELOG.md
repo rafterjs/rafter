@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.39 (2021-08-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mongodb to v3.6.11 ([7b3d365](https://github.com/rafterjs/rafter/commit/7b3d36519d2415d781c1beab077ca315544a562c))
+
+
+
+
+
 ## 0.8.38 (2021-08-07)
 
 **Note:** Version bump only for package @rafterjs/babel-preset-rafter
