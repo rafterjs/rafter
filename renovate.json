@@ -1,6 +1,6 @@
 {
   "extends": ["config:base"],
-  "schedule": ["every weekend"],
+  "schedule": ["on the first day of the month"],
   "rebaseWhen": "auto",
   "rebaseLabel": "rebase",
   "semanticCommits": true,
@@ -10,12 +10,16 @@
   ],
   "packageRules": [
     {
-      "updateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    },
-    {
-      "depTypeList": ["devDependencies"],
-      "automerge": true
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "automerge": false
     },
     {
       "packagePatterns": ["eslint"],
