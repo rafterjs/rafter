@@ -29,7 +29,7 @@
     "chokidar": "3.5.2",
     "shelljs": "0.8.4",
     "tree-kill": "1.2.2",
-    "yargs": "17.1.0"
+    "yargs": "17.1.1"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.47",
