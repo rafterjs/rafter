@@ -4,7 +4,8 @@ import {
   DateTimeJSOptions as LuxonDateTimeJSOptions,
   DateTimeOptions as LuxonDateTimeOptions,
   Duration as LuxonDuration,
-  DurationObject,
+  DurationLike,
+  LocaleOptions,
 } from 'luxon';
 
 export type DateTime = LuxonDateTime;
@@ -24,11 +25,11 @@ export class DateHelper {
     return LuxonDateTime.utc();
   }
 
-  public getPastDate(duration: DurationObject): DateTime {
+  public getPastDate(duration: DurationLike): DateTime {
     return this.getNow().minus(duration);
   }
 
-  public getFutureDate(duration: DurationObject): DateTime {
+  public getFutureDate(duration: DurationLike): DateTime {
     return this.getNow().plus(duration);
   }
 
@@ -72,7 +73,7 @@ export class DateHelper {
     return date.toFormat(DateFormats.YYYYMMDD);
   }
 
-  public formatToLongDateTimeString(date: DateTime, options: DateTimeFormatOptions = { timeZone: 'UTC' }): string {
+  public formatToLongDateTimeString(date: DateTime, options: LocaleOptions = { locale: 'en' }): string {
     return date.toFormat(DateFormats.YYYYMMDDhhmmss, options);
   }
 
