@@ -3,3 +3,24 @@ version: '3'
 services:
   app:
     build: .
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      - ./plugins/mongodb/seed:/docker-entrypoint-initdb.d
+      # named volumes
+      - ./.mongodb:/data/db
+      - ./.mongoconfig:/data/configdb
+    networks:
+      - rafter
+
+networks:
+  rafter:
