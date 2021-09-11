@@ -30,8 +30,7 @@
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.48",
-    "@rafterjs/eslint-config": "^0.8.48",
-    "@types/mongodb": "3.6.20"
+    "@rafterjs/eslint-config": "^0.8.48"
   },
   "description": "A simple mongodb plugin",
   "main": "./dist/lib/mongoDb.js",
