@@ -18,3 +18,5 @@ build
 npm-debug.log*
 nohup.out
 stats.json
+.mongodb
+.mongoconfig
