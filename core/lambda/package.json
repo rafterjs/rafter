@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/lambda",
   "description": "A serverless version of rafter",
-  "version": "0.8.52",
+  "version": "0.8.53",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -34,14 +34,14 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/lambda",
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.52",
-    "@rafterjs/utils": "^0.8.52",
-    "rafter": "^0.8.52"
+    "@rafterjs/logger-plugin": "^0.8.53",
+    "@rafterjs/utils": "^0.8.53",
+    "rafter": "^0.8.53"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.52",
-    "@rafterjs/eslint-config": "^0.8.52",
-    "@rafterjs/test": "^0.8.52"
+    "@rafterjs/babel-preset-rafter": "^0.8.53",
+    "@rafterjs/eslint-config": "^0.8.53",
+    "@rafterjs/test": "^0.8.53"
   },
   "engines": {
     "node": ">=14"
