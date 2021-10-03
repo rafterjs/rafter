@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.51 (2021-10-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency awilix to v5 ([#242](https://github.com/rafterjs/rafter/issues/242)) ([3d3628c](https://github.com/rafterjs/rafter/commit/3d3628c5c5786be52635bf9248c430a229c4259c))
+
+
+
+
+
 ## 0.8.50 (2021-10-03)
 
 **Note:** Version bump only for package @rafterjs/simple-api
