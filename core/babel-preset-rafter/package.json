@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/babel-preset-rafter",
   "dependencies": {
-    "@babel/cli": "7.15.4",
+    "@babel/cli": "7.15.7",
     "@babel/core": "7.15.5",
     "@babel/eslint-parser": "7.15.4",
     "@babel/helper-plugin-utils": "7.14.5",
@@ -40,7 +40,7 @@
     "@babel/preset-typescript": "7.15.0",
     "@babel/register": "7.15.3",
     "@babel/runtime-corejs2": "7.15.4",
-    "babel-jest": "27.1.1"
+    "babel-jest": "27.2.4"
   },
   "devDependencies": {
     "@rafterjs/eslint-config": "^0.8.49"
