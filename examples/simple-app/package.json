@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/simple-app",
   "private": true,
-  "version": "0.8.49",
+  "version": "0.8.50",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -27,14 +27,14 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@rafterjs/cors-plugin": "^0.8.49",
-    "@rafterjs/di-autoloader": "^0.8.49",
-    "@rafterjs/logger-plugin": "^0.8.49",
-    "rafter": "^0.8.49"
+    "@rafterjs/cors-plugin": "^0.8.50",
+    "@rafterjs/di-autoloader": "^0.8.50",
+    "@rafterjs/logger-plugin": "^0.8.50",
+    "rafter": "^0.8.50"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.49",
-    "@rafterjs/eslint-config": "^0.8.49"
+    "@rafterjs/babel-preset-rafter": "^0.8.50",
+    "@rafterjs/eslint-config": "^0.8.50"
   },
   "description": "A simple example app to start new projects",
   "main": "./dist/index.js",
