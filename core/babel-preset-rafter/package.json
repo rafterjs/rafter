@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/babel-preset-rafter",
-  "version": "0.8.47",
+  "version": "0.8.50",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -27,23 +27,23 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/babel-preset-rafter",
   "dependencies": {
-    "@babel/cli": "7.14.8",
-    "@babel/core": "7.15.0",
+    "@babel/cli": "7.15.7",
+    "@babel/core": "7.15.5",
     "@babel/eslint-parser": "7.15.4",
     "@babel/helper-plugin-utils": "7.14.5",
-    "@babel/node": "7.14.9",
+    "@babel/node": "7.15.4",
     "@babel/plugin-proposal-class-properties": "7.14.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.14.7",
+    "@babel/plugin-proposal-object-rest-spread": "7.15.6",
     "@babel/plugin-proposal-optional-chaining": "7.14.5",
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
-    "@babel/preset-env": "7.15.0",
+    "@babel/preset-env": "7.15.6",
     "@babel/preset-typescript": "7.15.0",
-    "@babel/register": "7.14.5",
-    "@babel/runtime-corejs2": "7.14.8",
-    "babel-jest": "27.0.6"
+    "@babel/register": "7.15.3",
+    "@babel/runtime-corejs2": "7.15.4",
+    "babel-jest": "27.2.4"
   },
   "devDependencies": {
-    "@rafterjs/eslint-config": "^0.8.47"
+    "@rafterjs/eslint-config": "^0.8.50"
   },
   "peerDependencies": {
     "@babel/cli": ">=7.13.0",

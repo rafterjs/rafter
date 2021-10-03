@@ -9,5 +9,5 @@ export type IMongoDbConfig = {
 export type IMongoDb = MongoClient;
 
 export default function mongoDbFactory(config: IMongoDbConfig): IMongoDb {
-  return new MongoClient(config.mongodb.connectionString, { useUnifiedTopology: true });
+  return new MongoClient(config.mongodb.connectionString);
 }

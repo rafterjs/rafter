@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.50 (2021-10-03)
+
+**Note:** Version bump only for package rafter
+
+
+
+
+
+## 0.8.49 (2021-09-11)
+
+**Note:** Version bump only for package rafter
+
+
+
+
+
+## 0.8.48 (2021-09-11)
+
+**Note:** Version bump only for package rafter
+
+
+
+
+
 ## 0.8.47 (2021-09-11)
 
 **Note:** Version bump only for package rafter
