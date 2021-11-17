@@ -38,7 +38,7 @@
     "awilix": "5.0.1",
     "is-class": "0.0.9",
     "lodash": "4.17.21",
-    "ts-deepmerge": "1.0.8"
+    "ts-deepmerge": "1.1.0"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.53",

@@ -136,10 +136,10 @@ path-is-absolute@^1.0.0:
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
-ts-deepmerge@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/ts-deepmerge/-/ts-deepmerge-1.0.8.tgz#927ebb0db106bdc4a15011c288a2024496638900"
-  integrity sha512-d3ZRKksHOOUQpLpB8qncIrcbRKGO/TWIC8hncD0QkEMAxTPq39hqRig0LM4fHnuZW3tWID/aNxjbAFW50IV3Lw==
+ts-deepmerge@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ts-deepmerge/-/ts-deepmerge-1.1.0.tgz#4236ae102199affe2e77690dcf198a420160eef2"
+  integrity sha512-VvwaV/6RyYMwT9d8dClmfHIsG2PCdm6WY430QKOIbPRR50Y/1Q2ilp4i2XEZeHFcNqfaYnAQzpyUC6XA0AqqBg==
 
 tslib@^2.0.3:
   version "2.1.0"
