@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.55 (2021-11-20)
+
+**Note:** Version bump only for package @rafterjs/simple-api
+
+
+
+
+
 ## 0.8.54 (2021-11-20)
 
 **Note:** Version bump only for package @rafterjs/simple-api
