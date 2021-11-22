@@ -3,7 +3,6 @@ import { createContainer, InjectionMode } from 'awilix';
 import { AwilixContainer } from 'awilix/lib/container';
 import { join } from 'path';
 import { stubInterface } from 'ts-sinon';
-import { IRoutes } from '../../rafter/lib';
 import { config2, TestConfig2 } from '../test/fixtures/full/config/config';
 import { routes1 } from '../test/fixtures/full/config/routes';
 import { config1, TestConfig1 } from '../test/fixtures/full/lib/config';
@@ -11,6 +10,7 @@ import { routes2 } from '../test/fixtures/full/lib/routes';
 import TestClass from '../test/fixtures/full/lib/TestClass';
 import TestFunction from '../test/fixtures/full/lib/TestFunction';
 import { DiAutoloader } from './DiAutoloader';
+import { IRoutes } from '../test/types';
 
 const FIXTURES_DIR = join(__dirname, '../test/fixtures');
 const FIXTURES_GLOB = join(FIXTURES_DIR, '**');
