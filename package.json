@@ -98,7 +98,7 @@
     "@types/express-serve-static-core": "4.17.25"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=14.17.0"
   },
   "config": {
     "commitizen": {

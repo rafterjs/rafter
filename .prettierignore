@@ -2,3 +2,5 @@
 node_modules
 coverage
 lerna.json
+CHANGELOG.md
+renovate.json
