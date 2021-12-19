@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.8.60",
-    "mongodb": "4.2.0"
+    "mongodb": "4.2.2"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.60",
