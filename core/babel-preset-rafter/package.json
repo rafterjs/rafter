@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/babel-preset-rafter",
-  "version": "0.8.59",
+  "version": "0.8.60",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -43,7 +43,7 @@
     "babel-jest": "27.3.1"
   },
   "devDependencies": {
-    "@rafterjs/eslint-config": "^0.8.59"
+    "@rafterjs/eslint-config": "^0.8.60"
   },
   "peerDependencies": {
     "@babel/cli": ">=7.13.0",
