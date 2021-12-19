@@ -53,7 +53,7 @@ export class DiAutoloader implements IDiAutoloader {
         normalizedValue = await normalizedValue();
       }
 
-      if (this.container.has(name)) {
+      if (this.container.hasRegistration(name)) {
         this.logger.debug(`   Updating ${name}`);
         await this.updateMergedFile(name, normalizedValue);
       } else {
