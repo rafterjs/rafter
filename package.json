@@ -54,7 +54,7 @@
     "cz:retry": "git-cz --retry"
   },
   "dependencies": {
-    "dot-prop": "6.0.1",
+    "dot-prop": "7.2.0",
     "is-class": "0.0.9",
     "lerna-dependency-graph": "1.1.0"
   },
