@@ -1,19 +1,18 @@
 import { IRequest, IResponse } from 'rafter';
-import { IJsonController } from './IJsonController';
 import { IJsonResponseData } from './IJsonResponse';
 import { JsonErrorResponseDto } from './JsonErrorResponseDto';
 import { JsonResponseDto } from './JsonResponseDto';
-import { JsonRenderer } from './JsonRenderer';
+import { JsonResponseTransformer } from './JsonResponseTransformer';
 
-export abstract class JsonController implements IJsonController {
-  protected constructor(protected readonly jsonRenderer: JsonRenderer) {}
+export class JsonRenderer {
+  protected constructor(protected readonly jsonResponseTransformer: JsonResponseTransformer) {}
 
   public async render<T extends IJsonResponseData>(
     request: IRequest,
     response: IResponse,
     jsonResponseDto: JsonResponseDto<T>,
   ): Promise<void> {
-    return this.jsonRenderer.render(request, response, jsonResponseDto);
+    response.status(jsonResponseDto.status).json(this.jsonResponseTransformer.convert(request, jsonResponseDto));
   }
 
   public async renderError(
@@ -21,6 +20,10 @@ export abstract class JsonController implements IJsonController {
     response: IResponse,
     jsonErrorResponseDto: JsonErrorResponseDto,
   ): Promise<void> {
-    return this.jsonRenderer.renderError(request, response, jsonErrorResponseDto);
+    response
+      .status(jsonErrorResponseDto.status)
+      .json(this.jsonResponseTransformer.convertError(request, jsonErrorResponseDto));
   }
 }
+
+export default JsonRenderer;

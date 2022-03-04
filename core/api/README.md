@@ -19,14 +19,14 @@ Example structure
   - preStartHooks.ts
   - routes.ts
 - lib
-  - HomeController.ts
+  - HealthController.ts
 - index.ts
 
 #### index.ts
 
 This is the server entry point. Think of this like your `express()` server definition.
 
-You pass in the paths you want to autoload our dependencies from. In the example below all the `./config` files and `./lib/HomeController.ts` will load into the rafter api server.
+You pass in the paths you want to autoload our dependencies from. In the example below all the `./config` files and `./lib/HealthController.ts` will load into the rafter api server.
 
 ```typescript
 import { Server } from '@rafterjs/api';
@@ -50,7 +50,7 @@ async function run(): Promise<void> {
 run();
 ```
 
-#### lib/HomeController.ts
+#### lib/HealthController.ts
 
 One of the benefits of the `@rafterjs/api` is that you can extend the provided `JsonController` and it will handle rendering in a consistent format.
 

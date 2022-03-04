@@ -28,7 +28,7 @@ export class PluginPathProvider implements IPluginPathProvider {
     try {
       validPath = join(dirname(require.resolve(pluginName)), `**`);
     } catch (error) {
-      this.logger.warn(`Failed to load the package.json for ${pluginName}, trying another approach`);
+      this.logger.debug(`Failed to load the package.json for ${pluginName}, trying another approach`);
 
       // NOTE: this is pretty heavy handed, but the way npm works the dependencies could be anywhere!
       const modulesPaths: string[] = require.main?.paths || findNodeModules({ relative: false });
@@ -54,7 +54,7 @@ export class PluginPathProvider implements IPluginPathProvider {
           return pluginPath;
         }
       } catch (error) {
-        this.logger.warn(`Failed to load the package.json from ${path}`);
+        this.logger.debug(`Failed to load the package.json from ${path}`);
       }
     }
   }

@@ -34,11 +34,11 @@
   },
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/lambda",
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.63",
     "@rafterjs/utils": "^0.8.63",
     "rafter": "^0.8.63"
   },
   "devDependencies": {
+    "@rafterjs/logger-plugin": "^0.8.63",
     "@rafterjs/babel-preset-rafter": "^0.8.63",
     "@rafterjs/eslint-config": "^0.8.63",
     "@rafterjs/test": "^0.8.63"

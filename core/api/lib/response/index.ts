@@ -4,6 +4,7 @@ export * from './IJsonResponse';
 export * from './IJsonResponseTransformer';
 export * from './JsonController';
 export * from './JsonErrorResponseDto';
+export * from './JsonRenderer';
 export * from './JsonResponseDto';
 export * from './JsonResponseTransformer';
 export * from './ResponseDto';
