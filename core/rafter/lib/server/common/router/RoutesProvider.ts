@@ -1,6 +1,6 @@
 import { ILogger, ILoggerFactory } from '@rafterjs/logger-plugin';
-import { IRouter } from 'express-serve-static-core';
 import { ConfigToRouteDtoTransformer } from './ConfigToRouteDtoTransformer';
+import { IRouter } from '../../vendor';
 import { IRoutes } from './IRouteConfig';
 import { RouteDto } from './RouteDto';
 import { RouterProvider } from './RouterProvider';

@@ -1,3 +1,6 @@
-import { Response } from 'express-serve-static-core';
+import { Response } from '../../vendor';
 
-export type IResponse = Response;
+export type IResponse<ResBody = any, Locals extends Record<string, any> = Record<string, any>> = Response<
+  ResBody,
+  Locals
+>;

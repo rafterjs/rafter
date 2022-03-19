@@ -1,5 +1,6 @@
-import * as Express from 'express';
-import { IRouter } from 'express-serve-static-core';
+import { IRouter, Router } from '../../vendor';
+
+export { IRouter } from '../../vendor';
 
 export interface IRouterProvider {
   createInstance(): IRouter;
@@ -10,7 +11,7 @@ export interface IRouterProvider {
  */
 export class RouterProvider implements IRouterProvider {
   public createInstance(): IRouter {
-    return Express.Router();
+    return Router();
   }
 }
 

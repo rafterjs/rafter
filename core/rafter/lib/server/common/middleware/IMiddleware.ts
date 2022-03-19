@@ -1,9 +1,19 @@
-import { NextFunction } from 'express-serve-static-core';
-import { IRequest } from '../request/IRequest';
-import { IResponse } from '../response/IResponse';
+import { ParsedQs } from 'qs';
+import { NextFunction } from '../../vendor';
+import { IParamsDictionary, IRequest } from '../request';
+import { IResponse } from '../response';
 
 export type INextFunction = NextFunction;
 
-export type IMiddleware = (request: IRequest, response: IResponse, next: INextFunction) => void;
+export interface IMiddleware<
+  P = IParamsDictionary,
+  ResBody = any,
+  ReqBody = any,
+  ReqQuery = ParsedQs,
+  Locals extends Record<string, any> = Record<string, any>,
+> {
+  (req: IRequest<P, ResBody, ReqBody, ReqQuery, Locals>, res: IResponse<ResBody, Locals>, next: NextFunction): void;
+}
+
 export type IMiddlewareConfig = string;
 export type IMiddlewares = Set<IMiddlewareConfig>;

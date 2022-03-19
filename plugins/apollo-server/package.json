@@ -1,6 +1,5 @@
 {
-  "name": "@rafterjs/simple-app",
-  "private": true,
+  "name": "@rafterjs/apollo-server-plugin",
   "version": "0.8.61",
   "contributors": [
     {
@@ -9,40 +8,44 @@
     }
   ],
   "license": "GPL-3.0-or-later",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rafterjs/rafter.git",
-    "directory": "examples/simple-app"
+    "directory": "plugins/apollo-server"
   },
-  "homepage": "https://github.com/rafterjs/rafter/tree/master/examples/simple-app",
   "scripts": {
     "build": "yarn clean && yarn build:config && yarn build:lib && yarn build:index && yarn build:types",
     "build:config": "babel ./config --out-dir dist/config --extensions .js,.jsx,.ts,.tsx --source-maps",
-    "build:lib": "babel lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
+    "build:lib": "babel ./lib --out-dir dist/lib --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:index": "babel index.ts --out-dir dist --extensions .js,.jsx,.ts,.tsx --source-maps",
     "build:types": "tsc --emitDeclarationOnly",
     "clean": "rimraf ./dist",
+    "copy": "copyfiles ./package.json ./dist/package.json",
     "lint": "eslint \"./lib/**/*\" \"./config/**/*\" ./babel.config.js",
-    "lint:fix": "yarn lint --fix",
-    "start": "node ./dist/index.js"
+    "types": "tsc",
+    "update:latest": "yarn upgrade --latest"
   },
   "dependencies": {
-    "@rafterjs/cors-plugin": "^0.8.61",
-    "@rafterjs/di-autoloader": "^0.8.61",
-    "@rafterjs/logger-plugin": "^0.8.61",
-    "@rafterjs/apollo-server-plugin": "^0.8.61",
-    "rafter": "^0.8.61"
+    "apollo-server-core": "^3.5.0",
+    "apollo-server-express": "^3.5.0",
+    "graphql": "^16.2.0"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.61",
     "@rafterjs/eslint-config": "^0.8.61"
   },
-  "description": "A simple example app to start new projects",
+  "peerDependencies": {
+    "rafter": "^0.8.61"
+  },
+  "description": "Apollo server for Rafter projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "engines": {
-    "node": ">=14"
+    "node": ">=9"
   },
-  "gitHead": "a1f017d6435d2fd58ab8bfcaee868f5d63956807"
+  "gitHead": "11da44fed33e1fbddfbb7bab5ca88116a58fcb70"
 }

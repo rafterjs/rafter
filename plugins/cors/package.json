@@ -34,6 +34,9 @@
     "@rafterjs/eslint-config": "^0.8.61",
     "@types/cors": "2.8.12"
   },
+  "peerDependencies": {
+    "rafter": "^0.8.61"
+  },
   "description": "A simple CORS plugin",
   "main": "./dist/cors.js",
   "module": "./dist/cors.js",

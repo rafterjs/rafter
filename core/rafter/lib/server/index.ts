@@ -7,7 +7,6 @@ export * from './common/request';
 export * from './common/response';
 export * from './common/router';
 export * from './common/server';
-export * from './vendor/express';
 export * from './IRafterServer';
 export * from './RafterServer';
 export * from './RafterServerFactory';

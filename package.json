@@ -88,6 +88,7 @@
     "lerna": "4.0.0",
     "nodemon": "2.0.15",
     "prettier": "2.5.1",
+    "rafter": "^0.8.61",
     "rimraf": "3.0.2",
     "ts-jest": "27.1.2",
     "ts-node": "9.1.1",

@@ -1,9 +1,9 @@
 import cors, { CorsOptions } from 'cors';
-import { NextFunction, Request, Response } from 'express-serve-static-core';
+import { INextFunction, IRequest, IResponse } from 'rafter';
 import { ILogger } from '@rafterjs/logger-plugin';
 
 export default function corsFactory(logger: ILogger, config: CorsOptions = {}) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: IRequest, res: IResponse, next: INextFunction): void => {
     logger.debug(`    CORS middleware`);
     cors(config)(req, res, next);
   };

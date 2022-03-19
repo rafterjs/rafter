@@ -1,7 +1,6 @@
-import express, { Express, Request as ExpressRequest, Response as ExpressResponse } from 'express';
+import express, { Express } from 'express';
 
-export type Request = ExpressRequest;
-export type Response = ExpressResponse;
+export { Express, Request, Response, IRouter, Router, NextFunction } from 'express';
 
 export default (): Express => {
   return express();

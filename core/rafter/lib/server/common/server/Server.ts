@@ -1,25 +1,28 @@
 import { ILogger, ILoggerFactory } from '@rafterjs/logger-plugin';
-import { Express } from 'express';
-import { RequestHandler } from 'express-serve-static-core';
 import * as http from 'http';
 import * as https from 'https';
 import { IPluginsConfig } from '../../../plugins';
 import { IServerConfig } from '../../config/IServerConfig';
-import { IMiddlewareProvider, IMiddlewares } from '../middleware';
+import { IMiddleware, IMiddlewareProvider, IMiddlewares } from '../middleware';
 import { IPreStartHooks, IPreStartHooksProvider } from '../pre-start-hooks';
 import { IRoutes } from '../router';
+import { Express } from '../../vendor';
 import { IRoutesProvider } from '../router/RoutesProvider';
 
 export interface IServer {
   start(): Promise<void>;
 
   stop(): Promise<void>;
+
+  getHttpServerInstance(): http.Server | https.Server | undefined;
+
+  getApplicationInstance(): Express;
 }
 
 export default class Server implements IServer {
   private readonly logger: ILogger;
 
-  private serverInstance?: http.Server | https.Server;
+  private httpServer?: http.Server | https.Server;
 
   constructor(
     private readonly express: Express,
@@ -62,7 +65,7 @@ export default class Server implements IServer {
    */
   private async initMiddleware(): Promise<void> {
     if (this.middleware.size > 0) {
-      const middlewareFunctions: RequestHandler[] = this.middlewareProvider.createInstance(this.middleware);
+      const middlewareFunctions: IMiddleware[] = this.middlewareProvider.createInstance(this.middleware);
       if (middlewareFunctions.length > 0) {
         this.express.use(middlewareFunctions);
       }
@@ -76,7 +79,7 @@ export default class Server implements IServer {
   }
 
   public async start(): Promise<void> {
-    if (!this.serverInstance) {
+    if (!this.httpServer) {
       // get all plugins
       // this.logger.info(`plugins have already been loaded`);
 
@@ -101,15 +104,15 @@ export default class Server implements IServer {
           }
 
           this.logger.info(`SSL enabled`);
-          this.serverInstance = https.createServer(
+          this.httpServer = https.createServer(
             { key: privateKey, cert: certificate, passphrase: password },
             this.express,
           );
         } else {
-          this.serverInstance = http.createServer(this.express);
+          this.httpServer = http.createServer(this.express);
         }
 
-        this.serverInstance.listen(this.config.server.port);
+        this.httpServer.listen(this.config.server.port);
         this.logger.info(`Server running on port ${this.config.server.port}`);
 
         resolve();
@@ -121,9 +124,17 @@ export default class Server implements IServer {
   }
 
   public async stop(): Promise<void> {
-    if (this.serverInstance) {
-      this.serverInstance.close();
-      this.serverInstance = undefined;
+    if (this.httpServer) {
+      this.httpServer.close();
+      this.httpServer = undefined;
     }
+  }
+
+  public getHttpServerInstance(): http.Server | https.Server | undefined {
+    return this.httpServer;
+  }
+
+  public getApplicationInstance(): Express {
+    return this.express;
   }
 }
