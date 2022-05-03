@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.66 (2022-05-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dot-prop to v7 ([#264](https://github.com/rafterjs/rafter/issues/264)) ([6a5a6f5](https://github.com/rafterjs/rafter/commit/6a5a6f57d2bdb4cd91653fe50b8851fc6b2e0211))
+
+
+
+
+
 ## 0.8.65 (2022-03-05)
 
 **Note:** Version bump only for package @rafterjs/api
