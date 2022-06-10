@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.68 (2022-06-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency helmet to v5 ([#265](https://github.com/rafterjs/rafter/issues/265)) ([078b2ad](https://github.com/rafterjs/rafter/commit/078b2adb580bdf47e965b7344efa42eb70494f61))
+
+
+
+
+
 ## 0.8.67 (2022-05-03)
 
 **Note:** Version bump only for package @rafterjs/di-autoloader
