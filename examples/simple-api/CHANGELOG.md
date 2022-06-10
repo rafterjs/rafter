@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.69 (2022-06-10)
+
+
+### Bug Fixes
+
+* **container:** forced scope singleton ([#278](https://github.com/rafterjs/rafter/issues/278)) ([70f1459](https://github.com/rafterjs/rafter/commit/70f14598c34b4eac8d9bb38a8df10da6a51ffb7c))
+
+
+
+
+
 ## 0.8.68 (2022-06-10)
 
 
