@@ -1,5 +1,5 @@
 import { ILogger } from '@rafterjs/logger-plugin';
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, listModules } from 'awilix';
+import { asClass, asFunction, asValue, Constructor, FunctionReturning, Lifetime, listModules } from 'awilix';
 import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { isClass } from 'is-class';
@@ -17,6 +17,8 @@ import { IDiContainer } from './IDiContainer';
 import { IService } from './IService';
 import { MergableFileSet } from './MergableFileSet';
 
+export { Lifetime };
+
 export class DiAutoloader implements IDiAutoloader {
   private mergableFiles: IMergableFiles = new Map();
 
@@ -25,7 +27,12 @@ export class DiAutoloader implements IDiAutoloader {
   public async load(
     paths: IPaths = [],
     mergableFilenames: IMergableFileNames = [],
-    options: ILoadOptions = { formatName: this.formatName },
+    options: ILoadOptions = {
+      formatName: this.formatName,
+      resolverOptions: {
+        lifetime: Lifetime.SINGLETON,
+      },
+    },
   ): Promise<void> {
     this.logger.debug(`   Registering mergable files`);
     await this.loadMergableFiles(paths, mergableFilenames);
