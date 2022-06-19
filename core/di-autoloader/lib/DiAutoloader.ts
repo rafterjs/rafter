@@ -20,6 +20,7 @@ import {
   ILoadOptions,
   IMergableFile,
   IMergableFileNames,
+  IMergableFileObject,
   IMergableFiles,
   IPaths,
 } from './IDiAutoloader';
@@ -137,18 +138,22 @@ export class DiAutoloader implements IDiAutoloader {
         mergedFile = new MergableFileSet([...specialFile2, ...specialFile1]);
       } else {
         // override the values of 1 from 2
-        mergedFile = merge(specialFile1, specialFile2);
+        mergedFile = merge(specialFile1 as IMergableFileObject, specialFile2 as IMergableFileObject);
       }
+
       this.logger.debug(`Deep merged file:`, mergedFile);
 
       return mergedFile;
     }
+
     if (!specialFile1 && specialFile2) {
       return specialFile2;
     }
+
     if (specialFile1 && !specialFile2) {
       return specialFile1;
     }
+
     throw new Error('You must pass at least one special file with contents');
   }
 
