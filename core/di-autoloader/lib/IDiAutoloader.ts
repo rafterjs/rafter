@@ -1,10 +1,14 @@
-import { GlobWithOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
-import { Constructor, FunctionReturning } from 'awilix';
+import { Constructor, FunctionReturning, GlobWithOptions, ModuleDescriptor } from 'awilix';
 import { IService } from './IService';
 
 export type IMergableFileFunction = () => Record<string, unknown> | Array<unknown>;
-export type IMergableFile = Record<string, unknown> | Array<unknown> | Set<unknown> | IMergableFileFunction;
+export type IMergableFileObject = Record<string, any>;
+export type IMergableFile =
+  | IMergableFileObject
+  | Array<IMergableFileObject>
+  | Set<IMergableFileObject>
+  | IMergableFileFunction;
 export type IMergableFiles = Map<string, IMergableFile>;
 export type IMergableFileNames = string[];
 export type IPath = string | GlobWithOptions;
