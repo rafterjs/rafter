@@ -1,7 +1,7 @@
 {
   "name": "@rafterjs/simple-lambda",
   "private": true,
-  "version": "0.8.70",
+  "version": "0.8.71",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -27,14 +27,14 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@rafterjs/lambda": "^0.8.70",
-    "@rafterjs/logger-plugin": "^0.8.70",
-    "@rafterjs/utils": "^0.8.70",
+    "@rafterjs/lambda": "^0.8.71",
+    "@rafterjs/logger-plugin": "^0.8.71",
+    "@rafterjs/utils": "^0.8.71",
     "readline-sync": "1.4.10"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.70",
-    "@rafterjs/eslint-config": "^0.8.70",
+    "@rafterjs/babel-preset-rafter": "^0.8.71",
+    "@rafterjs/eslint-config": "^0.8.71",
     "@types/readline-sync": "1.4.3"
   },
   "description": "A simple lambda example app",
