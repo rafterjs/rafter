@@ -42,7 +42,7 @@
     "@rafterjs/eslint-config": "^0.8.73",
     "@rafterjs/test": "^0.8.73",
     "@types/axios": "0.14.0",
-    "@types/luxon": "2.3.0",
+    "@types/luxon": "2.3.2",
     "@types/uuid": "8.3.4"
   },
   "engines": {
