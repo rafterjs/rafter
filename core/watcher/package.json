@@ -1,6 +1,6 @@
 {
   "name": "@rafterjs/watcher",
-  "version": "0.8.74",
+  "version": "0.8.75",
   "contributors": [
     {
       "name": "Josh Stuart",
@@ -25,15 +25,15 @@
     "lint": "eslint \"./lib/**/*\" ./babel.config.js ./index.ts"
   },
   "dependencies": {
-    "@rafterjs/logger-plugin": "^0.8.74",
+    "@rafterjs/logger-plugin": "^0.8.75",
     "chokidar": "3.5.3",
     "shelljs": "0.8.5",
     "tree-kill": "1.2.2",
     "yargs": "17.5.1"
   },
   "devDependencies": {
-    "@rafterjs/babel-preset-rafter": "^0.8.74",
-    "@rafterjs/eslint-config": "^0.8.74",
+    "@rafterjs/babel-preset-rafter": "^0.8.75",
+    "@rafterjs/eslint-config": "^0.8.75",
     "@types/chokidar": "2.1.3",
     "@types/shelljs": "0.8.11"
   },

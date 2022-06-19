@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.75 (2022-06-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ts-deepmerge to v2 ([#266](https://github.com/rafterjs/rafter/issues/266)) ([f3e20ce](https://github.com/rafterjs/rafter/commit/f3e20ce74ce9422a58d94c0b125a82c347b1f6d5))
+
+
+
+
+
 ## 0.8.74 (2022-06-19)
 
 **Note:** Version bump only for package @rafterjs/utils
