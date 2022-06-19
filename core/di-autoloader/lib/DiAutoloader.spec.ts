@@ -89,15 +89,19 @@ describe('DI Autoloader', () => {
       const diAutoloader = new DiAutoloader(container, mockLogger);
       diAutoloader.registerValue('diAutoloader', diAutoloader);
 
-      const modules = diAutoloader.list(dependenciesPath);
+      const modules = diAutoloader
+        .list(dependenciesPath)
+        .map((module) => module.name.toLowerCase())
+        .sort();
+
       expect(modules).toHaveLength(7);
-      expect(modules[0].name).toEqual('config');
-      expect(modules[1].name).toEqual('routes');
-      expect(modules[2].name).toEqual('config');
-      expect(modules[3].name).toEqual('routes');
-      expect(modules[4].name).toEqual('TestClass');
-      expect(modules[5].name).toEqual('TestController');
-      expect(modules[6].name).toEqual('TestFunction');
+      expect(modules[0]).toEqual('config');
+      expect(modules[1]).toEqual('config');
+      expect(modules[2]).toEqual('routes');
+      expect(modules[3]).toEqual('routes');
+      expect(modules[4]).toEqual('testclass');
+      expect(modules[5]).toEqual('testcontroller');
+      expect(modules[6]).toEqual('testfunction');
     });
 
     it('instantiates autoloader with a custom logger', async () => {

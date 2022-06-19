@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Argv } from 'yargs';
 import yargs from 'yargs/yargs';
-import { Watcher, WatcherConfig } from './lib/Watcher';
+import { Match, Watcher, WatcherConfig } from './lib/Watcher';
 import { DEFAULT_COMMANDS, DEFAULT_DELAY, DEFAULT_EXTENSION, DEFAULT_IGNORE } from './lib/WatcherConstants';
 
 const { argv } = yargs(process.argv.slice(2))
@@ -57,7 +57,7 @@ const config: WatcherConfig = {
   onChange: argv.change as string,
   options: {
     extension: argv.extension as string,
-    ignore: argv.ignore as Array<string | number>,
+    ignore: argv.ignore as Match,
     delay: argv.delay as number,
   },
 };

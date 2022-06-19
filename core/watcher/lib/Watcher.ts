@@ -1,4 +1,5 @@
 import { ILogger } from '@rafterjs/logger-plugin';
+import { Matcher } from 'anymatch';
 import { ChildProcess } from 'child_process';
 import chokidar, { FSWatcher } from 'chokidar';
 import { isAbsolute, join, relative } from 'path';
@@ -6,12 +7,14 @@ import treeKill from 'tree-kill';
 import { execute, executeChild } from './Executor';
 import { DEFAULT_COMMANDS, PACKAGE_TOKEN } from './WatcherConstants';
 
+export type Match = Matcher;
+
 export type WatcherConfig = {
   command: string;
   onChange: string;
   options: {
     extension?: string;
-    ignore?: Array<string | number>;
+    ignore?: Match;
     delay?: number;
   };
 };

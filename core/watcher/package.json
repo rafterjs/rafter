@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.8.72",
-    "chokidar": "3.5.2",
-    "shelljs": "0.8.4",
+    "chokidar": "3.5.3",
+    "shelljs": "0.8.5",
     "tree-kill": "1.2.2",
-    "yargs": "17.3.0"
+    "yargs": "17.5.1"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.72",
