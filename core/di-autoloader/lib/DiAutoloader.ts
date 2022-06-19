@@ -1,6 +1,16 @@
 import { ILogger } from '@rafterjs/logger-plugin';
-import { asClass, asFunction, asValue, Constructor, FunctionReturning, Lifetime, listModules } from 'awilix';
-import { GlobWithOptions, ListModulesOptions, ModuleDescriptor } from 'awilix/lib/list-modules';
+import {
+  asClass,
+  asFunction,
+  asValue,
+  Constructor,
+  FunctionReturning,
+  GlobWithOptions,
+  Lifetime,
+  listModules,
+  ListModulesOptions,
+  ModuleDescriptor,
+} from 'awilix';
 import { LoadModulesOptions } from 'awilix/lib/load-modules';
 import { isClass } from 'is-class';
 import { camelCase } from 'lodash';
