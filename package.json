@@ -85,7 +85,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "4.0.0",
     "jest": "27.5.1",
-    "lerna": "5.4.3",
+    "lerna": "8.1.2",
     "nodemon": "2.0.19",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
