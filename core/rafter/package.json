@@ -39,7 +39,7 @@
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.75",
     "@rafterjs/eslint-config": "^0.8.75",
-    "@types/glob": "7.2.0"
+    "@types/glob": "8.1.0"
   },
   "description": "A slightly opinionated JS framework that makes building apps easy and testable",
   "main": "./dist/index.js",
