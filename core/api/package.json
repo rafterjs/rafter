@@ -39,8 +39,8 @@
     "@rafterjs/utils": "^0.8.75",
     "@types/express": "4.17.14",
     "@types/express-serve-static-core": "4.17.31",
-    "body-parser": "1.20.0",
-    "express": "4.18.1",
+    "body-parser": "1.20.3",
+    "express": "4.21.2",
     "express-http-context": "1.2.4",
     "helmet": "5.1.1",
     "rafter": "^0.8.75"

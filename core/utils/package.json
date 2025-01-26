@@ -33,8 +33,8 @@
   "homepage": "https://github.com/rafterjs/rafter/tree/master/core/utils",
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.8.75",
-    "axios": "0.27.2",
-    "luxon": "3.0.1",
+    "axios": "0.29.0",
+    "luxon": "3.5.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
