@@ -76,7 +76,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "27.5.1",
     "commitizen": "4.2.5",
-    "commitlint": "17.0.3",
+    "commitlint": "19.7.1",
     "copyfiles": "2.4.1",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.57.1",
