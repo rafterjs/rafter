@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rafterjs/logger-plugin": "^0.8.75",
-    "cors": "2.8.5"
+    "cors": "2.8.6"
   },
   "devDependencies": {
     "@rafterjs/babel-preset-rafter": "^0.8.75",
